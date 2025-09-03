@@ -24,6 +24,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -34,6 +35,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.fromHtml
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
@@ -44,6 +46,7 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.LessonActivity
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.Colors
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.TextStyles
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonContentTypes
+import com.d4rk.englishwithlidia.plus.R
 import ir.mahozad.multiplatform.wavyslider.WaveDirection
 import ir.mahozad.multiplatform.wavyslider.material3.WavySlider
 import org.koin.compose.koinInject
@@ -123,21 +126,43 @@ fun LessonContentLayout(
                 }
 
                 LessonContentTypes.AD_BANNER -> {
-                    AdBanner(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = SizeConstants.MediumSize),
-                        adsConfig = bannerConfig
-                    )
+                            .padding(vertical = SizeConstants.MediumSize)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.ad_label),
+                            style = TextStyles.label(),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        AdBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            adsConfig = bannerConfig
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                 }
 
                 LessonContentTypes.AD_LARGE_BANNER -> {
-                    AdBanner(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(vertical = SizeConstants.MediumSize),
-                        adsConfig = mediumRectangleConfig
-                    )
+                            .padding(vertical = SizeConstants.MediumSize)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.ad_label),
+                            style = TextStyles.label(),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        AdBanner(
+                            modifier = Modifier.fillMaxWidth(),
+                            adsConfig = mediumRectangleConfig
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                    }
                 }
 
                 else -> {
