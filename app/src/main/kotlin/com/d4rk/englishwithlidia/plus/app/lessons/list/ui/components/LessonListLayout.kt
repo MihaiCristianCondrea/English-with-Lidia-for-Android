@@ -31,6 +31,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
@@ -117,23 +118,47 @@ fun LessonItem(lesson : UiHomeLesson,  modifier : Modifier = Modifier) {
         }
 
         LessonConstants.TYPE_AD_VIEW_BANNER -> {
-            AdBanner(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = SizeConstants.MediumSize),
-                adsConfig = bannerConfig
-            )
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.ad_label),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                AdBanner(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = SizeConstants.MediumSize),
+                    adsConfig = bannerConfig
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
         }
 
         LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> {
-            AdBanner(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = SizeConstants.MediumSize),
-                adsConfig = mediumRectangleConfig
-            )
+                    .padding(horizontal = 16.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.ad_label),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+                AdBanner(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = SizeConstants.MediumSize),
+                    adsConfig = mediumRectangleConfig
+                )
+            }
             Spacer(modifier = Modifier.height(16.dp))
         }
 
