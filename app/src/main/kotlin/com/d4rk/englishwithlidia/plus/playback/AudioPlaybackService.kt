@@ -19,7 +19,6 @@ class AudioPlaybackService : MediaSessionService() {
     private val mediaSession : MediaSession by lazy {
         MediaSession.Builder(this , player)
             .setCallback(MediaSessionCallback())
-            .setMediaButtonResumptionEnabled(false)
             .build()
     }
 
