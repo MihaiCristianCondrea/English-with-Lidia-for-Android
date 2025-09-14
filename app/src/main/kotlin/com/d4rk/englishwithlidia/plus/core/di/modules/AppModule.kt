@@ -6,6 +6,7 @@ import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.provider
 import com.d4rk.android.libs.apptoolkit.data.client.KtorClient
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import com.d4rk.englishwithlidia.plus.BuildConfig
+import com.d4rk.englishwithlidia.plus.app.lessons.details.data.LessonMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.details.data.LessonRepositoryImpl
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
@@ -40,7 +41,8 @@ val appModule : Module = module {
     factory { GetHomeLessonsUseCase(repository = get()) }
     viewModel { HomeViewModel(getHomeLessonsUseCase = get(), dispatcherProvider = get()) }
 
-    single<LessonRepository> { LessonRepositoryImpl(client = get(), dispatchers = get()) }
+    single { LessonMapper() }
+    single<LessonRepository> { LessonRepositoryImpl(client = get(), dispatchers = get(), mapper = get()) }
     factory { GetLessonUseCase(repository = get()) }
     viewModel { LessonViewModel(getLessonUseCase = get()) }
 }
