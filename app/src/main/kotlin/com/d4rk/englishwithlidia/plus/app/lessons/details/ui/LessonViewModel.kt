@@ -2,7 +2,6 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
 
 import androidx.lifecycle.viewModelScope
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.copyData
@@ -12,14 +11,12 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonAc
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonEvent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
-import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.withContext
 import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.update
 
 class LessonViewModel(
     private val getLessonUseCase: GetLessonUseCase,
-    private val dispatcherProvider: DispatcherProvider,
 ) : ScreenViewModel<UiLessonScreen, LessonEvent, LessonAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiLessonScreen())
 ), PlaybackEventHandler {
@@ -35,9 +32,15 @@ class LessonViewModel(
     private fun fetchLesson(lessonId: String) {
         viewModelScope.launch {
             screenState.setLoading<UiLessonScreen>()
-            val lesson = getLessonUseCase(lessonId)
-            withContext(dispatcherProvider.main) {
-                screenState.update { current ->
+            val lesson = try {
+                getLessonUseCase(lessonId)
+            } catch (e: Exception) {
+                null
+            }
+            screenState.update { current ->
+                if (lesson == null || lesson.lessonContent.isEmpty()) {
+                    current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
+                } else {
                     current.copy(screenState = ScreenState.Success(), data = lesson)
                 }
             }
