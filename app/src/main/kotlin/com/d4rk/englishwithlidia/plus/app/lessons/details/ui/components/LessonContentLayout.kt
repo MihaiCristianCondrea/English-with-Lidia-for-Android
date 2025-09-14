@@ -28,7 +28,9 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -73,7 +75,8 @@ fun LessonContentLayout(
             .verticalScroll(scrollState)
     ) {
         lesson.lessonContent.forEachIndexed { index, contentItem ->
-            when (contentItem.contentType) {
+            key(contentItem.contentId) {
+                when (contentItem.contentType) {
                 LessonContentTypes.HEADER -> {
                     StyledText(
                         text = contentItem.contentText,
@@ -160,8 +163,9 @@ fun LessonContentLayout(
                 }
             }
 
-            if (index < lesson.lessonContent.lastIndex) {
-                Spacer(modifier = Modifier.height(8.dp))
+                if (index < lesson.lessonContent.lastIndex) {
+                    Spacer(modifier = Modifier.height(8.dp))
+                }
             }
         }
     }
@@ -173,7 +177,7 @@ fun StyledText(
     style: TextStyle = TextStyles.body(),
     color: Color = Colors.primaryText(),
 ) {
-    val annotatedString = AnnotatedString.fromHtml(text)
+    val annotatedString = remember(text) { AnnotatedString.fromHtml(text) }
 
     Text(
         text = annotatedString,
@@ -215,13 +219,17 @@ fun AudioCardView(
     ).value
 
     var sliderValue by remember { mutableFloatStateOf(0f) }
-
-    LaunchedEffect(playbackDuration, sliderPosition) {
-        sliderValue = if (playbackDuration > 0f) {
-            sliderPosition / playbackDuration
-        } else {
-            0f
+    val targetSliderValue by remember(playbackDuration, sliderPosition) {
+        derivedStateOf {
+            if (playbackDuration > 0f) {
+                sliderPosition / playbackDuration
+            } else {
+                0f
+            }
         }
+    }
+    LaunchedEffect(targetSliderValue) {
+        sliderValue = targetSliderValue
     }
 
     OutlinedCard(
