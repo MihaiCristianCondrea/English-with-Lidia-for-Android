@@ -3,8 +3,8 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -16,17 +16,17 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components.LessonCo
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LessonScreen(
-    activity: LessonActivity,
     viewModel: LessonViewModel,
+    onBack: () -> Unit,
+    onPlayClick: () -> Unit,
+    onSeekChange: (Float) -> Unit,
 ) {
     val scrollState = rememberScrollState()
-    val screenState: UiStateScreen<UiLessonScreen> by viewModel.uiState.collectAsState()
+    val screenState: UiStateScreen<UiLessonScreen> by viewModel.uiState.collectAsStateWithLifecycle()
 
     LargeTopAppBarWithScaffold(
         title = screenState.data?.lessonTitle ?: "",
-        onBackClicked = {
-            activity.finish()
-        }
+        onBackClicked = onBack
     ) { paddingValues ->
 
         ScreenStateHandler(
@@ -38,13 +38,15 @@ fun LessonScreen(
                 NoDataScreen()
             },
             onSuccess = { lesson ->
-                    LessonContentLayout(
-                        paddingValues = paddingValues,
-                        scrollState = scrollState,
-                        lesson = lesson,
-                        activity = activity,
-                    )
+                LessonContentLayout(
+                    paddingValues = paddingValues,
+                    scrollState = scrollState,
+                    lesson = lesson,
+                    onPlayClick = onPlayClick,
+                    onSeekChange = onSeekChange,
+                )
             },
         )
     }
 }
+
