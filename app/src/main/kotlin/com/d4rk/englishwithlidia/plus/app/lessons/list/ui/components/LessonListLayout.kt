@@ -2,6 +2,7 @@ package com.d4rk.englishwithlidia.plus.app.lessons.list.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -23,6 +24,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -44,77 +46,80 @@ import org.koin.core.qualifier.named
 
 @Composable
 fun LessonListLayout(
-    lessons : List<UiHomeLesson> , paddingValues : PaddingValues
+    lessons: List<UiHomeLesson>, paddingValues: PaddingValues
 ) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(paddingValues)
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
+        contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize),
+        verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        itemsIndexed(lessons) { index , lesson ->
+        itemsIndexed(lessons) { index, lesson ->
             LessonItem(
-                lesson = lesson ,
+                lesson = lesson,
                 modifier = Modifier
-                        .animateVisibility()
-                        .animateItem()
+                    .animateVisibility()
+                    .animateItem()
             )
         }
     }
 }
 
 @Composable
-fun LessonItem(lesson : UiHomeLesson,  modifier : Modifier = Modifier) {
+fun LessonItem(lesson: UiHomeLesson, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val bannerConfig: AdsConfig = koinInject()
-    val mediumRectangleConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
+    val mediumRectangleConfig: AdsConfig =
+        koinInject(qualifier = named(name = "banner_medium_rectangle"))
 
 
     when (lesson.lessonType) {
         LessonConstants.TYPE_BANNER_IMAGE_LOCAL -> {
             Image(
-                imageVector = homeBanner() ,
-                contentDescription = null ,
+                imageVector = homeBanner(),
+                contentDescription = null,
                 modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight() ,
+                    .fillMaxWidth()
+                    .wrapContentHeight(),
                 contentScale = ContentScale.FillWidth
             )
-            Spacer(modifier = Modifier.height(16.dp))
         }
 
         LessonConstants.TYPE_ROW_BUTTONS_LOCAL -> {
             Row(
                 modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight()
-                        .padding(start = 24.dp , end = 24.dp) ,
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(start = 24.dp, end = 24.dp),
             ) {
                 OutlinedUrlButtons(
-                    vectorIcon = Icons.Outlined.Language ,
+                    vectorIcon = Icons.Outlined.Language,
                     modifier = Modifier
-                            .weight(1f)
-                            .bounceClick() ,
-                    text = R.string.website ,
+                        .weight(1f)
+                        .bounceClick(),
+                    text = R.string.website,
                     url = "https://sites.google.com/view/englishwithlidia"
                 )
 
                 Spacer(modifier = Modifier.width(24.dp))
 
                 OutlinedUrlButtons(
-                    painterIcon = painterResource(id = R.drawable.ic_find_us) ,
+                    painterIcon = painterResource(id = R.drawable.ic_find_us),
                     modifier = Modifier
-                            .weight(1f)
-                            .bounceClick() ,
-                    text = R.string.find_us ,
+                        .weight(1f)
+                        .bounceClick(),
+                    text = R.string.find_us,
                     url = "https://www.facebook.com/lidia.melinte"
                 )
             }
-            Spacer(modifier = Modifier.height(16.dp))
         }
 
         LessonConstants.TYPE_AD_VIEW_BANNER -> {
             AdBanner(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = SizeConstants.MediumSize),
+                    .fillMaxWidth(),
                 adsConfig = bannerConfig
             )
         }
@@ -122,56 +127,54 @@ fun LessonItem(lesson : UiHomeLesson,  modifier : Modifier = Modifier) {
         LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> {
             AdBanner(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = SizeConstants.MediumSize),
+                    .fillMaxWidth(),
                 adsConfig = mediumRectangleConfig
             )
         }
 
         LessonConstants.TYPE_FULL_IMAGE_BANNER -> {
-            LessonCard(title = lesson.lessonTitle ,
-                       imageResource = lesson.lessonThumbnailImageUrl ,
-                       onClick = {
-                           openLessonDetailActivity(context = context , lesson = lesson)
-                       } ,
-                       modifier = modifier)
-            Spacer(modifier = Modifier.width(8.dp))
+            LessonCard(
+                title = lesson.lessonTitle,
+                imageResource = lesson.lessonThumbnailImageUrl,
+                onClick = {
+                    openLessonDetailActivity(context = context, lesson = lesson)
+                },
+                modifier = modifier)
         }
     }
 }
 
 @Composable
 fun LessonCard(
-    title : String , imageResource : String , onClick : () -> Unit , modifier : Modifier = Modifier
+    title: String, imageResource: String, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp) ,
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
     ) {
         Card(
             modifier = Modifier
-                    .fillMaxWidth()
-                    .bounceClick()
-                    .clip(RoundedCornerShape(12.dp))
-                    .clickable(onClick = onClick)
-                    .aspectRatio(ratio = 2.06f / 1f) ,
+                .fillMaxWidth()
+                .bounceClick()
+                .clip(RoundedCornerShape(12.dp))
+                .clickable(onClick = onClick)
+                .aspectRatio(ratio = 2.06f / 1f),
         ) {
             AsyncImage(
-                model = imageResource ,
-                contentDescription = null ,
-                modifier = Modifier.fillMaxSize() ,
-                contentScale = ContentScale.Crop ,
+                model = imageResource,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop,
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = title ,
-            style = MaterialTheme.typography.headlineMedium ,
+            text = title,
+            style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.fillMaxWidth()
         )
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider()
-        Spacer(modifier = Modifier.height(16.dp))
     }
 }

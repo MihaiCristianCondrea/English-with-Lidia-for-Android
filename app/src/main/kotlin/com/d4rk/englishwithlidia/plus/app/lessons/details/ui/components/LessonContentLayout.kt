@@ -66,7 +66,9 @@ fun LessonContentLayout(
         verticalArrangement = Arrangement.spacedBy(SizeConstants.MediumSize),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        itemsIndexed(items = lesson.lessonContent, key = { _, item -> item.contentId }) { index, contentItem ->
+        itemsIndexed(
+            items = lesson.lessonContent,
+            key = { _, item -> item.contentId }) { index, contentItem ->
             when (contentItem.contentType) {
                 LessonContentTypes.HEADER -> {
                     StyledText(
