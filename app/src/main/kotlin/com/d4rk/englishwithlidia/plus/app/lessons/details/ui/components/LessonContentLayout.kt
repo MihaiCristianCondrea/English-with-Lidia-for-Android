@@ -27,6 +27,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,8 +51,7 @@ import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.Colors
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.TextStyles
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonContentTypes
 import com.d4rk.englishwithlidia.plus.R
-import ir.mahozad.multiplatform.wavyslider.WaveDirection
-import ir.mahozad.multiplatform.wavyslider.material3.WavySlider
+import androidx.compose.material3.Slider
 import org.koin.compose.koinInject
 import org.koin.core.qualifier.named
 
@@ -221,7 +224,15 @@ fun AudioCardView(
         label = ""
     ).value
 
-    var sliderValue = if (playbackDuration > 0f) sliderPosition / playbackDuration else 0f
+    var sliderValue by remember { mutableFloatStateOf(0f) }
+
+    LaunchedEffect(playbackDuration, sliderPosition) {
+        sliderValue = if (playbackDuration > 0f) {
+            sliderPosition / playbackDuration
+        } else {
+            0f
+        }
+    }
 
     OutlinedCard(
         modifier = Modifier
@@ -252,23 +263,20 @@ fun AudioCardView(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                WavySlider(value = sliderValue ,
-                           onValueChange = { newValue ->
-                               sliderValue = newValue
-                               if (playbackDuration > 0f) {
-                                   val newPosition = newValue * playbackDuration
-                                   onSeekChange(newPosition)
-                               }
-                           } ,
-                           waveLength = 24.dp ,
-                           waveHeight = 4.dp ,
-                           waveVelocity = 4.dp to WaveDirection.HEAD ,
-                           waveThickness = 4.dp ,
-                           trackThickness = 4.dp ,
-                           incremental = false ,
-                           modifier = Modifier
-                                   .fillMaxWidth()
-                                   .weight(weight = 4f))
+                Slider(
+                    value = sliderValue,
+                    onValueChange = { newValue ->
+                        sliderValue = newValue
+                        if (playbackDuration > 0f) {
+                            val newPosition = newValue * playbackDuration
+                            onSeekChange(newPosition)
+                        }
+                    },
+                    valueRange = 0f..1f,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(weight = 4f)
+                )
             }
         }
     }
