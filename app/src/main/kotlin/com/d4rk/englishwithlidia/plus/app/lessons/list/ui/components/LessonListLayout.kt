@@ -49,6 +49,7 @@ import org.koin.core.qualifier.named
 fun LessonListLayout(
     lessons: List<UiHomeLesson>,
     paddingValues: PaddingValues,
+    modifier: Modifier = Modifier,
 ) {
     // Obtain ad configurations once for the entire list
     val bannerConfig: AdsConfig = koinInject()
@@ -56,7 +57,7 @@ fun LessonListLayout(
         koinInject(qualifier = named(name = "banner_medium_rectangle"))
 
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(paddingValues),
         contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize),
@@ -78,6 +79,7 @@ fun LessonListLayout(
         }
     }
 }
+
 
 
 @Composable
@@ -141,23 +143,23 @@ private fun LessonActionButtonsRow(modifier: Modifier = Modifier) {
             .padding(start = 24.dp, end = 24.dp),
     ) {
         OutlinedUrlButtons(
-            vectorIcon = Icons.Outlined.Language,
+            url = "https://sites.google.com/view/englishwithlidia",
+            text = R.string.website,
             modifier = Modifier
                 .weight(1f)
                 .bounceClick(),
-            text = R.string.website,
-            url = "https://sites.google.com/view/englishwithlidia",
+            vectorIcon = Icons.Outlined.Language,
         )
 
         Spacer(modifier = Modifier.width(24.dp))
 
         OutlinedUrlButtons(
-            painterIcon = painterResource(id = R.drawable.ic_find_us),
+            url = "https://www.facebook.com/lidia.melinte",
+            text = R.string.find_us,
             modifier = Modifier
                 .weight(1f)
                 .bounceClick(),
-            text = R.string.find_us,
-            url = "https://www.facebook.com/lidia.melinte",
+            painterIcon = painterResource(id = R.drawable.ic_find_us),
         )
     }
 }

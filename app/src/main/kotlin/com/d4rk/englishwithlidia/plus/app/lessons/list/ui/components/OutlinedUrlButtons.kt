@@ -17,35 +17,33 @@ import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 
 @Composable
 fun OutlinedUrlButtons(
-    url : String ,
-    vectorIcon : ImageVector? = null ,
-    painterIcon : Painter? = null ,
-    text : Int ,
-    modifier : Modifier
+    url: String,
+    text: Int,
+    modifier: Modifier = Modifier,
+    vectorIcon: ImageVector? = null,
+    painterIcon: Painter? = null,
 ) {
     val context = LocalContext.current
-    OutlinedButton(onClick = {
-        IntentsHelper.openUrl(
-            context = context , url = url
-        )
-    } , modifier = modifier) {
 
+    OutlinedButton(
+        onClick = { IntentsHelper.openUrl(context = context, url = url) },
+        modifier = modifier,
+    ) {
         if (painterIcon != null) {
             Icon(
-                painter = painterIcon ,
-                contentDescription = null ,
-                modifier = Modifier.size(ButtonDefaults.IconSize)
+                painter = painterIcon,
+                contentDescription = null,
+                modifier = Modifier.size(ButtonDefaults.IconSize),
             )
-        }
-        else if (vectorIcon != null) {
+        } else if (vectorIcon != null) {
             Icon(
-                imageVector = vectorIcon ,
-                contentDescription = null ,
-                modifier = Modifier.size(ButtonDefaults.IconSize)
+                imageVector = vectorIcon,
+                contentDescription = null,
+                modifier = Modifier.size(ButtonDefaults.IconSize),
             )
         }
 
         Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-        Text(text = stringResource(id = text) , modifier = Modifier.basicMarquee())
+        Text(text = stringResource(id = text), modifier = Modifier.basicMarquee())
     }
 }
