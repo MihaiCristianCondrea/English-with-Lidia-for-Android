@@ -15,13 +15,13 @@ import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
+import androidx.core.net.toUri
 
 private val Context.audioCacheStore: DataStore<Preferences> by preferencesDataStore(name = "audio_cache")
 
@@ -87,11 +87,11 @@ class AudioCacheManager(
             val newEntry = CacheEntry(remoteUrl, urlHash, target.absolutePath, now, size)
             dataStore.edit { it[key] = json.encodeToString(newEntry) }
             target.toURI().toString().let(Uri::parse)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             temp.delete()
             val newEntry = CacheEntry(remoteUrl, urlHash, "", now, 0)
             dataStore.edit { it[key] = json.encodeToString(newEntry) }
-            Uri.parse(remoteUrl)
+            remoteUrl.toUri()
         }
 
         resultUri
@@ -104,7 +104,7 @@ class AudioCacheManager(
             prefs[evictionKey] = now
             val keys = prefs.asMap().keys.filter { it.name.startsWith("audio.") && it.name.endsWith(".blob") }
             keys.forEach { prefKey ->
-                val value = prefs[prefKey as Preferences.Key<String>] ?: return@forEach
+                val value = prefs[prefKey as Preferences.Key<String>] ?: return@forEach // FIXME: Unchecked cast of 'Preferences.Key<*>' to 'Preferences.Key<String>'.
                 val entry = runCatching { json.decodeFromString<CacheEntry>(value) }.getOrNull() ?: return@forEach
                 if (now - entry.lastOpenedMs > THIRTY_DAYS_MS) {
                     entry.filePath.takeIf { it.isNotBlank() }?.let { File(it).delete() }

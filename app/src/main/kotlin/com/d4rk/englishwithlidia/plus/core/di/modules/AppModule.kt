@@ -17,11 +17,10 @@ import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLe
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.HomeViewModel
 import com.d4rk.englishwithlidia.plus.app.main.ui.MainViewModel
 import com.d4rk.englishwithlidia.plus.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
-import com.d4rk.englishwithlidia.plus.core.data.datastore.DataStore
 import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
+import com.d4rk.englishwithlidia.plus.core.data.datastore.DataStore
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
-import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule : Module = module {
