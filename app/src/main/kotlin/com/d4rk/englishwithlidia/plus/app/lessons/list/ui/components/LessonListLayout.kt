@@ -24,6 +24,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -56,7 +57,10 @@ fun LessonListLayout(
         verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        itemsIndexed(lessons) { index, lesson ->
+        itemsIndexed(
+            items = lessons,
+            key = { _, lesson -> lesson.lessonId },
+        ) { index, lesson ->
             LessonItem(
                 lesson = lesson,
                 modifier = Modifier
@@ -133,13 +137,15 @@ fun LessonItem(lesson: UiHomeLesson, modifier: Modifier = Modifier) {
         }
 
         LessonConstants.TYPE_FULL_IMAGE_BANNER -> {
+            val onLessonClick = remember(context, lesson) {
+                { openLessonDetailActivity(context = context, lesson = lesson) }
+            }
             LessonCard(
                 title = lesson.lessonTitle,
                 imageResource = lesson.lessonThumbnailImageUrl,
-                onClick = {
-                    openLessonDetailActivity(context = context, lesson = lesson)
-                },
-                modifier = modifier)
+                onClick = onLessonClick,
+                modifier = modifier,
+            )
         }
     }
 }
