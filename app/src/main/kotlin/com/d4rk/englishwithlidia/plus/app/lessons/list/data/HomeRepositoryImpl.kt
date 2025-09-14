@@ -40,7 +40,7 @@ class HomeRepositoryImpl(
                     )
                 } ?: emptyList()
 
-            UiHomeScreen(lessons = ArrayList(lessons))
+            UiHomeScreen(lessons = lessons)
         }.getOrElse {
             UiHomeScreen()
         }
