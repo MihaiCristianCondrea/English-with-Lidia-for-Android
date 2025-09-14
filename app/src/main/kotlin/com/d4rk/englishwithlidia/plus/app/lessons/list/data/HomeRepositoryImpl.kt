@@ -1,5 +1,6 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.list.data
 
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.englishwithlidia.plus.BuildConfig
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
@@ -9,10 +10,12 @@ import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 class HomeRepositoryImpl(
     private val client: HttpClient,
+    private val dispatchers: DispatcherProvider,
 ) : HomeRepository {
 
     private val baseUrl = BuildConfig.DEBUG.let { isDebug ->
@@ -25,8 +28,8 @@ class HomeRepositoryImpl(
         isLenient = true
     }
 
-    override suspend fun getHomeLessons(): UiHomeScreen {
-        return runCatching {
+    override suspend fun getHomeLessons(): UiHomeScreen = withContext(dispatchers.io) {
+        runCatching {
             val jsonString = client.get(baseUrl).bodyAsText()
             val lessons = jsonString.takeUnless { it.isBlank() }
                 ?.let { jsonParser.decodeFromString<ApiHomeResponse>(it) }

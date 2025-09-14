@@ -1,7 +1,6 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.list.ui
 
 import androidx.lifecycle.viewModelScope
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
@@ -11,11 +10,9 @@ import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScr
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeViewModel(
     private val getHomeLessonsUseCase: GetHomeLessonsUseCase,
-    private val dispatcherProvider: DispatcherProvider,
 ) : ScreenViewModel<UiHomeScreen, HomeEvent, HomeAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
@@ -31,17 +28,15 @@ class HomeViewModel(
     }
 
     private fun getHomeLessons() {
-        viewModelScope.launch(context = dispatcherProvider.io) {
+        viewModelScope.launch {
             val lessons = getHomeLessonsUseCase()
-            withContext(dispatcherProvider.main) {
-                if (lessons.lessons.isEmpty()) {
-                    screenState.update { current ->
-                        current.copy(screenState = ScreenState.NoData(), data = lessons)
-                    }
-                } else {
-                    screenState.update { current ->
-                        current.copy(screenState = ScreenState.Success(), data = lessons)
-                    }
+            if (lessons.lessons.isEmpty()) {
+                screenState.update { current ->
+                    current.copy(screenState = ScreenState.NoData(), data = lessons)
+                }
+            } else {
+                screenState.update { current ->
+                    current.copy(screenState = ScreenState.Success(), data = lessons)
                 }
             }
         }
