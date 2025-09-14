@@ -22,6 +22,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -105,12 +106,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun checkInAppReview() {
         lifecycleScope.launch {
-            val (sessionCount: Int, hasPrompted: Boolean) = withContext(dispatchers.io) {
-                val sc = dataStore.sessionCount.first()
-                val hp = dataStore.hasPromptedReview.first()
-                sc to hp
+            val (sessionCount: Int, hasPrompted: Boolean) = coroutineScope {
+                val sessionCountDeferred = async(dispatchers.io) { dataStore.sessionCount.first() }
+                val hasPromptedDeferred = async(dispatchers.io) { dataStore.hasPromptedReview.first() }
+                awaitAll(sessionCountDeferred, hasPromptedDeferred)
+                sessionCountDeferred.getCompleted() to hasPromptedDeferred.getCompleted()
             }
             ReviewHelper.launchInAppReviewIfEligible(
                 activity = this@MainActivity,
