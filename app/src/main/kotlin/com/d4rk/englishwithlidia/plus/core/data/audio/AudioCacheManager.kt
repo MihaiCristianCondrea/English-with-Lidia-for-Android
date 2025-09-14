@@ -106,7 +106,7 @@ class AudioCacheManager(
             prefs[evictionKey] = now
             val keys = prefs.asMap().keys.filter { it.name.startsWith("audio.") && it.name.endsWith(".blob") }
             keys.forEach { prefKey ->
-                val key = prefKey as? Preferences.Key<String> ?: return@forEach
+                val key = stringPreferencesKey(prefKey.name)
                 val value = prefs[key] ?: return@forEach
                 val entry = runCatching { json.decodeFromString<CacheEntry>(value) }.getOrNull() ?: return@forEach
                 if (now - entry.lastOpenedMs > THIRTY_DAYS_MS) {

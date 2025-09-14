@@ -39,6 +39,9 @@ android {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
+
+        val developerAppsBaseUrl = project.findProperty("developerAppsBaseUrl")?.toString() ?: ""
+        buildConfigField("String", "DEVELOPER_APPS_BASE_URL", "\"$developerAppsBaseUrl\"")
     }
 
     signingConfigs {
