@@ -64,9 +64,11 @@ fun LessonContentLayout(
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
-            .padding(paddingValues)
-            .padding(horizontal = 16.dp),
+            .padding(paddingValues),
         state = listState,
+        contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize),
+        verticalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         itemsIndexed(items = lesson.lessonContent, key = { _, item -> item.contentId }) { index, contentItem ->
             when (contentItem.contentType) {
@@ -153,10 +155,6 @@ fun LessonContentLayout(
                 else -> {
                     Text(text = "Unsupported content type: ${contentItem.contentType}")
                 }
-            }
-
-            if (index < lesson.lessonContent.lastIndex) {
-                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
