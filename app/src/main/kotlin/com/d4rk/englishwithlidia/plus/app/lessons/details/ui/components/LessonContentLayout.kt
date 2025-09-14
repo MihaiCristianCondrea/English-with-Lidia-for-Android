@@ -25,15 +25,13 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.Slider
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LinearWavyProgressIndicator
+import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -62,7 +60,6 @@ fun LessonContentLayout(
     bannerConfig: AdsConfig,
     mediumRectangleConfig: AdsConfig,
     onPlayClick: () -> Unit,
-    onSeekChange: (Float) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -96,7 +93,6 @@ fun LessonContentLayout(
 
                     AudioCardView(
                         onPlayClick = onPlayClick,
-                        onSeekChange = onSeekChange,
                         sliderPosition = sliderPosition.toFloat() / 1000f,
                         playbackDuration = playbackDuration.toFloat() / 1000f,
                         isPlaying = isPlaying,
@@ -199,29 +195,29 @@ fun StyledImage(
     }
 }
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AudioCardView(
     onPlayClick: () -> Unit,
-    onSeekChange: (Float) -> Unit,
     sliderPosition: Float,
     playbackDuration: Float,
     isPlaying: Boolean,
 ) {
+    val progress = if (playbackDuration > 0f) {
+        sliderPosition / playbackDuration
+    } else {
+        0f
+    }
+    val animatedProgress by animateFloatAsState(
+        targetValue = progress,
+        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
+        label = "",
+    )
     val cornerRadius = animateFloatAsState(
         targetValue = if (isPlaying) 16f else 28f,
         animationSpec = tween(durationMillis = 200),
         label = "",
     ).value
-
-    var sliderValue by rememberSaveable { mutableFloatStateOf(0f) }
-    val targetSliderValue = if (playbackDuration > 0f) {
-        sliderPosition / playbackDuration
-    } else {
-        0f
-    }
-    LaunchedEffect(targetSliderValue) {
-        sliderValue = targetSliderValue
-    }
 
     OutlinedCard(
         modifier = Modifier
@@ -253,19 +249,12 @@ fun AudioCardView(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                Slider(
-                    value = sliderValue,
-                    onValueChange = { newValue ->
-                        sliderValue = newValue
-                        if (playbackDuration > 0f) {
-                            val newPosition = newValue * playbackDuration
-                            onSeekChange(newPosition)
-                        }
-                    },
-                    valueRange = 0f..1f,
+                LinearWavyProgressIndicator(
+                    progress = { animatedProgress },
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(4f),
+                    amplitude = { if (isPlaying) 1f else 0f },
                 )
             }
         }

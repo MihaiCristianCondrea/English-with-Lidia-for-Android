@@ -60,9 +60,6 @@ class LessonActivity : ActivityPlayer() {
                     mediumRectangleConfig = mediumRectangleConfig,
                     onBack = { finish() },
                     onPlayClick = { playPause() },
-                    onSeekChange = { newPosition ->
-                        seekTo((newPosition * 1000).toLong())
-                    },
                 )
             }
         }

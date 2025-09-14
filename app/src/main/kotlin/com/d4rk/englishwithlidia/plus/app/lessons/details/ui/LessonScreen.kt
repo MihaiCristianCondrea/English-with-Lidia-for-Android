@@ -22,7 +22,6 @@ fun LessonScreen(
     mediumRectangleConfig: AdsConfig,
     onBack: () -> Unit,
     onPlayClick: () -> Unit,
-    onSeekChange: (Float) -> Unit,
 ) {
     val listState = rememberLazyListState()
     val screenState: UiStateScreen<UiLessonScreen> by viewModel.uiState.collectAsStateWithLifecycle()
@@ -48,7 +47,6 @@ fun LessonScreen(
                     bannerConfig = bannerConfig,
                     mediumRectangleConfig = mediumRectangleConfig,
                     onPlayClick = onPlayClick,
-                    onSeekChange = onSeekChange,
                 )
             },
         )
