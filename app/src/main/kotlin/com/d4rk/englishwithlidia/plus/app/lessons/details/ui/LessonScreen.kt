@@ -1,6 +1,6 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,7 +21,7 @@ fun LessonScreen(
     onPlayClick: () -> Unit,
     onSeekChange: (Float) -> Unit,
 ) {
-    val scrollState = rememberScrollState()
+    val listState = rememberLazyListState()
     val screenState: UiStateScreen<UiLessonScreen> by viewModel.uiState.collectAsStateWithLifecycle()
 
     LargeTopAppBarWithScaffold(
@@ -40,7 +40,7 @@ fun LessonScreen(
             onSuccess = { lesson ->
                 LessonContentLayout(
                     paddingValues = paddingValues,
-                    scrollState = scrollState,
+                    listState = listState,
                     lesson = lesson,
                     onPlayClick = onPlayClick,
                     onSeekChange = onSeekChange,

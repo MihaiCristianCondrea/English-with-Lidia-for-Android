@@ -2,7 +2,6 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -13,8 +12,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -29,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -59,7 +59,7 @@ import org.koin.core.qualifier.named
 @Composable
 fun LessonContentLayout(
     paddingValues: PaddingValues,
-    scrollState: ScrollState,
+    listState: LazyListState,
     lesson: UiLessonScreen,
     onPlayClick: () -> Unit,
     onSeekChange: (Float) -> Unit,
@@ -67,16 +67,15 @@ fun LessonContentLayout(
     val bannerConfig: AdsConfig = koinInject()
     val mediumRectangleConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
 
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(paddingValues)
-            .padding(horizontal = 16.dp)
-            .verticalScroll(scrollState)
+            .padding(horizontal = 16.dp),
+        state = listState,
     ) {
-        lesson.lessonContent.forEachIndexed { index, contentItem ->
-            key(contentItem.contentId) {
-                when (contentItem.contentType) {
+        itemsIndexed(items = lesson.lessonContent, key = { _, item -> item.contentId }) { index, contentItem ->
+            when (contentItem.contentType) {
                 LessonContentTypes.HEADER -> {
                     StyledText(
                         text = contentItem.contentText,
@@ -163,9 +162,8 @@ fun LessonContentLayout(
                 }
             }
 
-                if (index < lesson.lessonContent.lastIndex) {
-                    Spacer(modifier = Modifier.height(8.dp))
-                }
+            if (index < lesson.lessonContent.lastIndex) {
+                Spacer(modifier = Modifier.height(8.dp))
             }
         }
     }
