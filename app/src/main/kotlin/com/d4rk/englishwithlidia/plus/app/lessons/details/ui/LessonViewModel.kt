@@ -12,10 +12,9 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonEv
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class LessonViewModel(
     private val getLessonUseCase: GetLessonUseCase,
@@ -34,21 +33,21 @@ class LessonViewModel(
     private fun fetchLesson(lessonId: String) {
         viewModelScope.launch {
             screenState.setLoading<UiLessonScreen>()
-            getLessonUseCase(lessonId)
-                .catch {
-                    screenState.update { current ->
+            try {
+                val lesson = getLessonUseCase(lessonId)
+                screenState.update { current ->
+                    if (lesson.lessonContent.isEmpty()) {
                         current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
+                    } else {
+                        current.copy(screenState = ScreenState.Success(), data = lesson)
                     }
                 }
-                .collect { lesson ->
-                    screenState.update { current ->
-                        if (lesson.lessonContent.isEmpty()) {
-                            current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
-                        } else {
-                            current.copy(screenState = ScreenState.Success(), data = lesson)
-                        }
-                    }
+            } catch (exception: Exception) {
+                if (exception is CancellationException) throw exception
+                screenState.update { current ->
+                    current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
                 }
+            }
         }
     }
 

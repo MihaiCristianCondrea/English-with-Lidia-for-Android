@@ -10,9 +10,7 @@ import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 class LessonRepositoryImpl(
@@ -30,8 +28,8 @@ class LessonRepositoryImpl(
         isLenient = true
     }
 
-    override fun getLesson(lessonId: String): Flow<UiLessonScreen> =
-        flow {
+    override suspend fun getLesson(lessonId: String): UiLessonScreen =
+        withContext(dispatchers.io) {
             val url = "$baseUrl/api_get_$lessonId.json"
             val jsonString = client.get(url).bodyAsText()
 
@@ -60,6 +58,6 @@ class LessonRepositoryImpl(
                         ),
                     )
                 } ?: emptyList()
-            emit(lessons.firstOrNull() ?: UiLessonScreen())
-        }.flowOn(dispatchers.io)
+            lessons.firstOrNull() ?: UiLessonScreen()
+        }
 }
