@@ -37,9 +37,9 @@ val appModule : Module = module {
     //single<String>(qualifier = named(name = "developer_apps_base_url")) { BuildConfig.DEVELOPER_APPS_BASE_URL } // TODO: Make the API link in gradle
 
     // Lessons
-    single<HomeRepository> { HomeRepositoryImpl(client = get()) }
+    single<HomeRepository> { HomeRepositoryImpl(client = get(), dispatchers = get()) }
     factory { GetHomeLessonsUseCase(repository = get()) }
-    viewModel { HomeViewModel(getHomeLessonsUseCase = get(), dispatcherProvider = get()) }
+    viewModel { HomeViewModel(getHomeLessonsUseCase = get()) }
 
     single { LessonMapper() }
     single { AudioCacheManager(context = get(), dispatchers = get()) }
