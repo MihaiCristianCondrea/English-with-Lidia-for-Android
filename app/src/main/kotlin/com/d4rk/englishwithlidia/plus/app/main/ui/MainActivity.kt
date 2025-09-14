@@ -21,7 +21,7 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
-import kotlinx.coroutines.CoroutineDispatcher
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -29,13 +29,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.android.ext.android.inject
-import org.koin.core.qualifier.named
 
 class MainActivity : AppCompatActivity() {
 
     private val dataStore: DataStore by inject()
-    private val defaultDispatcher: CoroutineDispatcher by inject(named("default"))
-    private val ioDispatcher: CoroutineDispatcher by inject(named("io"))
+    private val dispatchers: DispatcherProvider by inject()
     private var updateResultLauncher: ActivityResultLauncher<IntentSenderRequest> =
         registerForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {}
     private var keepSplashVisible: Boolean = true
@@ -59,8 +57,8 @@ class MainActivity : AppCompatActivity() {
     private fun initializeDependencies() {
         lifecycleScope.launch {
             coroutineScope {
-                val adsInitialization = async(defaultDispatcher) { MobileAds.initialize(this@MainActivity) {} }
-                val consentInitialization = async(ioDispatcher) {
+                val adsInitialization = async(dispatchers.default) { MobileAds.initialize(this@MainActivity) {} }
+                val consentInitialization = async(dispatchers.io) {
                     ConsentManagerHelper.applyInitialConsent(dataStore)
                 }
                 awaitAll(adsInitialization, consentInitialization)
@@ -70,7 +68,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleStartup() {
         lifecycleScope.launch {
-            val isFirstLaunch: Boolean = withContext(ioDispatcher) {
+            val isFirstLaunch: Boolean = withContext(dispatchers.io) {
                 dataStore.startup.first()
             }
             keepSplashVisible = false
@@ -97,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkUserConsent() {
         lifecycleScope.launch {
-            val consentInfo: ConsentInformation = withContext(ioDispatcher) {
+            val consentInfo: ConsentInformation = withContext(dispatchers.io) {
                 UserMessagingPlatform.getConsentInformation(this@MainActivity)
             }
             ConsentFormHelper.showConsentFormIfRequired(
@@ -109,7 +107,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun checkInAppReview() {
         lifecycleScope.launch {
-            val (sessionCount: Int, hasPrompted: Boolean) = withContext(ioDispatcher) {
+            val (sessionCount: Int, hasPrompted: Boolean) = withContext(dispatchers.io) {
                 val sc = dataStore.sessionCount.first()
                 val hp = dataStore.hasPromptedReview.first()
                 sc to hp
@@ -120,15 +118,15 @@ class MainActivity : AppCompatActivity() {
                 hasPromptedBefore = hasPrompted,
                 scope = this
             ) {
-                launch(ioDispatcher) { dataStore.setHasPromptedReview(value = true) }
+                launch(dispatchers.io) { dataStore.setHasPromptedReview(value = true) }
             }
-            withContext(ioDispatcher) { dataStore.incrementSessionCount() }
+            withContext(dispatchers.io) { dataStore.incrementSessionCount() }
         }
     }
 
     private fun checkForUpdates() {
         lifecycleScope.launch {
-            withContext(ioDispatcher) {
+            withContext(dispatchers.io) {
                 InAppUpdateHelper.performUpdate(
                     appUpdateManager = AppUpdateManagerFactory.create(this@MainActivity),
                     updateResultLauncher = updateResultLauncher,
