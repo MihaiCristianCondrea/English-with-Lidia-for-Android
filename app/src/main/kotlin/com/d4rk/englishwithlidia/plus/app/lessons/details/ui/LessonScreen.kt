@@ -37,7 +37,7 @@ fun LessonScreen(
     LaunchedEffect(screenState.data?.lessonContent) {
         val content = screenState.data?.lessonContent?.firstOrNull { it.contentType == LessonContentTypes.CONTENT_PLAYER }
         if (!isPlayerPrepared && content != null) {
-            onPreparePlayer(content, screenState.data.lessonTitle)
+            onPreparePlayer(content, screenState.data.lessonTitle) // FIXME: Smart cast to 'UiLessonScreen' is impossible, because 'data' is a public API property declared in different module.
             isPlayerPrepared = true
         }
     }

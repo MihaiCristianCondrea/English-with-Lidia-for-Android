@@ -1,9 +1,9 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.data
 
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.englishwithlidia.plus.BuildConfig
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
-import com.d4rk.englishwithlidia.plus.core.di.DispatcherProvider
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonResponse
 import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
 import io.ktor.client.HttpClient

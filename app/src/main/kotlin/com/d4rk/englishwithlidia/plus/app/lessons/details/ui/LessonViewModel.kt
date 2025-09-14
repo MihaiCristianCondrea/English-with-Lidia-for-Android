@@ -22,17 +22,13 @@ class LessonViewModel(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiLessonScreen())
 ), PlaybackEventHandler {
 
-    init {
-        // No player initialization here. Player lifecycle is handled by ActivityPlayer.
-    }
-
     fun getLesson(lessonId: String) {
         onEvent(LessonEvent.FetchLesson(lessonId))
     }
 
     private fun fetchLesson(lessonId: String) {
         viewModelScope.launch {
-            screenState.setLoading<UiLessonScreen>()
+            screenState.setLoading()
             try {
                 val lesson = getLessonUseCase(lessonId)
                 screenState.update { current ->
