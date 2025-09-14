@@ -5,9 +5,7 @@ package com.d4rk.englishwithlidia.plus
 import android.app.Activity
 import android.os.Bundle
 import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.libs.apptoolkit.data.core.BaseCoreManager

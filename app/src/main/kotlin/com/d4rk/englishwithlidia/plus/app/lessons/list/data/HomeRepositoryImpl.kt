@@ -30,7 +30,7 @@ class HomeRepositoryImpl(
             val jsonString = client.get(baseUrl).bodyAsText()
             val lessons = jsonString.takeUnless { it.isBlank() }
                 ?.let { jsonParser.decodeFromString<ApiHomeResponse>(it) }
-                ?.takeIf { it.data.isNotEmpty() }?.data?.mapNotNull { networkLesson ->
+                ?.takeIf { it.data.isNotEmpty() }?.data?.map { networkLesson ->
                     UiHomeLesson(
                         lessonId = networkLesson.lessonId,
                         lessonTitle = networkLesson.lessonTitle,

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,7 +24,6 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearWavyProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
@@ -36,7 +34,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.fromHtml
@@ -46,7 +43,6 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
-import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.Colors
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.TextStyles
@@ -113,43 +109,17 @@ fun LessonContentLayout(
                 }
 
                 LessonContentTypes.AD_BANNER -> {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = SizeConstants.MediumSize)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.ad_label),
-                            style = TextStyles.label(),
-                            color = MaterialTheme.colorScheme.primary,
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        AdBanner(
-                            modifier = Modifier.fillMaxWidth(),
-                            adsConfig = bannerConfig,
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
+                    AdBanner(
+                        modifier = Modifier.fillMaxWidth(),
+                        adsConfig = bannerConfig,
+                    )
                 }
 
                 LessonContentTypes.AD_LARGE_BANNER -> {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = SizeConstants.MediumSize)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.ad_label),
-                            style = TextStyles.label(),
-                            color = MaterialTheme.colorScheme.primary,
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        AdBanner(
-                            modifier = Modifier.fillMaxWidth(),
-                            adsConfig = mediumRectangleConfig,
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                    }
+                    AdBanner(
+                        modifier = Modifier.fillMaxWidth(),
+                        adsConfig = mediumRectangleConfig,
+                    )
                 }
 
                 else -> {
