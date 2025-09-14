@@ -10,6 +10,7 @@ import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
@@ -44,7 +45,8 @@ class HomeRepositoryImpl(
                 } ?: emptyList()
 
             UiHomeScreen(lessons = lessons)
-        }.getOrElse {
+        }.getOrElse { throwable ->
+            if (throwable is CancellationException) throw throwable
             UiHomeScreen()
         }
     }
