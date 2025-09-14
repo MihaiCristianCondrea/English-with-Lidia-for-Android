@@ -157,4 +157,7 @@ dependencies {
     implementation(dependencyNotation = libs.media3.exoplayer)
     implementation(dependencyNotation = libs.media3.ui)
     implementation(dependencyNotation = libs.media3.session)
+
+    testImplementation(dependencyNotation = "junit:junit:4.13.2")
+    testImplementation(dependencyNotation = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
 }
