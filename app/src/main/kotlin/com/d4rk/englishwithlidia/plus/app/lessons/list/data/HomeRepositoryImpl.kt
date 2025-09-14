@@ -11,7 +11,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
 
 class HomeRepositoryImpl(
@@ -29,8 +32,8 @@ class HomeRepositoryImpl(
         isLenient = true
     }
 
-    override suspend fun getHomeLessons(): UiHomeScreen = withContext(dispatchers.io) {
-        runCatching {
+    override fun getHomeLessons(): Flow<UiHomeScreen> =
+        flow {
             val jsonString = client.get(baseUrl).bodyAsText()
             val lessons = jsonString.takeUnless { it.isBlank() }
                 ?.let { jsonParser.decodeFromString<ApiHomeResponse>(it) }
@@ -44,10 +47,9 @@ class HomeRepositoryImpl(
                     )
                 } ?: emptyList()
 
-            UiHomeScreen(lessons = lessons)
-        }.getOrElse { throwable ->
+            emit(UiHomeScreen(lessons = lessons))
+        }.catch { throwable ->
             if (throwable is CancellationException) throw throwable
-            UiHomeScreen()
-        }
-    }
+            emit(UiHomeScreen())
+        }.flowOn(dispatchers.io)
 }

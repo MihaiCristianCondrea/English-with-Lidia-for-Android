@@ -9,6 +9,7 @@ import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -30,21 +31,24 @@ class HomeViewModel(
 
     private fun getHomeLessons() {
         viewModelScope.launch {
-            val lessons = runCatching { getHomeLessonsUseCase() }
-                .getOrElse { throwable ->
+            getHomeLessonsUseCase()
+                .catch { throwable ->
                     if (throwable is CancellationException) throw throwable
-                    UiHomeScreen()
+                    screenState.update { current ->
+                        current.copy(screenState = ScreenState.NoData(), data = UiHomeScreen())
+                    }
                 }
-
-            if (lessons.lessons.isEmpty()) {
-                screenState.update { current ->
-                    current.copy(screenState = ScreenState.NoData(), data = lessons)
+                .collect { lessons ->
+                    if (lessons.lessons.isEmpty()) {
+                        screenState.update { current ->
+                            current.copy(screenState = ScreenState.NoData(), data = lessons)
+                        }
+                    } else {
+                        screenState.update { current ->
+                            current.copy(screenState = ScreenState.Success(), data = lessons)
+                        }
+                    }
                 }
-            } else {
-                screenState.update { current ->
-                    current.copy(screenState = ScreenState.Success(), data = lessons)
-                }
-            }
         }
     }
 }
