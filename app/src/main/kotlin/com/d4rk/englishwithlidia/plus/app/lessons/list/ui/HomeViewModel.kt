@@ -6,10 +6,9 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeAction
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch
@@ -18,6 +17,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getHomeLessonsUseCase: GetHomeLessonsUseCase,
+    private val uiMapper: HomeUiMapper,
 ) : ScreenViewModel<UiHomeScreen, HomeEvent, HomeAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiHomeScreen())
 ) {
@@ -42,7 +42,7 @@ class HomeViewModel(
                     }
                 }
                 .collect { homeScreen ->
-                    val uiScreen = homeScreen.toUi()
+                    val uiScreen = uiMapper.map(homeScreen)
                     if (uiScreen.lessons.isEmpty()) {
                         screenState.update { current ->
                             current.copy(screenState = ScreenState.NoData(), data = UiHomeScreen())
@@ -56,15 +56,3 @@ class HomeViewModel(
         }
     }
 }
-
-private fun HomeScreen.toUi(): UiHomeScreen =
-    UiHomeScreen(lessons = lessons.map { it.toUi() })
-
-private fun HomeLesson.toUi(): UiHomeLesson =
-    UiHomeLesson(
-        lessonId = lessonId,
-        lessonTitle = lessonTitle,
-        lessonType = lessonType,
-        lessonThumbnailImageUrl = lessonThumbnailImageUrl,
-        lessonDeepLinkPath = lessonDeepLinkPath,
-    )
