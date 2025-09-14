@@ -4,8 +4,8 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.WifiTetheringError
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -20,7 +20,7 @@ fun HomeScreen(
     paddingValues : PaddingValues
 ) {
     val viewModel : HomeViewModel = koinViewModel()
-    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsState()
+    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
 
     ScreenStateHandler(
         screenState = screenState,
@@ -35,7 +35,7 @@ fun HomeScreen(
             })
         },
         onSuccess = { uiHomeScreen ->
-            LessonListLayout(lessons = uiHomeScreen.lessons,paddingValues)
+            LessonListLayout(lessons = uiHomeScreen.lessons, paddingValues)
         },
     )
 }
