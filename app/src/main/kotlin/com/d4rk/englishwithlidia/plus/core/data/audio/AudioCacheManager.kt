@@ -18,6 +18,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.net.URL
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
@@ -82,7 +83,9 @@ class AudioCacheManager(
                     input.copyTo(output)
                 }
             }
-            temp.renameTo(target) // TODO: error check
+            if (!temp.renameTo(target)) {
+                throw IOException("Failed to rename temp file to target")
+            }
             val size = target.length()
             val newEntry = CacheEntry(remoteUrl, urlHash, target.absolutePath, now, size)
             dataStore.edit { it[key] = json.encodeToString(newEntry) }
@@ -103,12 +106,13 @@ class AudioCacheManager(
             prefs[evictionKey] = now
             val keys = prefs.asMap().keys.filter { it.name.startsWith("audio.") && it.name.endsWith(".blob") }
             keys.forEach { prefKey ->
-                val value = prefs[prefKey as Preferences.Key<String>] ?: return@forEach // FIXME: Unchecked cast of 'Preferences.Key<*>' to 'Preferences.Key<String>'.
+                val key = stringPreferencesKey(prefKey.name)
+                val value = prefs[key] ?: return@forEach
                 val entry = runCatching { json.decodeFromString<CacheEntry>(value) }.getOrNull() ?: return@forEach
                 if (now - entry.lastOpenedMs > THIRTY_DAYS_MS) {
                     entry.filePath.takeIf { it.isNotBlank() }?.let { File(it).delete() }
                     val updated = entry.copy(filePath = "")
-                    prefs[prefKey] = json.encodeToString(updated)
+                    prefs[key] = json.encodeToString(updated)
                 }
             }
         }

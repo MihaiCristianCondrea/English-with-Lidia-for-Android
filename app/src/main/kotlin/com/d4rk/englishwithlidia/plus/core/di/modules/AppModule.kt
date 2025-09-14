@@ -23,6 +23,7 @@ import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
 import com.d4rk.englishwithlidia.plus.core.data.datastore.DataStore
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val appModule : Module = module {
@@ -36,7 +37,7 @@ val appModule : Module = module {
 
     viewModel { MainViewModel(navigationRepository = get()) }
 
-    //single<String>(qualifier = named(name = "developer_apps_base_url")) { BuildConfig.DEVELOPER_APPS_BASE_URL } // TODO: Make the API link in gradle
+    single<String>(qualifier = named("developer_apps_base_url")) { BuildConfig.DEVELOPER_APPS_BASE_URL }
 
     // Lessons
     single { HomeMapper() }

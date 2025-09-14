@@ -39,6 +39,9 @@ android {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
+
+        val developerAppsBaseUrl = project.findProperty("developerAppsBaseUrl")?.toString() ?: ""
+        buildConfigField("String", "DEVELOPER_APPS_BASE_URL", "\"$developerAppsBaseUrl\"")
     }
 
     signingConfigs {
@@ -87,13 +90,13 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
