@@ -13,6 +13,8 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLes
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.update
 
 class LessonViewModel(
@@ -32,18 +34,21 @@ class LessonViewModel(
     private fun fetchLesson(lessonId: String) {
         viewModelScope.launch {
             screenState.setLoading<UiLessonScreen>()
-            val lesson = try {
-                getLessonUseCase(lessonId)
-            } catch (e: Exception) {
-                null
-            }
-            screenState.update { current ->
-                if (lesson == null || lesson.lessonContent.isEmpty()) {
-                    current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
-                } else {
-                    current.copy(screenState = ScreenState.Success(), data = lesson)
+            getLessonUseCase(lessonId)
+                .catch {
+                    screenState.update { current ->
+                        current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
+                    }
                 }
-            }
+                .collect { lesson ->
+                    screenState.update { current ->
+                        if (lesson.lessonContent.isEmpty()) {
+                            current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
+                        } else {
+                            current.copy(screenState = ScreenState.Success(), data = lesson)
+                        }
+                    }
+                }
         }
     }
 

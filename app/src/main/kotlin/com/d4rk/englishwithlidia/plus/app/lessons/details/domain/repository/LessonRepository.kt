@@ -1,7 +1,8 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository
 
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import kotlinx.coroutines.flow.Flow
 
 interface LessonRepository {
-    suspend fun getLesson(lessonId: String): UiLessonScreen
+    fun getLesson(lessonId: String): Flow<UiLessonScreen>
 }
