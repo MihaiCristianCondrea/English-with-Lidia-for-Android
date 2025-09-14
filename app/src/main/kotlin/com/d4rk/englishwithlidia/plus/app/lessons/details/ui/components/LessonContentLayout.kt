@@ -63,7 +63,7 @@ fun LessonContentLayout(
             .padding(paddingValues),
         state = listState,
         contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize),
-        verticalArrangement = Arrangement.spacedBy(SizeConstants.SmallSize),
+        verticalArrangement = Arrangement.spacedBy(SizeConstants.MediumSize),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         itemsIndexed(items = lesson.lessonContent, key = { _, item -> item.contentId }) { index, contentItem ->
@@ -98,7 +98,7 @@ fun LessonContentLayout(
                 }
 
                 LessonContentTypes.TYPE_DIVIDER -> {
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                    HorizontalDivider()
                 }
 
                 LessonContentTypes.IMAGE -> {
