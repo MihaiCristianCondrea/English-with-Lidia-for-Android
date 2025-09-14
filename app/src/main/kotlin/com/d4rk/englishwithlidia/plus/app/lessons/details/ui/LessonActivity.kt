@@ -3,10 +3,6 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -53,19 +49,14 @@ class LessonActivity : ActivityPlayer() {
 
         setContent {
             AppTheme {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background,
-                ) {
-                    LessonScreen(
-                        viewModel = viewModel,
-                        onBack = { finish() },
-                        onPlayClick = { playPause() },
-                        onSeekChange = { newPosition ->
-                            seekTo((newPosition * 1000).toLong())
-                        },
-                    )
-                }
+                LessonScreen(
+                    viewModel = viewModel,
+                    onBack = { finish() },
+                    onPlayClick = { playPause() },
+                    onSeekChange = { newPosition ->
+                        seekTo((newPosition * 1000).toLong())
+                    },
+                )
             }
         }
     }
