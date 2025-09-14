@@ -5,6 +5,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
@@ -17,6 +18,8 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components.LessonCo
 @Composable
 fun LessonScreen(
     viewModel: LessonViewModel,
+    bannerConfig: AdsConfig,
+    mediumRectangleConfig: AdsConfig,
     onBack: () -> Unit,
     onPlayClick: () -> Unit,
     onSeekChange: (Float) -> Unit,
@@ -42,6 +45,8 @@ fun LessonScreen(
                     paddingValues = paddingValues,
                     listState = listState,
                     lesson = lesson,
+                    bannerConfig = bannerConfig,
+                    mediumRectangleConfig = mediumRectangleConfig,
                     onPlayClick = onPlayClick,
                     onSeekChange = onSeekChange,
                 )
