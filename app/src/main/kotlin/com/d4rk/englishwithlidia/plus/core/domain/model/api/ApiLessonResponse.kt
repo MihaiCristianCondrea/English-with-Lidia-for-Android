@@ -5,13 +5,13 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ApiLessonResponse(
-    @SerialName("data") val data : List<ApiLesson> = ArrayList()
+    @SerialName("data") val data: List<ApiLesson> = ArrayList()
 )
 
 @Serializable
 data class ApiLesson(
-    @SerialName("lesson_title") val lessonTitle : String = "" ,
-    @SerialName("lesson_content") val lessonContent : List<ApiLessonContent> = emptyList()
+    @SerialName("lesson_title") val lessonTitle: String = "",
+    @SerialName("lesson_content") val lessonContent: List<ApiLessonContent> = emptyList()
 )
 
 @Serializable

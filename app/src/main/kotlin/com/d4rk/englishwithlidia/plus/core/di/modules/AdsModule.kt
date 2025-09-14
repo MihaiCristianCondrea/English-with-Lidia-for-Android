@@ -13,7 +13,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val adsModule : Module = module {
+val adsModule: Module = module {
 
     single<AdsSettingsRepository> {
         DefaultAdsSettingsRepository(
@@ -28,26 +28,32 @@ val adsModule : Module = module {
     }
 
     single<AdsConfig> {
-        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.BANNER)
+        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID, adSize = AdSize.BANNER)
     }
 
     single<AdsConfig>(named(name = "full_banner")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.FULL_BANNER)
+        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID, adSize = AdSize.FULL_BANNER)
     }
 
     single<AdsConfig>(named(name = "large_banner")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.LARGE_BANNER)
+        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID, adSize = AdSize.LARGE_BANNER)
     }
 
     single<AdsConfig>(named(name = "banner_medium_rectangle")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID , adSize = AdSize.MEDIUM_RECTANGLE)
+        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID, adSize = AdSize.MEDIUM_RECTANGLE)
     }
 
     single<AdsConfig>(named(name = "help_large_banner_ad")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.HELP_LARGE_BANNER_AD_UNIT_ID , adSize = AdSize.LARGE_BANNER)
+        AdsConfig(
+            bannerAdUnitId = AdsConstants.HELP_LARGE_BANNER_AD_UNIT_ID,
+            adSize = AdSize.LARGE_BANNER
+        )
     }
 
     single<AdsConfig>(named(name = "support_banner_ad")) {
-        AdsConfig(bannerAdUnitId = AdsConstants.SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID , adSize = AdSize.MEDIUM_RECTANGLE)
+        AdsConfig(
+            bannerAdUnitId = AdsConstants.SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID,
+            adSize = AdSize.MEDIUM_RECTANGLE
+        )
     }
 }

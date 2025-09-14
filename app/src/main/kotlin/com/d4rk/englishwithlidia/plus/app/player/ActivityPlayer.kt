@@ -33,7 +33,8 @@ abstract class ActivityPlayer : AppCompatActivity() {
         val context = applicationContext
         val intent = Intent(context, AudioPlaybackService::class.java)
         context.startService(intent)
-        val sessionToken = SessionToken(context, ComponentName(context, AudioPlaybackService::class.java))
+        val sessionToken =
+            SessionToken(context, ComponentName(context, AudioPlaybackService::class.java))
         controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
         lifecycleScope.launch {
             player = controllerFuture?.await()

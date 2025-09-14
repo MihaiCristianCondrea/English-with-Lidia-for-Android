@@ -19,10 +19,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun AppNavigationHost(
-    navController : NavHostController, paddingValues : PaddingValues
+    navController: NavHostController, paddingValues: PaddingValues
 ) {
     NavigationHost(
-        navController = navController , startDestination = NavigationRoutes.ROUTE_LESSONS_LIST
+        navController = navController, startDestination = NavigationRoutes.ROUTE_LESSONS_LIST
     ) {
         composable(route = NavigationRoutes.ROUTE_LESSONS_LIST) {
             HomeRoute(paddingValues = paddingValues)
@@ -38,10 +38,21 @@ fun handleNavigationItemClick(
     onChangelogRequested: () -> Unit = {},
 ) {
     when (item.route) {
-        NavigationDrawerRoutes.ROUTE_SETTINGS -> IntentsHelper.openActivity(context = context, activityClass = SettingsActivity::class.java)
-        NavigationDrawerRoutes.ROUTE_HELP_AND_FEEDBACK -> IntentsHelper.openActivity(context = context, activityClass = HelpActivity::class.java)
+        NavigationDrawerRoutes.ROUTE_SETTINGS -> IntentsHelper.openActivity(
+            context = context,
+            activityClass = SettingsActivity::class.java
+        )
+
+        NavigationDrawerRoutes.ROUTE_HELP_AND_FEEDBACK -> IntentsHelper.openActivity(
+            context = context,
+            activityClass = HelpActivity::class.java
+        )
+
         NavigationDrawerRoutes.ROUTE_UPDATES -> onChangelogRequested()
-        NavigationDrawerRoutes.ROUTE_SHARE -> IntentsHelper.shareApp(context = context, shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
+        NavigationDrawerRoutes.ROUTE_SHARE -> IntentsHelper.shareApp(
+            context = context,
+            shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message
+        )
     }
     if (drawerState != null && coroutineScope != null) {
         coroutineScope.launch { drawerState.close() }

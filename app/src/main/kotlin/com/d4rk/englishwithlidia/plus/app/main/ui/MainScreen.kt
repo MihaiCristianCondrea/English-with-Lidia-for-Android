@@ -79,13 +79,15 @@ fun MainScaffoldContent(drawerState: DrawerState) {
             MainTopAppBar(
                 navigationIcon = if (drawerState.isOpen) Icons.AutoMirrored.Outlined.MenuOpen else Icons.Default.Menu,
                 onNavigationIconClick = { coroutineScope.launch { drawerState.open() } },
-                scrollBehavior = scrollBehavior)
+                scrollBehavior = scrollBehavior
+            )
         }, snackbarHost = {
             DefaultSnackbarHost(snackbarState = snackBarHostState)
         }) { paddingValues ->
         AppNavigationHost(
             navController = navController,
-            paddingValues = paddingValues)
+            paddingValues = paddingValues
+        )
     }
 }
 
@@ -108,7 +110,9 @@ fun MainScaffoldTabletContent() {
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute by remember(backStackEntry) {
-        derivedStateOf { backStackEntry?.destination?.route ?: navController.currentDestination?.route }
+        derivedStateOf {
+            backStackEntry?.destination?.route ?: navController.currentDestination?.route
+        }
     }
 
     val hapticFeedback: HapticFeedback = LocalHapticFeedback.current
@@ -125,7 +129,8 @@ fun MainScaffoldTabletContent() {
                         isRailExpanded = !isRailExpanded
                     }
                 },
-                scrollBehavior = scrollBehavior)
+                scrollBehavior = scrollBehavior
+            )
         }) { paddingValues ->
         LeftNavigationRail(
             drawerItems = uiState.navigationDrawerItems,
@@ -148,7 +153,8 @@ fun MainScaffoldTabletContent() {
             content = {
                 AppNavigationHost(
                     navController = navController,
-                    paddingValues = PaddingValues())
+                    paddingValues = PaddingValues()
+                )
             })
     }
 

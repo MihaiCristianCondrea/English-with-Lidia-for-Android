@@ -5,9 +5,9 @@ import com.d4rk.englishwithlidia.plus.BuildConfig
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
+import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonResponse
 import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
-import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText

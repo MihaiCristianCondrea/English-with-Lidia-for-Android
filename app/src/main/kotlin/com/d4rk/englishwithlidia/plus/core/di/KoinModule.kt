@@ -9,9 +9,17 @@ import com.d4rk.englishwithlidia.plus.core.di.modules.settingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-fun initializeKoin(context : Context) {
+fun initializeKoin(context: Context) {
     startKoin {
         androidContext(androidContext = context)
-        modules(modules = listOf(dispatchersModule , appModule , settingsModule , adsModule , appToolkitModule))
+        modules(
+            modules = listOf(
+                dispatchersModule,
+                appModule,
+                settingsModule,
+                adsModule,
+                appToolkitModule
+            )
+        )
     }
 }

@@ -36,7 +36,8 @@ fun LessonScreen(
 
     LaunchedEffect(screenState.data?.lessonContent) {
         screenState.data?.let { lesson ->
-            val content = lesson.lessonContent.firstOrNull { it.contentType == LessonContentTypes.CONTENT_PLAYER }
+            val content =
+                lesson.lessonContent.firstOrNull { it.contentType == LessonContentTypes.CONTENT_PLAYER }
             if (!isPlayerPrepared && content != null) {
                 onPreparePlayer(content, lesson.lessonTitle)
                 isPlayerPrepared = true

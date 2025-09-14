@@ -11,13 +11,15 @@ import com.google.common.util.concurrent.ListenableFuture
 
 class AudioPlaybackService : MediaSessionService() {
 
-    private val player : ExoPlayer by lazy {
-        val audioAttributes : AudioAttributes = AudioAttributes.Builder().setContentType(C.AUDIO_CONTENT_TYPE_SPEECH).setUsage(C.USAGE_MEDIA).build()
-        ExoPlayer.Builder(this).setAudioAttributes(audioAttributes , true).build()
+    private val player: ExoPlayer by lazy {
+        val audioAttributes: AudioAttributes =
+            AudioAttributes.Builder().setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
+                .setUsage(C.USAGE_MEDIA).build()
+        ExoPlayer.Builder(this).setAudioAttributes(audioAttributes, true).build()
     }
 
-    private val mediaSession : MediaSession by lazy {
-        MediaSession.Builder(this , player)
+    private val mediaSession: MediaSession by lazy {
+        MediaSession.Builder(this, player)
             .setCallback(MediaSessionCallback())
             .build()
     }
@@ -27,7 +29,7 @@ class AudioPlaybackService : MediaSessionService() {
         mediaSession
     }
 
-    override fun onGetSession(controllerInfo : MediaSession.ControllerInfo) : MediaSession? {
+    override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession? {
         return mediaSession
     }
 
@@ -38,10 +40,14 @@ class AudioPlaybackService : MediaSessionService() {
     }
 
     private inner class MediaSessionCallback : MediaSession.Callback {
-        override fun onAddMediaItems(mediaSession : MediaSession , controller : MediaSession.ControllerInfo , mediaItems : MutableList<MediaItem>) : ListenableFuture<MutableList<MediaItem>> {
+        override fun onAddMediaItems(
+            mediaSession: MediaSession,
+            controller: MediaSession.ControllerInfo,
+            mediaItems: MutableList<MediaItem>
+        ): ListenableFuture<MutableList<MediaItem>> {
             if (mediaItems.isNotEmpty()) {
                 player.clearMediaItems()
-                val singleMediaItem : MediaItem = mediaItems.first()
+                val singleMediaItem: MediaItem = mediaItems.first()
                 player.setMediaItem(singleMediaItem)
                 return Futures.immediateFuture(mutableListOf(singleMediaItem))
             }

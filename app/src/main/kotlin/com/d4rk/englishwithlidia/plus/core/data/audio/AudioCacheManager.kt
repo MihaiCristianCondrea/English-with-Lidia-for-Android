@@ -2,6 +2,7 @@ package com.d4rk.englishwithlidia.plus.core.data.audio
 
 import android.content.Context
 import android.net.Uri
+import androidx.core.net.toUri
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -22,7 +23,6 @@ import java.io.IOException
 import java.net.URL
 import java.security.MessageDigest
 import java.util.concurrent.TimeUnit
-import androidx.core.net.toUri
 
 private val Context.audioCacheStore: DataStore<Preferences> by preferencesDataStore(name = "audio_cache")
 
@@ -104,11 +104,13 @@ class AudioCacheManager(
         val evictionKey = longPreferencesKey("audio.cache.eviction_last_run_ms")
         dataStore.edit { prefs ->
             prefs[evictionKey] = now
-            val keys = prefs.asMap().keys.filter { it.name.startsWith("audio.") && it.name.endsWith(".blob") }
+            val keys =
+                prefs.asMap().keys.filter { it.name.startsWith("audio.") && it.name.endsWith(".blob") }
             keys.forEach { prefKey ->
                 val key = stringPreferencesKey(prefKey.name)
                 val value = prefs[key] ?: return@forEach
-                val entry = runCatching { json.decodeFromString<CacheEntry>(value) }.getOrNull() ?: return@forEach
+                val entry = runCatching { json.decodeFromString<CacheEntry>(value) }.getOrNull()
+                    ?: return@forEach
                 if (now - entry.lastOpenedMs > THIRTY_DAYS_MS) {
                     entry.filePath.takeIf { it.isNotBlank() }?.let { File(it).delete() }
                     val updated = entry.copy(filePath = "")

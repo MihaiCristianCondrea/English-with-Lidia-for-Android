@@ -6,8 +6,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeAction
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.catch

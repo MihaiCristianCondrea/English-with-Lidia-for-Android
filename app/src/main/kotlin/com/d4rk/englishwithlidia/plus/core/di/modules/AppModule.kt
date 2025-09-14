@@ -11,10 +11,10 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.data.LessonRepositoryI
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.LessonViewModel
-import com.d4rk.englishwithlidia.plus.app.lessons.list.data.HomeRepositoryImpl
 import com.d4rk.englishwithlidia.plus.app.lessons.list.data.HomeMapper
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.HomeRepositoryImpl
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.HomeViewModel
 import com.d4rk.englishwithlidia.plus.app.main.ui.MainViewModel
@@ -26,9 +26,15 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
-val appModule : Module = module {
+val appModule: Module = module {
     single<DataStore> { DataStore(context = get(), dispatchers = get()) }
-    single<AdsCoreManager> { AdsCoreManager(context = get(), buildInfoProvider = get(), dispatchers = get()) }
+    single<AdsCoreManager> {
+        AdsCoreManager(
+            context = get(),
+            buildInfoProvider = get(),
+            dispatchers = get()
+        )
+    }
     single { KtorClient.createClient(enableLogging = BuildConfig.DEBUG) }
 
     single<OnboardingProvider> { AppOnboardingProvider() }
@@ -41,14 +47,27 @@ val appModule : Module = module {
 
     // Lessons
     single { HomeMapper() }
-    single<HomeRepository> { HomeRepositoryImpl(client = get(), dispatchers = get(), mapper = get()) }
+    single<HomeRepository> {
+        HomeRepositoryImpl(
+            client = get(),
+            dispatchers = get(),
+            mapper = get()
+        )
+    }
     factory { GetHomeLessonsUseCase(repository = get()) }
     single { HomeUiMapper() }
     viewModel { HomeViewModel(getHomeLessonsUseCase = get(), uiMapper = get()) }
 
     single { LessonMapper() }
     single { AudioCacheManager(context = get(), dispatchers = get()) }
-    single<LessonRepository> { LessonRepositoryImpl(client = get(), dispatchers = get(), mapper = get(), audioCache = get()) }
+    single<LessonRepository> {
+        LessonRepositoryImpl(
+            client = get(),
+            dispatchers = get(),
+            mapper = get(),
+            audioCache = get()
+        )
+    }
     factory { GetLessonUseCase(repository = get()) }
     viewModel { LessonViewModel(getLessonUseCase = get()) }
 }

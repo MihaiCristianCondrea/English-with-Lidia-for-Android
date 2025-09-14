@@ -19,9 +19,9 @@ import kotlinx.coroutines.supervisorScope
 import org.koin.android.ext.android.getKoin
 
 class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
-    private var currentActivity : Activity? = null
+    private var currentActivity: Activity? = null
 
-    private val adsCoreManager : AdsCoreManager by lazy { getKoin().get<AdsCoreManager>() }
+    private val adsCoreManager: AdsCoreManager by lazy { getKoin().get<AdsCoreManager>() }
 
     override fun onCreate() {
         initializeKoin(context = this)
@@ -29,7 +29,7 @@ class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
         ProcessLifecycleOwner.get().lifecycle.addObserver(observer = this)
     }
 
-    override suspend fun onInitializeApp() : Unit = supervisorScope {
+    override suspend fun onInitializeApp(): Unit = supervisorScope {
         listOf(async { initializeAds() }).awaitAll()
     }
 
@@ -47,19 +47,19 @@ class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
         }
     }
 
-    override fun onActivityCreated(activity : Activity , savedInstanceState : Bundle?) {}
+    override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {}
 
-    override fun onActivityStarted(activity : Activity) {
+    override fun onActivityStarted(activity: Activity) {
         currentActivity = activity
     }
 
-    override fun onActivityStopped(activity : Activity) {
+    override fun onActivityStopped(activity: Activity) {
         if (currentActivity === activity) {
             currentActivity = null
         }
     }
 
-    override fun onActivityDestroyed(activity : Activity) {
+    override fun onActivityDestroyed(activity: Activity) {
         if (currentActivity === activity) {
             currentActivity = null
         }

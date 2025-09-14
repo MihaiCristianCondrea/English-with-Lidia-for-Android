@@ -1,6 +1,8 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.list.ui
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.WifiTetheringError
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -12,8 +14,6 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHa
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.components.LessonListLayout
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.WifiTetheringError
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

@@ -28,7 +28,7 @@ import org.koin.core.qualifier.named
 import org.koin.core.qualifier.qualifier
 import org.koin.dsl.module
 
-val appToolkitModule : Module = module {
+val appToolkitModule: Module = module {
     single<StartupProvider> { AppStartupProvider() }
 
     single(createdAtStart = true) {
@@ -75,5 +75,10 @@ val appToolkitModule : Module = module {
 
     single(githubTokenQualifier) { BuildConfig.GITHUB_TOKEN }
 
-    single<HelpScreenConfig> { HelpScreenConfig(versionName = BuildConfig.VERSION_NAME , versionCode = BuildConfig.VERSION_CODE) }
+    single<HelpScreenConfig> {
+        HelpScreenConfig(
+            versionName = BuildConfig.VERSION_NAME,
+            versionCode = BuildConfig.VERSION_CODE
+        )
+    }
 }

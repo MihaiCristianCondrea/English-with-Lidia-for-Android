@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.libs.apptoolkit.app.main.utils.InAppUpdateHelper
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentFormHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ConsentManagerHelper
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
@@ -21,7 +22,6 @@ import com.google.android.gms.ads.MobileAds
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.UserMessagingPlatform
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -58,7 +58,8 @@ class MainActivity : AppCompatActivity() {
     private fun initializeDependencies() {
         lifecycleScope.launch {
             coroutineScope {
-                val adsInitialization = async(dispatchers.default) { MobileAds.initialize(this@MainActivity) {} }
+                val adsInitialization =
+                    async(dispatchers.default) { MobileAds.initialize(this@MainActivity) {} }
                 val consentInitialization = async(dispatchers.io) {
                     ConsentManagerHelper.applyInitialConsent(dataStore)
                 }
@@ -111,7 +112,8 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val (sessionCount: Int, hasPrompted: Boolean) = coroutineScope {
                 val sessionCountDeferred = async(dispatchers.io) { dataStore.sessionCount.first() }
-                val hasPromptedDeferred = async(dispatchers.io) { dataStore.hasPromptedReview.first() }
+                val hasPromptedDeferred =
+                    async(dispatchers.io) { dataStore.hasPromptedReview.first() }
                 awaitAll(sessionCountDeferred, hasPromptedDeferred)
                 sessionCountDeferred.getCompleted() to hasPromptedDeferred.getCompleted()
             }

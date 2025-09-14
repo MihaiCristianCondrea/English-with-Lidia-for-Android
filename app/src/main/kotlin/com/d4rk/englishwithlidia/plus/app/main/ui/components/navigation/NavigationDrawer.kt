@@ -20,18 +20,20 @@ import com.d4rk.englishwithlidia.plus.app.main.ui.MainScaffoldContent
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun NavigationDrawer(screenState : UiStateScreen<UiMainScreen>) {
-    val drawerState : DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val coroutineScope : CoroutineScope = rememberCoroutineScope()
-    val context : Context = LocalContext.current
-    val uiState : UiMainScreen = screenState.data ?: UiMainScreen()
+fun NavigationDrawer(screenState: UiStateScreen<UiMainScreen>) {
+    val drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+    val coroutineScope: CoroutineScope = rememberCoroutineScope()
+    val context: Context = LocalContext.current
+    val uiState: UiMainScreen = screenState.data ?: UiMainScreen()
 
     ModalNavigationDrawer(
-        modifier = Modifier.hapticDrawerSwipe(state = drawerState) , drawerState = drawerState , drawerContent = {
+        modifier = Modifier.hapticDrawerSwipe(state = drawerState),
+        drawerState = drawerState,
+        drawerContent = {
             ModalDrawerSheet {
                 LargeVerticalSpacer()
-                uiState.navigationDrawerItems.forEach { item : NavigationDrawerItem ->
-                    NavigationDrawerItemContent(item = item , handleNavigationItemClick = {
+                uiState.navigationDrawerItems.forEach { item: NavigationDrawerItem ->
+                    NavigationDrawerItemContent(item = item, handleNavigationItemClick = {
                         handleNavigationItemClick(
                             context = context,
                             item = item,
