@@ -53,20 +53,17 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLess
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.Colors
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.TextStyles
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonContentTypes
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
 
 @Composable
 fun LessonContentLayout(
     paddingValues: PaddingValues,
     listState: LazyListState,
     lesson: UiLessonScreen,
+    bannerConfig: AdsConfig,
+    mediumRectangleConfig: AdsConfig,
     onPlayClick: () -> Unit,
     onSeekChange: (Float) -> Unit,
 ) {
-    val bannerConfig: AdsConfig = koinInject()
-    val mediumRectangleConfig: AdsConfig = koinInject(qualifier = named(name = "banner_medium_rectangle"))
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()

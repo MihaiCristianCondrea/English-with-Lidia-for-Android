@@ -38,24 +38,22 @@ class LessonRepositoryImpl(
                 ?.takeIf { it.data.isNotEmpty() }?.data?.map { networkLesson ->
                     UiLessonScreen(
                         lessonTitle = networkLesson.lessonTitle,
-                        lessonContent = ArrayList(
-                            networkLesson.lessonContent.map { networkContent ->
-                                UiLessonContent(
-                                    contentId = networkContent.contentId,
-                                    contentType = networkContent.contentType,
-                                    contentText = networkContent.contentText,
-                                    contentAudioUrl = networkContent.contentAudioUrl,
-                                    contentImageUrl = networkContent.contentImageUrl,
-                                    contentThumbnailUrl = networkContent.contentThumbnailUrl,
-                                    contentTitle = networkContent.contentTitle,
-                                    contentArtist = networkContent.contentArtist,
-                                    contentAlbumTitle = networkContent.contentAlbumTitle,
-                                    contentGenre = networkContent.contentGenre,
-                                    contentDescription = networkContent.contentDescription,
-                                    contentReleaseYear = networkContent.contentReleaseYear
-                                )
-                            },
-                        ),
+                        lessonContent = networkLesson.lessonContent.map { networkContent ->
+                            UiLessonContent(
+                                contentId = networkContent.contentId,
+                                contentType = networkContent.contentType,
+                                contentText = networkContent.contentText,
+                                contentAudioUrl = networkContent.contentAudioUrl,
+                                contentImageUrl = networkContent.contentImageUrl,
+                                contentThumbnailUrl = networkContent.contentThumbnailUrl,
+                                contentTitle = networkContent.contentTitle,
+                                contentArtist = networkContent.contentArtist,
+                                contentAlbumTitle = networkContent.contentAlbumTitle,
+                                contentGenre = networkContent.contentGenre,
+                                contentDescription = networkContent.contentDescription,
+                                contentReleaseYear = networkContent.contentReleaseYear,
+                            )
+                        },
                     )
                 } ?: emptyList()
             lessons.firstOrNull() ?: UiLessonScreen()

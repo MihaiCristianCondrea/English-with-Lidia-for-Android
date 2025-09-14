@@ -1,13 +1,17 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class UiLessonScreen(
     val isPlaying: Boolean = false,
     val playbackPosition: Long = 0L,
     val playbackDuration: Long = 0L,
     val lessonTitle: String = "",
-    val lessonContent: ArrayList<UiLessonContent> = ArrayList()
+    val lessonContent: List<UiLessonContent> = emptyList(),
 )
 
+@Immutable
 data class UiLessonContent(
     val contentId: String = "",
     val contentType: String = "",
@@ -20,5 +24,5 @@ data class UiLessonContent(
     val contentAlbumTitle: String = "",
     val contentGenre: String = "",
     val contentDescription: String = "",
-    val contentReleaseYear: Int? = null
+    val contentReleaseYear: Int? = null,
 )
