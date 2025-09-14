@@ -1,6 +1,7 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
 
+import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -14,6 +15,7 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLess
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.withContext
 import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
+import kotlinx.coroutines.launch
 
 class LessonViewModel(
     private val getLessonUseCase: GetLessonUseCase,
@@ -31,7 +33,7 @@ class LessonViewModel(
     }
 
     private fun fetchLesson(lessonId: String) {
-        launch(context = dispatcherProvider.io) {
+        viewModelScope.launch {
             screenState.setLoading<UiLessonScreen>()
             val lesson = getLessonUseCase(lessonId)
             withContext(dispatcherProvider.main) {

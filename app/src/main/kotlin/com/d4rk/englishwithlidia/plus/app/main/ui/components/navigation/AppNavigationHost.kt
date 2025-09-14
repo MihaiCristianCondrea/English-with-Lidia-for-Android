@@ -3,27 +3,23 @@ package com.d4rk.englishwithlidia.plus.app.main.ui.components.navigation
 import android.content.Context
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.DrawerState
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
-import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.help.ui.HelpActivity
 import com.d4rk.android.libs.apptoolkit.app.main.ui.components.navigation.NavigationHost
+import com.d4rk.android.libs.apptoolkit.app.main.utils.constants.NavigationDrawerRoutes
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.ui.SettingsActivity
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
-import com.d4rk.android.libs.apptoolkit.core.utils.constants.links.AppLinks
 import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.HomeScreen
-import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.HomeViewModel
 import com.d4rk.englishwithlidia.plus.app.main.utils.constants.NavigationRoutes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AppNavigationHost(
-    navController : NavHostController , snackbarHostState : SnackbarHostState , onFabVisibilityChanged : (Boolean) -> Unit , paddingValues : PaddingValues
+    navController : NavHostController, paddingValues : PaddingValues
 ) {
     NavigationHost(
         navController = navController , startDestination = NavigationRoutes.ROUTE_LESSONS_LIST
@@ -34,12 +30,18 @@ fun AppNavigationHost(
     }
 }
 
-fun handleNavigationItemClick(context : Context , item : NavigationDrawerItem , drawerState : DrawerState? = null , coroutineScope : CoroutineScope? = null) {
-    when (item.title) {
-        R.string.settings -> IntentsHelper.openActivity(context = context , activityClass = SettingsActivity::class.java)
-        R.string.help_and_feedback -> IntentsHelper.openActivity(context = context , activityClass = HelpActivity::class.java)
-        R.string.updates -> IntentsHelper.openUrl(context = context , url = AppLinks.githubChangelog(context.packageName))
-        R.string.share -> IntentsHelper.shareApp(context = context , shareMessageFormat = R.string.summary_share_message)
+fun handleNavigationItemClick(
+    context: Context,
+    item: NavigationDrawerItem,
+    drawerState: DrawerState? = null,
+    coroutineScope: CoroutineScope? = null,
+    onChangelogRequested: () -> Unit = {},
+) {
+    when (item.route) {
+        NavigationDrawerRoutes.ROUTE_SETTINGS -> IntentsHelper.openActivity(context = context, activityClass = SettingsActivity::class.java)
+        NavigationDrawerRoutes.ROUTE_HELP_AND_FEEDBACK -> IntentsHelper.openActivity(context = context, activityClass = HelpActivity::class.java)
+        NavigationDrawerRoutes.ROUTE_UPDATES -> onChangelogRequested()
+        NavigationDrawerRoutes.ROUTE_SHARE -> IntentsHelper.shareApp(context = context, shareMessageFormat = com.d4rk.android.libs.apptoolkit.R.string.summary_share_message)
     }
     if (drawerState != null && coroutineScope != null) {
         coroutineScope.launch { drawerState.close() }

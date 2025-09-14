@@ -18,4 +18,20 @@ object AdsConstants {
         } else {
             "ca-app-pub-5294151573817700/2885662643"
         }
+
+    val HELP_LARGE_BANNER_AD_UNIT_ID : String
+        get() = if (BuildConfig.DEBUG) {
+            DebugAdsConstants.BANNER_AD_UNIT_ID
+        }
+        else {
+            "ca-app-pub-5294151573817700/4295246186"
+        }
+
+    val SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID : String
+        get() = if (BuildConfig.DEBUG) {
+            DebugAdsConstants.BANNER_AD_UNIT_ID
+        }
+        else {
+            "ca-app-pub-5294151573817700/4767671864"
+        }
 }

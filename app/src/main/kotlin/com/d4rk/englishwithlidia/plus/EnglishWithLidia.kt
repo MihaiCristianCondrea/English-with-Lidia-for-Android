@@ -4,27 +4,30 @@ package com.d4rk.englishwithlidia.plus
 
 import android.app.Activity
 import android.os.Bundle
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.d4rk.android.libs.apptoolkit.data.core.BaseCoreManager
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import com.d4rk.englishwithlidia.plus.core.di.initializeKoin
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ads.AdsConstants
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import org.koin.android.ext.android.getKoin
 
-class EnglishWithLidia : BaseCoreManager() {
+class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
     private var currentActivity : Activity? = null
 
     private val adsCoreManager : AdsCoreManager by lazy { getKoin().get<AdsCoreManager>() }
 
     override fun onCreate() {
         initializeKoin(context = this)
-        super.onCreate()
-        registerActivityLifecycleCallbacks(this)
+        super<BaseCoreManager>.onCreate()
         ProcessLifecycleOwner.get().lifecycle.addObserver(observer = this)
     }
 
@@ -32,18 +35,35 @@ class EnglishWithLidia : BaseCoreManager() {
         listOf(async { initializeAds() }).awaitAll()
     }
 
-    private fun initializeAds() {
+    private suspend fun initializeAds() {
         adsCoreManager.initializeAds(AdsConstants.APP_OPEN_UNIT_ID)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onMoveToForeground() {
-        currentActivity?.let { adsCoreManager.showAdIfAvailable(it) }
+    override fun onStart(owner: LifecycleOwner) {
+        currentActivity?.let { adsCoreManager.showAdIfAvailable(it, owner.lifecycleScope) }
+    }
+
+    override fun onResume(owner: LifecycleOwner) {
+        owner.lifecycleScope.launch {
+            billingRepository.processPastPurchases()
+        }
     }
 
     override fun onActivityCreated(activity : Activity , savedInstanceState : Bundle?) {}
 
     override fun onActivityStarted(activity : Activity) {
         currentActivity = activity
+    }
+
+    override fun onActivityStopped(activity : Activity) {
+        if (currentActivity === activity) {
+            currentActivity = null
+        }
+    }
+
+    override fun onActivityDestroyed(activity : Activity) {
+        if (currentActivity === activity) {
+            currentActivity = null
+        }
     }
 }
