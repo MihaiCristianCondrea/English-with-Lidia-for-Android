@@ -2,7 +2,6 @@ package com.d4rk.englishwithlidia.plus.app.lessons.list.data
 
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.englishwithlidia.plus.BuildConfig
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiHomeResponse
@@ -20,6 +19,7 @@ import kotlinx.serialization.json.Json
 class HomeRepositoryImpl(
     private val client: HttpClient,
     private val dispatchers: DispatcherProvider,
+    private val mapper: HomeMapper,
 ) : HomeRepository {
 
     private val baseUrl = BuildConfig.DEBUG.let { isDebug ->
@@ -35,19 +35,13 @@ class HomeRepositoryImpl(
     override fun getHomeLessons(): Flow<HomeScreen> =
         flow {
             val jsonString = client.get(baseUrl).bodyAsText()
-            val lessons = jsonString.takeUnless { it.isBlank() }
+            val homeScreen = jsonString.takeUnless { it.isBlank() }
                 ?.let { jsonParser.decodeFromString<ApiHomeResponse>(it) }
-                ?.takeIf { it.data.isNotEmpty() }?.data?.map { networkLesson ->
-                    HomeLesson(
-                        lessonId = networkLesson.lessonId,
-                        lessonTitle = networkLesson.lessonTitle,
-                        lessonType = networkLesson.lessonType,
-                        lessonThumbnailImageUrl = networkLesson.lessonThumbnailImageUrl,
-                        lessonDeepLinkPath = networkLesson.lessonDeepLinkPath,
-                    )
-                } ?: emptyList()
+                ?.takeIf { it.data.isNotEmpty() }
+                ?.let { mapper.map(it) }
+                ?: HomeScreen()
 
-            emit(HomeScreen(lessons = lessons))
+            emit(homeScreen)
         }.catch { throwable ->
             if (throwable is CancellationException) throw throwable
             emit(HomeScreen())

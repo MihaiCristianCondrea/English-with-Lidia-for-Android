@@ -12,7 +12,9 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.Less
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.LessonViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.data.HomeRepositoryImpl
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.HomeMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.HomeViewModel
 import com.d4rk.englishwithlidia.plus.app.main.ui.MainViewModel
@@ -37,9 +39,11 @@ val appModule : Module = module {
     //single<String>(qualifier = named(name = "developer_apps_base_url")) { BuildConfig.DEVELOPER_APPS_BASE_URL } // TODO: Make the API link in gradle
 
     // Lessons
-    single<HomeRepository> { HomeRepositoryImpl(client = get(), dispatchers = get()) }
+    single { HomeMapper() }
+    single<HomeRepository> { HomeRepositoryImpl(client = get(), dispatchers = get(), mapper = get()) }
     factory { GetHomeLessonsUseCase(repository = get()) }
-    viewModel { HomeViewModel(getHomeLessonsUseCase = get()) }
+    single { HomeUiMapper() }
+    viewModel { HomeViewModel(getHomeLessonsUseCase = get(), uiMapper = get()) }
 
     single { LessonMapper() }
     single { AudioCacheManager(context = get(), dispatchers = get()) }
