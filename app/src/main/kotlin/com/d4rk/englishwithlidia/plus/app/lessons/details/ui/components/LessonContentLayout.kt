@@ -28,12 +28,12 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -218,15 +218,11 @@ fun AudioCardView(
         label = "",
     ).value
 
-    var sliderValue by remember { mutableFloatStateOf(0f) }
-    val targetSliderValue by remember(playbackDuration, sliderPosition) {
-        derivedStateOf {
-            if (playbackDuration > 0f) {
-                sliderPosition / playbackDuration
-            } else {
-                0f
-            }
-        }
+    var sliderValue by rememberSaveable { mutableFloatStateOf(0f) }
+    val targetSliderValue = if (playbackDuration > 0f) {
+        sliderPosition / playbackDuration
+    } else {
+        0f
     }
     LaunchedEffect(targetSliderValue) {
         sliderValue = targetSliderValue
