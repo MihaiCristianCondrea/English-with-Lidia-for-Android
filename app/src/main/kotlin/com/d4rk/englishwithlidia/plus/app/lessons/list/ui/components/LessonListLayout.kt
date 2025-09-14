@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Language
@@ -47,8 +47,14 @@ import org.koin.core.qualifier.named
 
 @Composable
 fun LessonListLayout(
-    lessons: List<UiHomeLesson>, paddingValues: PaddingValues
+    lessons: List<UiHomeLesson>,
+    paddingValues: PaddingValues,
 ) {
+    // Obtain ad configurations once for the entire list
+    val bannerConfig: AdsConfig = koinInject()
+    val mediumRectangleConfig: AdsConfig =
+        koinInject(qualifier = named(name = "banner_medium_rectangle"))
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -57,83 +63,47 @@ fun LessonListLayout(
         verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        itemsIndexed(
+        items(
             items = lessons,
-            key = { _, lesson -> lesson.lessonId },
-        ) { index, lesson ->
+            key = { lesson -> lesson.lessonId },
+        ) { lesson ->
             LessonItem(
                 lesson = lesson,
+                bannerConfig = bannerConfig,
+                mediumRectangleConfig = mediumRectangleConfig,
                 modifier = Modifier
                     .animateVisibility()
-                    .animateItem()
+                    .animateItem(),
             )
         }
     }
 }
 
-@Composable
-fun LessonItem(lesson: UiHomeLesson, modifier: Modifier = Modifier) {
-    val context = LocalContext.current
-    val bannerConfig: AdsConfig = koinInject()
-    val mediumRectangleConfig: AdsConfig =
-        koinInject(qualifier = named(name = "banner_medium_rectangle"))
 
+@Composable
+fun LessonItem(
+    lesson: UiHomeLesson,
+    bannerConfig: AdsConfig,
+    mediumRectangleConfig: AdsConfig,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
 
     when (lesson.lessonType) {
         LessonConstants.TYPE_BANNER_IMAGE_LOCAL -> {
-            Image(
-                imageVector = homeBanner(),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                contentScale = ContentScale.FillWidth
-            )
+            LessonBannerImage()
         }
 
         LessonConstants.TYPE_ROW_BUTTONS_LOCAL -> {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight()
-                    .padding(start = 24.dp, end = 24.dp),
-            ) {
-                OutlinedUrlButtons(
-                    vectorIcon = Icons.Outlined.Language,
-                    modifier = Modifier
-                        .weight(1f)
-                        .bounceClick(),
-                    text = R.string.website,
-                    url = "https://sites.google.com/view/englishwithlidia"
-                )
-
-                Spacer(modifier = Modifier.width(24.dp))
-
-                OutlinedUrlButtons(
-                    painterIcon = painterResource(id = R.drawable.ic_find_us),
-                    modifier = Modifier
-                        .weight(1f)
-                        .bounceClick(),
-                    text = R.string.find_us,
-                    url = "https://www.facebook.com/lidia.melinte"
-                )
-            }
+            LessonActionButtonsRow()
         }
 
         LessonConstants.TYPE_AD_VIEW_BANNER -> {
-            AdBanner(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                adsConfig = bannerConfig
-            )
+            BannerAdView(adsConfig = bannerConfig)
         }
 
         LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> {
-            AdBanner(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                adsConfig = mediumRectangleConfig
-            )
+            MediumRectangleAdView(adsConfig = mediumRectangleConfig)
         }
 
         LessonConstants.TYPE_FULL_IMAGE_BANNER -> {
@@ -148,6 +118,70 @@ fun LessonItem(lesson: UiHomeLesson, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+@Composable
+private fun LessonBannerImage(modifier: Modifier = Modifier) {
+    Image(
+        imageVector = homeBanner(),
+        contentDescription = null,
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        contentScale = ContentScale.FillWidth,
+    )
+}
+
+@Composable
+private fun LessonActionButtonsRow(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .padding(start = 24.dp, end = 24.dp),
+    ) {
+        OutlinedUrlButtons(
+            vectorIcon = Icons.Outlined.Language,
+            modifier = Modifier
+                .weight(1f)
+                .bounceClick(),
+            text = R.string.website,
+            url = "https://sites.google.com/view/englishwithlidia",
+        )
+
+        Spacer(modifier = Modifier.width(24.dp))
+
+        OutlinedUrlButtons(
+            painterIcon = painterResource(id = R.drawable.ic_find_us),
+            modifier = Modifier
+                .weight(1f)
+                .bounceClick(),
+            text = R.string.find_us,
+            url = "https://www.facebook.com/lidia.melinte",
+        )
+    }
+}
+
+@Composable
+private fun BannerAdView(
+    adsConfig: AdsConfig,
+    modifier: Modifier = Modifier,
+) {
+    AdBanner(
+        modifier = modifier.fillMaxWidth(),
+        adsConfig = adsConfig,
+    )
+}
+
+@Composable
+private fun MediumRectangleAdView(
+    adsConfig: AdsConfig,
+    modifier: Modifier = Modifier,
+) {
+    AdBanner(
+        modifier = modifier.fillMaxWidth(),
+        adsConfig = adsConfig,
+    )
 }
 
 @Composable
