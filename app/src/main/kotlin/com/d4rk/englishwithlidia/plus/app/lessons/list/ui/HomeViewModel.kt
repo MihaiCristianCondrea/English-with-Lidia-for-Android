@@ -6,6 +6,9 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeAction
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import kotlinx.coroutines.CancellationException
@@ -38,17 +41,30 @@ class HomeViewModel(
                         current.copy(screenState = ScreenState.NoData(), data = UiHomeScreen())
                     }
                 }
-                .collect { lessons ->
-                    if (lessons.lessons.isEmpty()) {
+                .collect { homeScreen ->
+                    val uiScreen = homeScreen.toUi()
+                    if (uiScreen.lessons.isEmpty()) {
                         screenState.update { current ->
-                            current.copy(screenState = ScreenState.NoData(), data = lessons)
+                            current.copy(screenState = ScreenState.NoData(), data = UiHomeScreen())
                         }
                     } else {
                         screenState.update { current ->
-                            current.copy(screenState = ScreenState.Success(), data = lessons)
+                            current.copy(screenState = ScreenState.Success(), data = uiScreen)
                         }
                     }
                 }
         }
     }
 }
+
+private fun HomeScreen.toUi(): UiHomeScreen =
+    UiHomeScreen(lessons = lessons.map { it.toUi() })
+
+private fun HomeLesson.toUi(): UiHomeLesson =
+    UiHomeLesson(
+        lessonId = lessonId,
+        lessonTitle = lessonTitle,
+        lessonType = lessonType,
+        lessonThumbnailImageUrl = lessonThumbnailImageUrl,
+        lessonDeepLinkPath = lessonDeepLinkPath,
+    )

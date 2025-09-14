@@ -2,8 +2,8 @@ package com.d4rk.englishwithlidia.plus.app.lessons.list.data
 
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.englishwithlidia.plus.BuildConfig
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiHomeResponse
 import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
@@ -32,13 +32,13 @@ class HomeRepositoryImpl(
         isLenient = true
     }
 
-    override fun getHomeLessons(): Flow<UiHomeScreen> =
+    override fun getHomeLessons(): Flow<HomeScreen> =
         flow {
             val jsonString = client.get(baseUrl).bodyAsText()
             val lessons = jsonString.takeUnless { it.isBlank() }
                 ?.let { jsonParser.decodeFromString<ApiHomeResponse>(it) }
                 ?.takeIf { it.data.isNotEmpty() }?.data?.map { networkLesson ->
-                    UiHomeLesson(
+                    HomeLesson(
                         lessonId = networkLesson.lessonId,
                         lessonTitle = networkLesson.lessonTitle,
                         lessonType = networkLesson.lessonType,
@@ -47,9 +47,9 @@ class HomeRepositoryImpl(
                     )
                 } ?: emptyList()
 
-            emit(UiHomeScreen(lessons = lessons))
+            emit(HomeScreen(lessons = lessons))
         }.catch { throwable ->
             if (throwable is CancellationException) throw throwable
-            emit(UiHomeScreen())
+            emit(HomeScreen())
         }.flowOn(dispatchers.io)
 }
