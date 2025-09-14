@@ -18,6 +18,7 @@ import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.HomeViewModel
 import com.d4rk.englishwithlidia.plus.app.main.ui.MainViewModel
 import com.d4rk.englishwithlidia.plus.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.englishwithlidia.plus.core.data.datastore.DataStore
+import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -42,7 +43,8 @@ val appModule : Module = module {
     viewModel { HomeViewModel(getHomeLessonsUseCase = get(), dispatcherProvider = get()) }
 
     single { LessonMapper() }
-    single<LessonRepository> { LessonRepositoryImpl(client = get(), dispatchers = get(), mapper = get()) }
+    single { AudioCacheManager(context = get(), dispatchers = get()) }
+    single<LessonRepository> { LessonRepositoryImpl(client = get(), dispatchers = get(), mapper = get(), audioCache = get()) }
     factory { GetLessonUseCase(repository = get()) }
     viewModel { LessonViewModel(getLessonUseCase = get()) }
 }

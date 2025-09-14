@@ -11,15 +11,14 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
-import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
 import com.d4rk.englishwithlidia.plus.core.utils.extensions.await
 import com.d4rk.englishwithlidia.plus.playback.AudioPlaybackService
 import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.Dispatchers
 
 abstract class ActivityPlayer : AppCompatActivity() {
 
@@ -96,13 +95,9 @@ abstract class ActivityPlayer : AppCompatActivity() {
             if (controller.isPlaying) {
                 controller.pause()
             } else {
-                controller.playWhenReady = true
+                controller.play()
             }
         }
-    }
-
-    fun seekTo(position: Long) {
-        player?.seekTo(position)
     }
 
     private fun startPositionUpdates() {
@@ -129,4 +124,5 @@ abstract class ActivityPlayer : AppCompatActivity() {
         positionJob?.cancel()
         controllerFuture?.let { MediaController.releaseFuture(it) }
     }
+
 }

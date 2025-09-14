@@ -127,4 +127,6 @@ dependencies {
     implementation(dependencyNotation = libs.media3.exoplayer)
     implementation(dependencyNotation = libs.media3.ui)
     implementation(dependencyNotation = libs.media3.session)
+    implementation(dependencyNotation = libs.datastore.preferences)
+    implementation(dependencyNotation = libs.work.runtime.ktx)
 }
