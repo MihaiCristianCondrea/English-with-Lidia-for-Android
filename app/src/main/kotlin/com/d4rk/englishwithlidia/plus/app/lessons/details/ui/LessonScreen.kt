@@ -17,8 +17,8 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHa
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
-import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonContentTypes
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components.LessonContentLayout
+import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonContentTypes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

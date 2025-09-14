@@ -9,8 +9,8 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonAction
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonEvent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.update
