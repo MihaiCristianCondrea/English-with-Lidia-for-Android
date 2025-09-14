@@ -12,7 +12,6 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonEv
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -29,8 +28,9 @@ class LessonViewModel(
     private fun fetchLesson(lessonId: String) {
         viewModelScope.launch {
             screenState.setLoading()
-            try {
-                val lesson = getLessonUseCase(lessonId)
+            runCatching {
+                getLessonUseCase(lessonId)
+            }.onSuccess { lesson ->
                 screenState.update { current ->
                     if (lesson.lessonContent.isEmpty()) {
                         current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
@@ -38,8 +38,7 @@ class LessonViewModel(
                         current.copy(screenState = ScreenState.Success(), data = lesson)
                     }
                 }
-            } catch (exception: Exception) {
-                if (exception is CancellationException) throw exception
+            }.onFailure {
                 screenState.update { current ->
                     current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
                 }

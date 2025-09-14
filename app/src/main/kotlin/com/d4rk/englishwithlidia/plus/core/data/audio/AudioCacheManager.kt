@@ -76,24 +76,23 @@ class AudioCacheManager(
         val target = File(cacheDir, "${contentId}_${urlHash}.mp3")
         val temp = File(cacheDir, "${contentId}_${urlHash}.tmp")
 
-        val resultUri = try {
+        val resultUri = runCatching {
             URL(remoteUrl).openStream().use { input ->
                 FileOutputStream(temp).use { output ->
                     input.copyTo(output)
                 }
             }
-            temp.renameTo(target)
+            temp.renameTo(target) // TODO: error check
             val size = target.length()
             val newEntry = CacheEntry(remoteUrl, urlHash, target.absolutePath, now, size)
             dataStore.edit { it[key] = json.encodeToString(newEntry) }
             target.toURI().toString().let(Uri::parse)
-        } catch (_: Exception) {
+        }.getOrElse {
             temp.delete()
             val newEntry = CacheEntry(remoteUrl, urlHash, "", now, 0)
             dataStore.edit { it[key] = json.encodeToString(newEntry) }
             remoteUrl.toUri()
         }
-
         resultUri
     }
 
