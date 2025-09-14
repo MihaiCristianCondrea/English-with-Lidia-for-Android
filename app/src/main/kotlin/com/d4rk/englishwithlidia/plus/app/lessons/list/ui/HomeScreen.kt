@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
+import com.d4rk.englishwithlidia.plus.app.main.ui.components.WavyLoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
@@ -25,7 +25,7 @@ fun HomeScreen(
     ScreenStateHandler(
         screenState = screenState,
         onLoading = {
-            LoadingScreen()
+            WavyLoadingScreen()
         },
         onEmpty = {
             NoDataScreen(

@@ -7,12 +7,12 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
 import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components.LessonContentLayout
+import com.d4rk.englishwithlidia.plus.app.main.ui.components.WavyLoadingScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -35,7 +35,7 @@ fun LessonScreen(
         ScreenStateHandler(
             screenState = screenState,
             onLoading = {
-                LoadingScreen()
+                WavyLoadingScreen()
             },
             onEmpty = {
                 NoDataScreen()
