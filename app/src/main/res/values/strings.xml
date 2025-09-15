@@ -23,4 +23,13 @@
     <string name="summary_preference_faq_8">The app is updated regularly with new lessons and features. You can check the Google Play page for the latest updates or follow D4rK on social media for announcements.</string>
     <string name="question_9">Who is Lidia Melinte and what is her role in the app?</string>
     <string name="summary_preference_faq_9">Lidia Melinte, an English teacher, creates the lessons and narrates the audios in the app.</string>
+
+    <string name="error_request_timeout">The request timed out. Please try again.</string>
+    <string name="error_no_internet">No internet connection. Please check your connection and try again.</string>
+    <string name="error_serialization">Data parsing error. Please try again.</string>
+    <string name="error_no_data">No data available.</string>
+    <string name="error_failed_to_load_apps">Failed to load apps.</string>
+    <string name="error_illegal_argument">Invalid input provided.</string>
+    <string name="error_database_operation_failed">Database operation failed.</string>
+    <string name="unknown_error">An unknown error occurred.</string>
 </resources>
