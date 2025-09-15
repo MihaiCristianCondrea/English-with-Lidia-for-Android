@@ -11,6 +11,7 @@ plugins {
     alias(notation = libs.plugins.about.libraries)
     alias(notation = libs.plugins.googleFirebase)
     alias(notation = libs.plugins.compose.compiler)
+    alias(notation = libs.plugins.mannodermaus)
 }
 
 android {
@@ -157,4 +158,12 @@ dependencies {
     implementation(dependencyNotation = libs.media3.exoplayer)
     implementation(dependencyNotation = libs.media3.ui)
     implementation(dependencyNotation = libs.media3.session)
+
+    // Unit Tests
+    testImplementation(dependencyNotation = libs.bundles.unitTest)
+    testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
+
+    // Instrumentation Tests
+    androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
+    debugImplementation(dependencyNotation = libs.androidx.ui.test.manifest)
 }

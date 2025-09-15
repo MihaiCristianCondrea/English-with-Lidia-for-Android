@@ -5,11 +5,37 @@ kotlin = "2.2.20"
 google-services = "4.4.3"
 google-firebase-crashlytics = "3.0.6"
 media3 = "1.8.0"
+junittest = "3.7.0"
+mannodermaus = "1.13.4.0"
+mockk = "1.14.5"
+jupiter = "5.13.4"
+testCorutines = "1.10.2"
+testTurbine = "1.2.1"
+truth = "1.7.0"
+testManifestTestJunit4Android = "1.9.1"
+slf4j = "2.0.17"
 
 [libraries]
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
 media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
 media3-session = { module = "androidx.media3:media3-session", version.ref = "media3" }
+
+# --- TESTING ---
+# Unit Tests (test folder)
+jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
+jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
+jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
+mockk-api = { module = "io.mockk:mockk", version.ref = "mockk" }
+test-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "testCorutines" }
+test-turbine = { module = "app.cash.turbine:turbine", version.ref = "testTurbine" }
+androidx-truth = { module = "androidx.test.ext:truth", version.ref = "truth" }
+slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+
+# Instrumentation Tests (androidTest folder)
+mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "junittest" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "testManifestTestJunit4Android" }
+androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "testManifestTestJunit4Android" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -21,3 +47,30 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 jetbrainsKotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
+mannodermaus = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermaus" }
+
+[bundles]
+# For local tests on the JVM (test sourceSet)
+unitTest = [
+    "jupiter-api",
+    "jupiter-params",
+    "mockk-api",
+    "test-kotlin-coroutines",
+    "test-turbine",
+    "androidx-truth",
+    "slf4j-simple"
+]
+unitTestRuntime = ["jupiter-engine"]
+
+# For instrumentation tests on an Android device (androidTest sourceSet)
+instrumentationTest = [
+    "jupiter-api",
+    "jupiter-params",
+    "mockk-android",
+    "test-kotlin-coroutines",
+    "test-turbine",
+    "androidx-espresso-core",
+    "androidx-ui-test-junit4-android",
+    "androidx-truth",
+]
+
