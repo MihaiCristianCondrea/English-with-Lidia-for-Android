@@ -10,6 +10,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
@@ -72,6 +73,19 @@ class HomeViewModelTest {
         advanceUntilIdle()
 
         assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
+    }
+
+    @Test
+    fun `state is no data when lessons fetch fails`() = runTest {
+        val flow: Flow<HomeScreen> = flow { throw RuntimeException() }
+        val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
+        val viewModel = HomeViewModel(useCase, HomeUiMapper())
+
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertTrue(state.screenState is ScreenState.NoData)
+        assertTrue(state.data.lessons.isEmpty())
     }
 
     private class FakeHomeRepository(
