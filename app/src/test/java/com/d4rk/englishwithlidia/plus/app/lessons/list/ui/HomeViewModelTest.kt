@@ -16,23 +16,24 @@ import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertTrue
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
 
-    @Before
+    @BeforeEach
     fun setUp() {
         Dispatchers.setMain(testDispatcher)
     }
 
-    @After
+    @AfterEach
     fun tearDown() {
         Dispatchers.resetMain()
     }
@@ -57,7 +58,9 @@ class HomeViewModelTest {
 
         val state = viewModel.uiState.value
         assertTrue(state.screenState is ScreenState.Success)
-        assertEquals(1, state.data?.lessons?.size)
+        val data = state.data
+        assertNotNull(data)
+        assertEquals(1, data!!.lessons.size)
     }
 
     @Test

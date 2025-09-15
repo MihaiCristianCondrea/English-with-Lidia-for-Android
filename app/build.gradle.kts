@@ -11,6 +11,7 @@ plugins {
     alias(notation = libs.plugins.about.libraries)
     alias(notation = libs.plugins.googleFirebase)
     alias(notation = libs.plugins.compose.compiler)
+    alias(notation = libs.plugins.mannodermaus)
 }
 
 android {
@@ -158,7 +159,11 @@ dependencies {
     implementation(dependencyNotation = libs.media3.ui)
     implementation(dependencyNotation = libs.media3.session)
 
-    testImplementation(dependencyNotation = "junit:junit:4.13.2")
-    testImplementation(dependencyNotation = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
-    testImplementation(kotlin("test"))
+    // Unit Tests
+    testImplementation(dependencyNotation = libs.bundles.unitTest)
+    testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
+
+    // Instrumentation Tests
+    androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
+    debugImplementation(dependencyNotation = libs.androidx.ui.test.manifest)
 }
