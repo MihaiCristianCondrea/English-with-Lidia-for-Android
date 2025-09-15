@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
+import androidx.media3.common.PlaybackException
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.d4rk.englishwithlidia.plus.core.utils.extensions.await
@@ -53,6 +54,11 @@ abstract class ActivityPlayer : AppCompatActivity() {
                         val duration = player?.duration ?: 0L
                         playbackHandler.updatePlaybackDuration(duration)
                     }
+                }
+                override fun onPlayerError(error: PlaybackException) {
+                    playbackHandler.updateIsPlaying(false)
+                    playbackHandler.onPlaybackError()
+                    positionJob?.cancel()
                 }
             })
         }

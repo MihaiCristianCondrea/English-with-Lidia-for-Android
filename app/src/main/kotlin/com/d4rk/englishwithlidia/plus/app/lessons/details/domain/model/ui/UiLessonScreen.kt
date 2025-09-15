@@ -7,6 +7,7 @@ data class UiLessonScreen(
     val isPlaying: Boolean = false,
     val playbackPosition: Long = 0L,
     val playbackDuration: Long = 0L,
+    val hasPlaybackError: Boolean = false,
     val lessonTitle: String = "",
     val lessonContent: List<UiLessonContent> = emptyList(),
 )
