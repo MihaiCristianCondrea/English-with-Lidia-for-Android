@@ -49,11 +49,19 @@ class HomeViewModelTest {
 
     @Test
     fun `state is success when lessons available`() = runTest {
-        val lesson = HomeLesson(lessonId = "1", lessonTitle = "Title", lessonType = "video", lessonThumbnailImageUrl = "", lessonDeepLinkPath = "")
-        val flow = flowOf(HomeScreen(lessons = listOf(lesson)))
+        val lesson = HomeLesson(
+            lessonId = "1",
+            lessonTitle = "Title",
+            lessonType = "video",
+            lessonThumbnailImageUrl = "",
+            lessonDeepLinkPath = "",
+        )
+        val flow = MutableSharedFlow<HomeScreen>()
         val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
         val viewModel = HomeViewModel(useCase, HomeUiMapper())
 
+        flow.emit(HomeScreen())
+        flow.emit(HomeScreen(lessons = listOf(lesson)))
         advanceUntilIdle()
 
         val state = viewModel.uiState.value
