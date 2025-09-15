@@ -82,6 +82,31 @@ class HomeViewModelTest {
         assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
     }
 
+    @Test
+    fun `state becomes no data when lessons become empty`() = runTest {
+        val flow = MutableSharedFlow<HomeScreen>()
+        val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
+        val viewModel = HomeViewModel(useCase, HomeUiMapper())
+
+        val lesson = HomeLesson(
+            lessonId = "1",
+            lessonTitle = "Title",
+            lessonType = "video",
+            lessonThumbnailImageUrl = "",
+            lessonDeepLinkPath = "",
+        )
+
+        flow.emit(HomeScreen(lessons = listOf(lesson)))
+        flow.emit(HomeScreen())
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertTrue(state.screenState is ScreenState.NoData)
+        val data = state.data
+        assertNotNull(data)
+        assertTrue(data?.lessons?.isEmpty() == true)
+    }
+
     private class FakeHomeRepository(
         private val flow: Flow<HomeScreen>
     ) : HomeRepository {
