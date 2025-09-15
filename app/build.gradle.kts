@@ -163,6 +163,7 @@ dependencies {
     testImplementation(dependencyNotation = libs.bundles.unitTest)
     testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
     testImplementation(dependencyNotation = "io.ktor:ktor-client-mock:3.2.3")
+    testImplementation(dependencyNotation = "com.squareup.okhttp3:mockwebserver:4.12.0")
 
     // Instrumentation Tests
     androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
