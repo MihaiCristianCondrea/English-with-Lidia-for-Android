@@ -85,7 +85,9 @@ class HomeViewModelTest {
 
         val state = viewModel.uiState.value
         assertTrue(state.screenState is ScreenState.NoData)
-        assertTrue(state.data.lessons.isEmpty())
+        val data = state.data
+        assertNotNull(data)
+        assertTrue(data!!.lessons.isEmpty())
     }
 
     private class FakeHomeRepository(
