@@ -51,7 +51,8 @@ val appModule: Module = module {
         HomeRepositoryImpl(
             client = get(),
             dispatchers = get(),
-            mapper = get()
+            mapper = get(),
+            baseRepositoryUrl = get(named("developer_apps_base_url")),
         )
     }
     factory { GetHomeLessonsUseCase(repository = get()) }
@@ -65,7 +66,8 @@ val appModule: Module = module {
             client = get(),
             dispatchers = get(),
             mapper = get(),
-            audioCache = get()
+            audioCache = get(),
+            baseRepositoryUrl = get(named("developer_apps_base_url")),
         )
     }
     factory { GetLessonUseCase(repository = get()) }

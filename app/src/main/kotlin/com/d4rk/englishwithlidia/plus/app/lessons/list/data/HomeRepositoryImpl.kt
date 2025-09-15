@@ -20,12 +20,21 @@ class HomeRepositoryImpl(
     private val client: HttpClient,
     private val dispatchers: DispatcherProvider,
     private val mapper: HomeMapper,
+    baseRepositoryUrl: String,
 ) : HomeRepository {
 
-    private val baseUrl = BuildConfig.DEBUG.let { isDebug ->
-        val environment = if (isDebug) "debug" else "release"
-        "${ApiConstants.BASE_REPOSITORY_URL}/$environment/ro/home/api_get_lessons.json"
-    }
+    private val repositoryBaseUrl = ApiConstants.resolveRepositoryBaseUrl(baseRepositoryUrl)
+    private val environmentSegment: String
+        get() = if (BuildConfig.DEBUG) "debug" else "release"
+
+    private val lessonsListUrl: String
+        get() = listOf(
+            repositoryBaseUrl,
+            environmentSegment,
+            ApiConstants.DEFAULT_LANGUAGE_CODE,
+            "home",
+            "api_get_lessons.json",
+        ).joinToString(separator = "/")
 
     private val jsonParser = Json {
         ignoreUnknownKeys = true
@@ -34,7 +43,7 @@ class HomeRepositoryImpl(
 
     override fun getHomeLessons(): Flow<HomeScreen> =
         flow {
-            val jsonString = client.get(baseUrl).bodyAsText()
+            val jsonString = client.get(lessonsListUrl).bodyAsText()
             val homeScreen = jsonString.takeUnless { it.isBlank() }
                 ?.let { jsonParser.decodeFromString<ApiHomeResponse>(it) }
                 ?.takeIf { it.data.isNotEmpty() }

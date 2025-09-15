@@ -19,20 +19,33 @@ class LessonRepositoryImpl(
     private val dispatchers: DispatcherProvider,
     private val mapper: LessonMapper,
     private val audioCache: AudioCacheManager,
+    baseRepositoryUrl: String,
     private val jsonParser: Json = Json {
         ignoreUnknownKeys = true
         isLenient = true
     },
 ) : LessonRepository {
 
-    private val baseUrl = BuildConfig.DEBUG.let { isDebug ->
-        val environment = if (isDebug) "debug" else "release"
-        "${ApiConstants.BASE_REPOSITORY_URL}/$environment/ro/lessons"
-    }
+    private val repositoryBaseUrl = ApiConstants.resolveRepositoryBaseUrl(baseRepositoryUrl)
+    private val environmentSegment: String
+        get() = if (BuildConfig.DEBUG) "debug" else "release"
+
+    private val lessonsBaseUrl: String
+        get() = listOf(
+            repositoryBaseUrl,
+            environmentSegment,
+            ApiConstants.DEFAULT_LANGUAGE_CODE,
+            "lessons",
+        ).joinToString(separator = "/")
 
     override suspend fun getLesson(lessonId: String): UiLessonScreen =
         withContext(dispatchers.io) {
-            val url = "$baseUrl/api_get_$lessonId.json"
+            val slug = lessonId.trim()
+            if (slug.isEmpty()) {
+                return@withContext UiLessonScreen()
+            }
+
+            val url = listOf(lessonsBaseUrl, "api_get_${slug}.json").joinToString(separator = "/")
             val jsonString = client.get(url).bodyAsText()
 
             val lessons = jsonString.takeUnless { it.isBlank() }

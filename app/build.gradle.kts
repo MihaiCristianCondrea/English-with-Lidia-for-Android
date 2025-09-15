@@ -60,13 +60,21 @@ android {
         val githubFile = rootProject.file("github.properties")
         val githubToken = if (githubFile.exists()) {
             githubProps.load(githubFile.inputStream())
-            githubProps["GITHUB_TOKEN"].toString()
+            githubProps["GITHUB_TOKEN"]
+                ?.toString()
+                ?.trim()
+                ?.trim('"')
+                ?: ""
         } else {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
 
-        val developerAppsBaseUrl = project.findProperty("developerAppsBaseUrl")?.toString() ?: ""
+        val developerAppsBaseUrl = project.findProperty("developerAppsBaseUrl")
+            ?.toString()
+            ?.trim()
+            ?.trim('"')
+            ?: ""
         buildConfigField("String", "DEVELOPER_APPS_BASE_URL", "\"$developerAppsBaseUrl\"")
     }
 
