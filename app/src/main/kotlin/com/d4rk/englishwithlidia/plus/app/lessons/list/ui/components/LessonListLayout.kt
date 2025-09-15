@@ -51,7 +51,6 @@ fun LessonListLayout(
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    // Obtain ad configurations once for the entire list
     val bannerConfig: AdsConfig = koinInject()
     val mediumRectangleConfig: AdsConfig =
         koinInject(qualifier = named(name = "banner_medium_rectangle"))
@@ -60,7 +59,6 @@ fun LessonListLayout(
         modifier = modifier
             .fillMaxSize()
             .padding(paddingValues),
-        contentPadding = PaddingValues(horizontal = SizeConstants.LargeSize),
         verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -80,7 +78,6 @@ fun LessonListLayout(
     }
 }
 
-
 @Composable
 fun LessonItem(
     lesson: UiHomeLesson,
@@ -92,19 +89,19 @@ fun LessonItem(
 
     when (lesson.lessonType) {
         LessonConstants.TYPE_BANNER_IMAGE_LOCAL -> {
-            LessonBannerImage()
+            LessonBannerImage(modifier = modifier)
         }
 
         LessonConstants.TYPE_ROW_BUTTONS_LOCAL -> {
-            LessonActionButtonsRow()
+            LessonActionButtonsRow(modifier = modifier)
         }
 
         LessonConstants.TYPE_AD_VIEW_BANNER -> {
-            BannerAdView(adsConfig = bannerConfig)
+            BannerAdView(modifier = modifier, adsConfig = bannerConfig)
         }
 
         LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> {
-            MediumRectangleAdView(adsConfig = mediumRectangleConfig)
+            MediumRectangleAdView(modifier = modifier, adsConfig = mediumRectangleConfig)
         }
 
         LessonConstants.TYPE_FULL_IMAGE_BANNER -> {
