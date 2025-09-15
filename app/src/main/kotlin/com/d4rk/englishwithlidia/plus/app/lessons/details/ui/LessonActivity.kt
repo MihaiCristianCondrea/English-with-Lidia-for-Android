@@ -44,6 +44,7 @@ class LessonActivity : ActivityPlayer() {
                             releaseYear = content.contentReleaseYear
                         )
                     },
+                    onSeek = { position -> seekTo((position * 1000).toLong()) },
                 )
             }
         }

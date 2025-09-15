@@ -2,7 +2,13 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -24,16 +30,21 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearWavyProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.fromHtml
@@ -56,6 +67,7 @@ fun LessonContentLayout(
     bannerConfig: AdsConfig,
     mediumRectangleConfig: AdsConfig,
     onPlayClick: () -> Unit,
+    onSeek: (Float) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -96,6 +108,7 @@ fun LessonContentLayout(
                         sliderPosition = sliderPosition.toFloat() / 1000f,
                         playbackDuration = playbackDuration.toFloat() / 1000f,
                         isPlaying = isPlaying,
+                        onSeek = onSeek,
                     )
                 }
 
@@ -172,6 +185,7 @@ fun AudioCardView(
     sliderPosition: Float,
     playbackDuration: Float,
     isPlaying: Boolean,
+    onSeek: (Float) -> Unit,
 ) {
     val progress = if (playbackDuration > 0f) {
         sliderPosition / playbackDuration
@@ -219,13 +233,48 @@ fun AudioCardView(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                LinearWavyProgressIndicator(
-                    progress = { animatedProgress },
+                var width by remember { mutableStateOf(0f) }
+                Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(4f),
-                    amplitude = { if (isPlaying) 1f else 0f },
-                )
+                        .weight(4f)
+                        .pointerInput(playbackDuration) {
+                            detectTapGestures { offset ->
+                                val newProgress = (offset.x / width).coerceIn(0f, 1f)
+                                onSeek(newProgress * playbackDuration)
+                            }
+                        }
+                        .draggable(
+                            orientation = Orientation.Horizontal,
+                            state = rememberDraggableState { delta ->
+                                val current = animatedProgress * width
+                                val newX = (current + delta).coerceIn(0f, width)
+                                val newProgress = if (width > 0f) newX / width else 0f
+                                onSeek(newProgress * playbackDuration)
+                            },
+                        )
+                        .onGloballyPositioned { width = it.size.width.toFloat() },
+                ) {
+                    LinearWavyProgressIndicator(
+                        progress = { animatedProgress },
+                        modifier = Modifier.matchParentSize(),
+                        amplitude = { if (isPlaying) 1f else 0f },
+                    )
+                    Canvas(modifier = Modifier.matchParentSize()) {
+                        val x = animatedProgress * size.width
+                        val radius = 6.dp.toPx()
+                        drawLine(
+                            color = MaterialTheme.colorScheme.primary,
+                            start = Offset(x, 0f),
+                            end = Offset(x, size.height),
+                            strokeWidth = 2.dp.toPx(),
+                        )
+                        drawCircle(
+                            color = MaterialTheme.colorScheme.primary,
+                            radius = radius,
+                            center = Offset(x, size.height / 2f),
+                        )
+                    }
+                }
             }
         }
     }

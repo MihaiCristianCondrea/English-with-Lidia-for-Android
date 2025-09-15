@@ -101,6 +101,11 @@ abstract class ActivityPlayer : AppCompatActivity() {
         }
     }
 
+    fun seekTo(positionMs: Long) {
+        player?.seekTo(positionMs)
+        playbackHandler.updatePlaybackPosition(positionMs)
+    }
+
     private fun startPositionUpdates() {
         positionJob?.cancel()
         positionJob = lifecycleScope.launch(Dispatchers.Default) {
