@@ -21,7 +21,7 @@ android {
         applicationId = "com.d4rk.englishwithlidia.plus"
         minSdk = 23
         targetSdk = 36
-        versionCode = 65
+        versionCode = 66
         versionName = "5.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage") androidResources.localeFilters += listOf(
