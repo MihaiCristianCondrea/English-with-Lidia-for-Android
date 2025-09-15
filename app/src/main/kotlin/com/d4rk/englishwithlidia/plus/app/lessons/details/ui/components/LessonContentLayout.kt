@@ -91,12 +91,16 @@ fun LessonContentLayout(
                     val playbackDuration = lesson.playbackDuration
                     val isPlaying = lesson.isPlaying
 
-                    AudioCardView(
-                        onPlayClick = onPlayClick,
-                        sliderPosition = sliderPosition.toFloat() / 1000f,
-                        playbackDuration = playbackDuration.toFloat() / 1000f,
-                        isPlaying = isPlaying,
-                    )
+                    if (lesson.hasPlaybackError) {
+                        PlaybackErrorView()
+                    } else {
+                        AudioCardView(
+                            onPlayClick = onPlayClick,
+                            sliderPosition = sliderPosition.toFloat() / 1000f,
+                            playbackDuration = playbackDuration.toFloat() / 1000f,
+                            isPlaying = isPlaying,
+                        )
+                    }
                 }
 
                 LessonContentTypes.TYPE_DIVIDER -> {
@@ -161,6 +165,24 @@ fun StyledImage(
             contentScale = ContentScale.FillWidth,
             contentDescription = contentDescription,
             modifier = Modifier.fillMaxWidth(),
+        )
+    }
+}
+@Composable
+fun PlaybackErrorView() {
+    OutlinedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        shape = RoundedCornerShape(28.dp),
+    ) {
+        Text(
+            text = "Playback unavailable",
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            style = TextStyles.body(),
+            color = Colors.secondaryText(),
         )
     }
 }
@@ -230,4 +252,3 @@ fun AudioCardView(
         }
     }
 }
-

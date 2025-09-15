@@ -63,4 +63,8 @@ class LessonViewModel(
     override fun updatePlaybackPosition(position: Long) {
         screenState.copyData { copy(playbackPosition = position) }
     }
+
+    override fun onPlaybackError() {
+        screenState.copyData { copy(hasPlaybackError = true, isPlaying = false) }
+    }
 }
