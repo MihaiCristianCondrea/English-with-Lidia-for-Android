@@ -57,7 +57,7 @@ class HomeViewModelTest {
 
         val state = viewModel.uiState.value
         assertTrue(state.screenState is ScreenState.Success)
-        assertEquals(1, state.data.lessons.size)
+        assertEquals(1, state.data?.lessons?.size)
     }
 
     @Test
