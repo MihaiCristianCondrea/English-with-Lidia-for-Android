@@ -5,28 +5,38 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLess
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
+private typealias TestCoroutineDispatcher = StandardTestDispatcher
+
 @OptIn(ExperimentalCoroutinesApi::class)
 class LessonViewModelTest {
 
-    private val testDispatcher = UnconfinedTestDispatcher()
+    private lateinit var testDispatcher: TestCoroutineDispatcher
+    private lateinit var repository: LessonRepository
+    private lateinit var useCase: GetLessonUseCase
 
     @BeforeEach
     fun setUp() {
+        testDispatcher = TestCoroutineDispatcher()
         Dispatchers.setMain(testDispatcher)
+        repository = mockk()
+        useCase = GetLessonUseCase(repository)
     }
 
     @AfterEach
@@ -35,82 +45,85 @@ class LessonViewModelTest {
     }
 
     @Test
-    fun `state is success when lesson available`() = runTest {
-        val useCase = fakeGetLessonUseCase(ResultType.SUCCESS)
+    fun `uiStateScreen emits success when repository returns lesson`() = runTest {
+        val lessonId = "lesson-id"
+        val expectedLesson = UiLessonScreen(
+            lessonTitle = "Grammar basics",
+            lessonContent = listOf(
+                UiLessonContent(
+                    contentId = "content-id",
+                    contentType = "text",
+                )
+            )
+        )
+        coEvery { repository.getLesson(lessonId) } returns expectedLesson
+
         val viewModel = LessonViewModel(useCase)
 
-        viewModel.getLesson("1")
-        advanceUntilIdle()
+        viewModel.getLesson(lessonId)
+        testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
+
         assertTrue(state.screenState is ScreenState.Success)
-        val data = state.data
-        assertNotNull(data)
-        assertEquals("Title", data!!.lessonTitle)
-        assertEquals(1, data.lessonContent.size)
+        assertEquals(expectedLesson, state.data)
+        coVerify(exactly = 1) { repository.getLesson(lessonId) }
     }
 
     @Test
-    fun `state is no data when lesson empty`() = runTest {
-        val useCase = fakeGetLessonUseCase(ResultType.EMPTY)
+    fun `uiStateScreen emits empty when repository returns no content`() = runTest {
+        val lessonId = "lesson-id"
+        val emptyLesson = UiLessonScreen()
+        coEvery { repository.getLesson(lessonId) } returns emptyLesson
+
         val viewModel = LessonViewModel(useCase)
 
-        viewModel.getLesson("1")
-        advanceUntilIdle()
+        viewModel.getLesson(lessonId)
+        testDispatcher.scheduler.advanceUntilIdle()
 
         val state = viewModel.uiState.value
+
         assertTrue(state.screenState is ScreenState.NoData)
-        val data = state.data
-        assertNotNull(data)
-        assertTrue(data!!.lessonContent.isEmpty())
+        assertEquals(emptyLesson, state.data)
+        coVerify(exactly = 1) { repository.getLesson(lessonId) }
     }
 
     @Test
-    fun `state is no data when use case throws`() = runTest {
-        val useCase = fakeGetLessonUseCase(ResultType.ERROR)
+    fun `uiStateScreen emits failure when repository throws`() = runTest {
+        val lessonId = "lesson-id"
+        coEvery { repository.getLesson(lessonId) } throws IllegalStateException("error")
+
         val viewModel = LessonViewModel(useCase)
 
-        viewModel.getLesson("1")
-        advanceUntilIdle()
+        viewModel.getLesson(lessonId)
+        testDispatcher.scheduler.advanceUntilIdle()
 
-        assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
+        val state = viewModel.uiState.value
+
+        assertTrue(state.screenState is ScreenState.NoData)
+        assertEquals(UiLessonScreen(), state.data)
+        coVerify(exactly = 1) { repository.getLesson(lessonId) }
     }
 
     @Test
-    fun `playback fields update correctly`() = runTest {
-        val useCase = fakeGetLessonUseCase(ResultType.SUCCESS)
+    fun `playback events mutate lesson state`() = runTest {
         val viewModel = LessonViewModel(useCase)
 
         viewModel.updateIsPlaying(true)
-        viewModel.updatePlaybackDuration(100L)
-        viewModel.updatePlaybackPosition(50L)
-        advanceUntilIdle()
+        viewModel.updatePlaybackDuration(120L)
+        viewModel.updatePlaybackPosition(30L)
+        testDispatcher.scheduler.advanceUntilIdle()
 
-        val data = viewModel.uiState.value.data
-        assertNotNull(data)
-        assertTrue(data!!.isPlaying)
-        assertEquals(100L, data.playbackDuration)
-        assertEquals(50L, data.playbackPosition)
-    }
+        val playbackState = viewModel.uiState.value.data
+        assertTrue(playbackState?.isPlaying == true)
+        assertEquals(120L, playbackState?.playbackDuration)
+        assertEquals(30L, playbackState?.playbackPosition)
 
-    private enum class ResultType { SUCCESS, EMPTY, ERROR }
+        viewModel.onPlaybackError()
 
-    private fun fakeGetLessonUseCase(result: ResultType): GetLessonUseCase {
-        val repository = object : LessonRepository {
-            override suspend fun getLesson(lessonId: String): UiLessonScreen {
-                return when (result) {
-                    ResultType.SUCCESS -> UiLessonScreen(
-                        lessonTitle = "Title",
-                        lessonContent = listOf(
-                            UiLessonContent(contentId = "1")
-                        )
-                    )
-                    ResultType.EMPTY -> UiLessonScreen()
-                    ResultType.ERROR -> throw RuntimeException()
-                }
-            }
-        }
-        return GetLessonUseCase(repository)
+        val errorState = viewModel.uiState.value.data
+        assertTrue(errorState?.hasPlaybackError == true)
+        assertFalse(errorState?.isPlaying ?: true)
     }
 }
 
