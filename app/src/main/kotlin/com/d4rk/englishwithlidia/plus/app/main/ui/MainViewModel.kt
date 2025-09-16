@@ -5,6 +5,8 @@ import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRep
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.successData
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.main.domain.action.MainAction
 import com.d4rk.englishwithlidia.plus.app.main.domain.action.MainEvent
 import com.d4rk.englishwithlidia.plus.app.main.domain.model.UiMainScreen
@@ -32,7 +34,12 @@ class MainViewModel(
                     screenState.successData {
                         copy(
                             showSnackbar = true,
-                            snackbarMessage = error.message ?: "Failed to load navigation"
+                            snackbarMessage = error.message
+                                ?.takeIf(String::isNotBlank)
+                                ?.let(UiTextHelper::DynamicString)
+                                ?: UiTextHelper.StringResource(
+                                    R.string.navigation_drawer_load_error
+                                )
                         )
                     }
                 }

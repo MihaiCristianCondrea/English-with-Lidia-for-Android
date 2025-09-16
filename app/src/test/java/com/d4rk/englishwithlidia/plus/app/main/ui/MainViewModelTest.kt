@@ -2,6 +2,8 @@ package com.d4rk.englishwithlidia.plus.app.main.ui
 
 import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRepository
 import com.d4rk.android.libs.apptoolkit.core.domain.model.navigation.NavigationDrawerItem
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.UiTextHelper
+import com.d4rk.englishwithlidia.plus.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -57,7 +59,23 @@ class MainViewModelTest {
 
         val state = viewModel.uiState.value.data!!
         assertTrue(state.showSnackbar)
-        assertEquals(errorMessage, state.snackbarMessage)
+        assertEquals(UiTextHelper.DynamicString(errorMessage), state.snackbarMessage)
+    }
+
+    @Test
+    fun `navigation drawer load error without message uses fallback string resource`() = runTest {
+        val failingFlow: Flow<List<NavigationDrawerItem>> = flow { throw RuntimeException() }
+        val repository = FakeNavigationRepository(failingFlow)
+        val viewModel = MainViewModel(repository)
+
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value.data!!
+        assertTrue(state.showSnackbar)
+        assertEquals(
+            UiTextHelper.StringResource(R.string.navigation_drawer_load_error),
+            state.snackbarMessage
+        )
     }
 
     private class FakeNavigationRepository(

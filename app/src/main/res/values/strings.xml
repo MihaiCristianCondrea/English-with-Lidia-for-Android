@@ -2,6 +2,8 @@
 <resources>
     <string name="app_short_description">Learn English and relax in the same time! 📚</string>
 
+    <string name="navigation_drawer_load_error">Failed to load navigation</string>
+
     <string name="find_us">Find us on</string>
     <string name="website">Website</string>
 
