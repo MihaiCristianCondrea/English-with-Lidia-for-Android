@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.d4rk.android.libs.apptoolkit.core.di.StandardDispatchers
+import kotlinx.coroutines.CancellationException
 
 class AudioCacheEvictionWorker(
     appContext: Context,
@@ -12,8 +13,12 @@ class AudioCacheEvictionWorker(
 
     private val manager = AudioCacheManager(appContext, StandardDispatchers())
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = try {
         manager.evictStaleEntries()
-        return Result.success()
+        Result.success()
+    } catch (cancellationException: CancellationException) {
+        throw cancellationException
+    } catch (exception: Exception) {
+        Result.failure()
     }
 }
