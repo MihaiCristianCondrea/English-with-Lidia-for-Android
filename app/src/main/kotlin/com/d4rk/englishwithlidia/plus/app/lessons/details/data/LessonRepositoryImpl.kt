@@ -45,7 +45,9 @@ class LessonRepositoryImpl(
                 val updatedContent = mutableListOf<UiLessonContent>()
                 for (content in lesson.lessonContent) {
                     val audioUrl = if (content.contentAudioUrl.isNotBlank()) {
-                        audioCache.resolve(content.contentId, content.contentAudioUrl).toString()
+                        runCatching {
+                            audioCache.resolve(content.contentId, content.contentAudioUrl).toString()
+                        }.getOrDefault(content.contentAudioUrl)
                     } else content.contentAudioUrl
                     updatedContent += content.copy(contentAudioUrl = audioUrl)
                 }
