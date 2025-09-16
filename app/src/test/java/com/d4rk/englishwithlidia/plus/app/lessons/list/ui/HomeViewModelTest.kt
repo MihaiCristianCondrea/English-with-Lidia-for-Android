@@ -1,15 +1,20 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.list.ui
 
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
+import io.mockk.clearAllMocks
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -18,11 +23,10 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotNull
-import org.junit.jupiter.api.Assertions.assertTrue
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
@@ -37,96 +41,91 @@ class HomeViewModelTest {
     @AfterEach
     fun tearDown() {
         Dispatchers.resetMain()
+        clearAllMocks()
     }
 
     @Test
-    fun `state is loading while lessons are fetched`() = runTest {
-        val flow = MutableSharedFlow<HomeScreen>()
-        val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
-        val viewModel = HomeViewModel(useCase, HomeUiMapper())
+    fun `init triggers initial lessons fetch`() = runTest {
+        val repository = mockk<HomeRepository>()
+        every { repository.getHomeLessons() } returns flowOf(HomeScreen())
 
-        assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
+        HomeViewModel(GetHomeLessonsUseCase(repository), HomeUiMapper())
+        advanceUntilIdle()
+
+        verify(exactly = 1) { repository.getHomeLessons() }
     }
 
     @Test
-    fun `state is success when lessons available`() = runTest {
+    fun `uiState is success when repository returns lessons`() = runTest {
+        val repository = mockk<HomeRepository>()
         val lesson = HomeLesson(
             lessonId = "1",
-            lessonTitle = "Title",
+            lessonTitle = "Sample lesson",
             lessonType = "video",
-            lessonThumbnailImageUrl = "",
-            lessonDeepLinkPath = "",
+            lessonThumbnailImageUrl = "https://example.com/thumb.jpg",
+            lessonDeepLinkPath = "/lesson/1",
         )
-        val flow = MutableSharedFlow<HomeScreen>()
-        val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
-        val viewModel = HomeViewModel(useCase, HomeUiMapper())
+        every { repository.getHomeLessons() } returns flowOf(HomeScreen(lessons = listOf(lesson)))
 
-        flow.emit(HomeScreen())
-        flow.emit(HomeScreen(lessons = listOf(lesson)))
+        val viewModel = HomeViewModel(GetHomeLessonsUseCase(repository), HomeUiMapper())
         advanceUntilIdle()
 
-        val state = viewModel.uiState.value
-        assertTrue(state.screenState is ScreenState.Success)
-        val data = state.data
-        assertNotNull(data)
-        assertEquals(1, data!!.lessons.size)
-    }
-
-    @Test
-    fun `state is no data when lessons fetch fails`() = runTest {
-        val flow: Flow<HomeScreen> = flow { throw RuntimeException() }
-        val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
-        val viewModel = HomeViewModel(useCase, HomeUiMapper())
-
-        advanceUntilIdle()
-
-        val state = viewModel.uiState.value
-        assertTrue(state.screenState is ScreenState.NoData)
-        val data = state.data
-        assertNotNull(data)
-        assertTrue(data!!.lessons.isEmpty())
-    }
-
-    @Test
-    fun `state is no data when lessons list is empty`() = runTest {
-        val flow = flowOf(HomeScreen())
-        val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
-        val viewModel = HomeViewModel(useCase, HomeUiMapper())
-
-        advanceUntilIdle()
-
-        assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
-    }
-
-    @Test
-    fun `state becomes no data when lessons become empty`() = runTest {
-        val flow = MutableSharedFlow<HomeScreen>()
-        val useCase = GetHomeLessonsUseCase(FakeHomeRepository(flow))
-        val viewModel = HomeViewModel(useCase, HomeUiMapper())
-
-        val lesson = HomeLesson(
-            lessonId = "1",
-            lessonTitle = "Title",
-            lessonType = "video",
-            lessonThumbnailImageUrl = "",
-            lessonDeepLinkPath = "",
+        val expectedState = UiStateScreen(
+            screenState = ScreenState.Success(),
+            data = UiHomeScreen(
+                lessons = listOf(
+                    UiHomeLesson(
+                        lessonId = lesson.lessonId,
+                        lessonTitle = lesson.lessonTitle,
+                        lessonType = lesson.lessonType,
+                        lessonThumbnailImageUrl = lesson.lessonThumbnailImageUrl,
+                        lessonDeepLinkPath = lesson.lessonDeepLinkPath,
+                    ),
+                ),
+            ),
         )
 
-        flow.emit(HomeScreen(lessons = listOf(lesson)))
-        flow.emit(HomeScreen())
-        advanceUntilIdle()
-
         val state = viewModel.uiState.value
-        assertTrue(state.screenState is ScreenState.NoData)
-        val data = state.data
-        assertNotNull(data)
-        assertTrue(data?.lessons?.isEmpty() == true)
+        assertEquals(expectedState, state)
+        verify(exactly = 1) { repository.getHomeLessons() }
     }
 
-    private class FakeHomeRepository(
-        private val flow: Flow<HomeScreen>
-    ) : HomeRepository {
-        override fun getHomeLessons(): Flow<HomeScreen> = flow
+    @Test
+    fun `uiState is no data when repository returns empty lessons`() = runTest {
+        val repository = mockk<HomeRepository>()
+        every { repository.getHomeLessons() } returns flowOf(HomeScreen())
+
+        val viewModel = HomeViewModel(GetHomeLessonsUseCase(repository), HomeUiMapper())
+        advanceUntilIdle()
+
+        val expectedState = UiStateScreen(
+            screenState = ScreenState.NoData(),
+            data = UiHomeScreen(),
+        )
+
+        val state = viewModel.uiState.value
+        assertEquals(expectedState, state)
+        verify(exactly = 1) { repository.getHomeLessons() }
+    }
+
+    @Test
+    fun `uiState is no data when repository throws`() = runTest {
+        val repository = mockk<HomeRepository>()
+        every { repository.getHomeLessons() } returns flow {
+            throw IllegalStateException("boom")
+        }
+
+        val viewModel = HomeViewModel(GetHomeLessonsUseCase(repository), HomeUiMapper())
+        advanceUntilIdle()
+
+        val expectedState = UiStateScreen(
+            screenState = ScreenState.NoData(),
+            data = UiHomeScreen(),
+        )
+
+        val state = viewModel.uiState.value
+        assertEquals(expectedState, state)
+        assertTrue(state.screenState is ScreenState.NoData)
+        verify(exactly = 1) { repository.getHomeLessons() }
     }
 }
-
