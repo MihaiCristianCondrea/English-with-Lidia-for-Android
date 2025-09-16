@@ -64,4 +64,9 @@ class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
             currentActivity = null
         }
     }
+
+    override fun onTerminate() {
+        ProcessLifecycleOwner.get().lifecycle.removeObserver(this)
+        super<BaseCoreManager>.onTerminate()
+    }
 }
