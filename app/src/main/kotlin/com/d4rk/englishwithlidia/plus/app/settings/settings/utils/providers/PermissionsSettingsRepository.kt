@@ -1,6 +1,8 @@
 package com.d4rk.englishwithlidia.plus.app.settings.settings.utils.providers
 
 import android.content.Context
+import android.content.Intent
+import android.provider.Settings
 import com.d4rk.android.libs.apptoolkit.R
 import com.d4rk.android.libs.apptoolkit.app.permissions.domain.repository.PermissionsRepository
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsCategory
@@ -70,6 +72,7 @@ class PermissionsSettingsRepository(
                                 SettingsPreference(
                                     title = context.getString(R.string.access_notification_policy),
                                     summary = context.getString(R.string.summary_preference_permissions_access_notification_policy),
+                                    action = { openSpecialPermissionSettings(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS) },
                                 ),
                             ),
                         ),
@@ -77,4 +80,12 @@ class PermissionsSettingsRepository(
                 ),
             )
         }.flowOn(dispatchers.io)
+
+    private fun openSpecialPermissionSettings(action: String) {
+        val intent = Intent(action).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+
+        runCatching { context.startActivity(intent) }
+    }
 }
