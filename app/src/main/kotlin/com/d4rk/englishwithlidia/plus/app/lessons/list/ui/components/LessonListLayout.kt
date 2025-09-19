@@ -26,6 +26,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,6 +60,9 @@ fun LessonListLayout(
     val mediumRectangleConfig: AdsConfig =
         koinInject(qualifier = named(name = "banner_medium_rectangle"))
     val listState = rememberLazyListState()
+    val items by remember(lessons) {
+        derivedStateOf { buildAppListItems(lessons) }
+    }
 
     LazyColumn(
         modifier = modifier
@@ -68,59 +73,42 @@ fun LessonListLayout(
         state = listState,
     ) {
         itemsIndexed(
-            items = lessons,
-            key = { index, lesson ->
-                lesson.lessonId.ifBlank { "${lesson.lessonType}_$index" }
+            items = items,
+            key = { index, item ->
+                when (item) {
+                    LessonListItem.BannerImage -> "banner_image_$index"
+                    LessonListItem.ActionButtons -> "action_buttons_$index"
+                    LessonListItem.BannerAd -> "banner_ad_$index"
+                    LessonListItem.MediumRectangleAd -> "medium_rectangle_ad_$index"
+                    is LessonListItem.Lesson ->
+                        item.lesson.lessonId.ifBlank { "${item.lesson.lessonType}_$index" }
+                }
             },
-        ) { index, lesson ->
-            LessonItem(
-                lesson = lesson,
-                bannerConfig = bannerConfig,
-                mediumRectangleConfig = mediumRectangleConfig,
-                modifier = Modifier
-                    .animateItem()
-                    .animateVisibility(index = index),
-            )
-        }
-    }
-}
+            contentType = { _, item ->
+                when (item) {
+                    LessonListItem.BannerImage -> "banner_image"
+                    LessonListItem.ActionButtons -> "action_buttons"
+                    LessonListItem.BannerAd -> "banner_ad"
+                    LessonListItem.MediumRectangleAd -> "medium_rectangle_ad"
+                    is LessonListItem.Lesson -> "lesson"
+                }
+            },
+        ) { index, item ->
+            val itemModifier = Modifier
+                .animateItem()
+                .animateVisibility(index = index)
 
-@Composable
-fun LessonItem(
-    lesson: UiHomeLesson,
-    bannerConfig: AdsConfig,
-    mediumRectangleConfig: AdsConfig,
-    modifier: Modifier = Modifier,
-) {
-    val context = LocalContext.current
+            when (item) {
+                LessonListItem.BannerImage -> LessonBannerImage(modifier = itemModifier)
+                LessonListItem.ActionButtons -> LessonActionButtonsRow(modifier = itemModifier)
+                LessonListItem.BannerAd ->
+                    BannerAdView(modifier = itemModifier, adsConfig = bannerConfig)
 
-    when (lesson.lessonType) {
-        LessonConstants.TYPE_BANNER_IMAGE_LOCAL -> {
-            LessonBannerImage(modifier = modifier)
-        }
+                LessonListItem.MediumRectangleAd ->
+                    MediumRectangleAdView(modifier = itemModifier, adsConfig = mediumRectangleConfig)
 
-        LessonConstants.TYPE_ROW_BUTTONS_LOCAL -> {
-            LessonActionButtonsRow(modifier = modifier)
-        }
-
-        LessonConstants.TYPE_AD_VIEW_BANNER -> {
-            BannerAdView(modifier = modifier, adsConfig = bannerConfig)
-        }
-
-        LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> {
-            MediumRectangleAdView(modifier = modifier, adsConfig = mediumRectangleConfig)
-        }
-
-        LessonConstants.TYPE_FULL_IMAGE_BANNER -> {
-            val onLessonClick = remember(context, lesson) {
-                { openLessonDetailActivity(context = context, lesson = lesson) }
+                is LessonListItem.Lesson -> LessonCardItem(lesson = item.lesson, modifier = itemModifier)
             }
-            LessonCard(
-                title = lesson.lessonTitle,
-                imageResource = lesson.lessonThumbnailImageUrl,
-                onClick = onLessonClick,
-                modifier = modifier,
-            )
         }
     }
 }
@@ -190,6 +178,23 @@ private fun MediumRectangleAdView(
 }
 
 @Composable
+private fun LessonCardItem(
+    lesson: UiHomeLesson,
+    modifier: Modifier = Modifier,
+) {
+    val context = LocalContext.current
+    val onLessonClick = remember(context, lesson) {
+        { openLessonDetailActivity(context = context, lesson = lesson) }
+    }
+    LessonCard(
+        title = lesson.lessonTitle,
+        imageResource = lesson.lessonThumbnailImageUrl,
+        onClick = onLessonClick,
+        modifier = modifier,
+    )
+}
+
+@Composable
 fun LessonCard(
     title: String,
     imageResource: String,
@@ -224,5 +229,27 @@ fun LessonCard(
         )
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(modifier = Modifier.padding(horizontal = SizeConstants.MediumSize))
+    }
+}
+
+internal sealed interface LessonListItem {
+    data object BannerImage : LessonListItem
+    data object ActionButtons : LessonListItem
+    data object BannerAd : LessonListItem
+    data object MediumRectangleAd : LessonListItem
+    data class Lesson(val lesson: UiHomeLesson) : LessonListItem
+}
+
+internal fun buildAppListItems(
+    lessons: List<UiHomeLesson>,
+): List<LessonListItem> = buildList {
+    lessons.forEach { lesson ->
+        when (lesson.lessonType) {
+            LessonConstants.TYPE_BANNER_IMAGE_LOCAL -> add(LessonListItem.BannerImage)
+            LessonConstants.TYPE_ROW_BUTTONS_LOCAL -> add(LessonListItem.ActionButtons)
+            LessonConstants.TYPE_AD_VIEW_BANNER -> add(LessonListItem.BannerAd)
+            LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> add(LessonListItem.MediumRectangleAd)
+            else -> add(LessonListItem.Lesson(lesson))
+        }
     }
 }
