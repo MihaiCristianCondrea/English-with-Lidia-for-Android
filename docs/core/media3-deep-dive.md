@@ -39,12 +39,10 @@ Migrating from standalone ExoPlayer is recommended, as Media3 is now the officia
 
 ## In This Repository
 
-This project already uses Media3 ExoPlayer, session, and UI libraries in `app/build.gradle.kts`:
+This project already uses the Media3 dependency bundle in `app/build.gradle.kts`:
 
 ```kotlin
-implementation(dependencyNotation = libs.media3.exoplayer)
-implementation(dependencyNotation = libs.media3.ui)
-implementation(dependencyNotation = libs.media3.session)
+implementation(dependencyNotation = libs.bundles.media3)
 ```
 
 The `LessonViewModel` class demonstrates basic playback using an `ExoPlayer` instance.

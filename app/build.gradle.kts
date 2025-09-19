@@ -162,10 +162,8 @@ dependencies {
     }
 
 
-    // AndroidX Media3 ExoPlayer
-    implementation(dependencyNotation = libs.media3.exoplayer)
-    implementation(dependencyNotation = libs.media3.ui)
-    implementation(dependencyNotation = libs.media3.session)
+    // AndroidX Media3
+    implementation(dependencyNotation = libs.bundles.media3)
 
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
