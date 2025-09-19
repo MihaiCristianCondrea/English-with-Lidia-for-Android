@@ -14,6 +14,7 @@ testTurbine = "1.2.1"
 truth = "1.7.0"
 testManifestTestJunit4Android = "1.9.1"
 slf4j = "2.0.17"
+ktor = "3.3.0"
 
 [libraries]
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
@@ -22,6 +23,7 @@ media3-session = { module = "androidx.media3:media3-session", version.ref = "med
 
 # --- TESTING ---
 # Unit Tests (test folder)
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
 jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
 jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
@@ -58,7 +60,8 @@ unitTest = [
     "test-kotlin-coroutines",
     "test-turbine",
     "androidx-truth",
-    "slf4j-simple"
+    "slf4j-simple",
+    "ktor-client-mock"
 ]
 unitTestRuntime = ["jupiter-engine"]
 
@@ -73,4 +76,3 @@ instrumentationTest = [
     "androidx-ui-test-junit4-android",
     "androidx-truth",
 ]
-

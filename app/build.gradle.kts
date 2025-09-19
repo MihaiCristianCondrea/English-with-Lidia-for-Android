@@ -60,13 +60,21 @@ android {
         val githubFile = rootProject.file("github.properties")
         val githubToken = if (githubFile.exists()) {
             githubProps.load(githubFile.inputStream())
-            githubProps["GITHUB_TOKEN"].toString()
+            githubProps["GITHUB_TOKEN"]
+                ?.toString()
+                ?.trim()
+                ?.trim('"')
+                ?: ""
         } else {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
 
-        val developerAppsBaseUrl = project.findProperty("developerAppsBaseUrl")?.toString() ?: ""
+        val developerAppsBaseUrl = project.findProperty("developerAppsBaseUrl")
+            ?.toString()
+            ?.trim()
+            ?.trim('"')
+            ?: ""
         buildConfigField("String", "DEVELOPER_APPS_BASE_URL", "\"$developerAppsBaseUrl\"")
     }
 
@@ -162,7 +170,6 @@ dependencies {
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
     testRuntimeOnly(dependencyNotation = libs.bundles.unitTestRuntime)
-    testImplementation(dependencyNotation = "io.ktor:ktor-client-mock:3.2.3")
 
     // Instrumentation Tests
     androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
