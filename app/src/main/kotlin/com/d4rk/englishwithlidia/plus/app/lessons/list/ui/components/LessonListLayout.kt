@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateItem
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -95,8 +94,8 @@ fun LessonListLayout(
             },
         ) { index, item ->
             val itemModifier = Modifier
-                .animateItem()
                 .animateVisibility(index = index)
+                .animateItem()
 
             when (item) {
                 LessonListItem.BannerImage -> LessonBannerImage(modifier = itemModifier)
