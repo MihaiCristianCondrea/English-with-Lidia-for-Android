@@ -1,5 +1,6 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.list.ui.components
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,9 +15,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Language
@@ -25,8 +29,9 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -39,6 +44,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.android.libs.apptoolkit.core.utils.helpers.ScreenHelper
 import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
 import com.d4rk.englishwithlidia.plus.app.main.ui.components.navigation.openLessonDetailActivity
@@ -55,27 +61,68 @@ fun LessonListLayout(
     val bannerConfig: AdsConfig = koinInject()
     val mediumRectangleConfig: AdsConfig =
         koinInject(qualifier = named(name = "banner_medium_rectangle"))
-    val listState = rememberLazyListState()
+    val context = LocalContext.current
+    val isTabletOrLandscape = remember(context) {
+        ScreenHelper.isLandscapeOrTablet(context = context)
+    }
+    val columnCount by remember(isTabletOrLandscape) {
+        derivedStateOf { if (isTabletOrLandscape) 4 else 2 }
+    }
+    val listState = rememberLazyGridState()
 
-    LazyColumn(
+    LessonsGrid(
+        lessons = lessons,
+        paddingValues = paddingValues,
+        modifier = modifier,
+        columnCount = columnCount,
+        listState = listState,
+        bannerConfig = bannerConfig,
+        mediumRectangleConfig = mediumRectangleConfig,
+    )
+}
+
+@Composable
+@OptIn(ExperimentalFoundationApi::class)
+private fun LessonsGrid(
+    lessons: List<UiHomeLesson>,
+    paddingValues: PaddingValues,
+    modifier: Modifier = Modifier,
+    columnCount: Int,
+    listState: LazyGridState,
+    bannerConfig: AdsConfig,
+    mediumRectangleConfig: AdsConfig,
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(count = columnCount),
+        state = listState,
         modifier = modifier
             .fillMaxSize()
             .padding(paddingValues),
+        contentPadding = PaddingValues(SizeConstants.LargeSize),
         verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        state = listState,
+        horizontalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
     ) {
-        items(
+        itemsIndexed(
             items = lessons,
-            key = { lesson -> lesson.lessonId },
-        ) { lesson ->
+            key = { index, lesson ->
+                lesson.lessonId.ifBlank { "${lesson.lessonType}_$index" }
+            },
+            span = { _, lesson ->
+                if (lesson.shouldSpanFullWidth()) {
+                    GridItemSpan(columnCount)
+                } else {
+                    GridItemSpan(1)
+                }
+            },
+            contentType = { _, lesson -> lesson.lessonType },
+        ) { index, lesson ->
             LessonItem(
                 lesson = lesson,
                 bannerConfig = bannerConfig,
                 mediumRectangleConfig = mediumRectangleConfig,
                 modifier = Modifier
-                    .animateVisibility()
-                    .animateItem(),
+                    .animateItem()
+                    .animateVisibility(index = index),
             )
         }
     }
@@ -118,6 +165,17 @@ fun LessonItem(
                 modifier = modifier,
             )
         }
+    }
+}
+
+private fun UiHomeLesson.shouldSpanFullWidth(): Boolean {
+    return when (lessonType) {
+        LessonConstants.TYPE_FULL_IMAGE_BANNER -> false
+        LessonConstants.TYPE_BANNER_IMAGE_LOCAL,
+        LessonConstants.TYPE_ROW_BUTTONS_LOCAL,
+        LessonConstants.TYPE_AD_VIEW_BANNER,
+        LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> true
+        else -> false
     }
 }
 
@@ -190,9 +248,7 @@ fun LessonCard(
     title: String, imageResource: String, onClick: () -> Unit, modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier = modifier.fillMaxWidth(),
     ) {
         Card(
             modifier = Modifier
@@ -213,9 +269,11 @@ fun LessonCard(
         Text(
             text = title,
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = SizeConstants.MediumSize)
         )
         Spacer(modifier = Modifier.height(16.dp))
-        HorizontalDivider()
+        HorizontalDivider(modifier = Modifier.padding(horizontal = SizeConstants.MediumSize))
     }
 }
