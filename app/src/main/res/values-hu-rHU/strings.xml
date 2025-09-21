@@ -3,6 +3,10 @@
   <string name="app_short_description">Tanuljon meg angolul, és lazítson ugyanabban az időben! 📚</string>
   <string name="find_us">Keressen minket</string>
   <string name="website">Weboldal</string>
+  <string name="onboarding_welcome_title">Üdvözöljük az angol nyelvben a Lidia Plus segítségével</string>
+  <string name="onboarding_welcome_description">Ismerje meg barátságos angoltanárát, és kezdjen el egy pihentető nyelvi utazást.</string>
+  <string name="onboarding_learn_title">Tanuljon leckékkel és podcastokkal</string>
+  <string name="onboarding_learn_description">Olvassa el az irányított leckéket, vagy hallgasson meg lebilincselő hangos történeteket, amikor csak szeretné.</string>
   <string name="question_1">Mi az angol a Lidia Plus -val?</string>
   <string name="summary_preference_faq_1">Angolul a Lidia Plus -val egy olyan alkalmazás, amely segít angolul megtanulni, ha elolvassa vagy meghallgatja a Lidia, az angol tanár által írt blogbejegyzéseket.</string>
   <string name="question_2">Hogyan használhatom az alkalmazást?</string>

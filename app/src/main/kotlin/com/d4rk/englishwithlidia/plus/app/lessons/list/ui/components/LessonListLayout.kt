@@ -67,7 +67,6 @@ fun LessonListLayout(
         modifier = modifier
             .fillMaxSize()
             .padding(paddingValues),
-        contentPadding = PaddingValues(SizeConstants.LargeSize),
         verticalArrangement = Arrangement.spacedBy(SizeConstants.LargeSize),
         state = listState,
     ) {
@@ -93,20 +92,40 @@ fun LessonListLayout(
                 }
             },
         ) { index, item ->
-            val itemModifier = Modifier
-                .animateVisibility(index = index)
-                .animateItem()
-
             when (item) {
-                LessonListItem.BannerImage -> LessonBannerImage(modifier = itemModifier)
-                LessonListItem.ActionButtons -> LessonActionButtonsRow(modifier = itemModifier)
+                LessonListItem.BannerImage -> LessonBannerImage(
+                    modifier = Modifier
+                        .animateVisibility(index = index)
+                        .animateItem(),
+                )
+                LessonListItem.ActionButtons -> LessonActionButtonsRow(
+                    modifier = Modifier
+                        .animateVisibility(index = index)
+                        .animateItem(),
+                )
                 LessonListItem.BannerAd ->
-                    BannerAdView(modifier = itemModifier, adsConfig = bannerConfig)
+                    BannerAdView(
+                        modifier = Modifier
+                            .animateVisibility(index = index)
+                            .animateItem(),
+                        adsConfig = bannerConfig,
+                    )
 
                 LessonListItem.MediumRectangleAd ->
-                    MediumRectangleAdView(modifier = itemModifier, adsConfig = mediumRectangleConfig)
+                    MediumRectangleAdView(
+                        modifier = Modifier
+                            .animateVisibility(index = index)
+                            .animateItem(),
+                        adsConfig = mediumRectangleConfig,
+                    )
 
-                is LessonListItem.Lesson -> LessonCardItem(lesson = item.lesson, modifier = itemModifier)
+                is LessonListItem.Lesson -> LessonCardItem(
+                    lesson = item.lesson,
+                    modifier = Modifier
+                        .animateVisibility(index = index)
+                        .animateItem()
+                        .padding(horizontal = SizeConstants.LargeSize),
+                )
             }
         }
     }

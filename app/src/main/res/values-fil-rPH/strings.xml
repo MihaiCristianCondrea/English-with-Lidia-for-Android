@@ -3,6 +3,10 @@
   <string name="app_short_description">Alamin ang Ingles at magpahinga sa parehong oras! 📚</string>
   <string name="find_us">Hanapin kami sa</string>
   <string name="website">Website</string>
+  <string name="onboarding_welcome_title">Maligayang pagdating sa Ingles na may Lidia Plus</string>
+  <string name="onboarding_welcome_description">Kilalanin ang iyong magiliw na guro ng Ingles at magsimula ng isang nakakarelaks na paglalakbay sa wika.</string>
+  <string name="onboarding_learn_title">Matuto gamit ang mga aralin at podcast</string>
+  <string name="onboarding_learn_description">Magbasa ng mga ginagabayang aralin o makinig sa mga nakakaengganyong kuwentong audio sa tuwing nababagay ito sa iyo.</string>
   <string name="question_1">Ano ang Ingles na may Lidia Plus?</string>
   <string name="summary_preference_faq_1">Ang Ingles na may Lidia Plus ay isang app na tumutulong sa iyo na matuto ng Ingles sa pamamagitan ng pagbabasa o pakikinig sa mga post sa blog na isinulat ni Lidia, isang guro ng Ingles.</string>
   <string name="question_2">Paano ko magagamit ang app?</string>

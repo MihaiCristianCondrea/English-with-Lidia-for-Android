@@ -3,6 +3,10 @@
   <string name="app_short_description">Học tiếng Anh và thư giãn trong cùng một lúc! 📚</string>
   <string name="find_us">Tìm chúng tôi trên</string>
   <string name="website">Trang web</string>
+  <string name="onboarding_welcome_title">Chào mừng bạn đến với tiếng Anh với Lidia Plus</string>
+  <string name="onboarding_welcome_description">Gặp gỡ giáo viên tiếng Anh thân thiện của bạn và bắt đầu một hành trình ngôn ngữ thư giãn.</string>
+  <string name="onboarding_learn_title">Học bằng bài học và podcast</string>
+  <string name="onboarding_learn_description">Đọc các bài học được hướng dẫn hoặc nghe các câu chuyện âm thanh hấp dẫn bất cứ khi nào phù hợp với bạn.</string>
   <string name="question_1">Tiếng Anh với Lidia Plus là gì?</string>
   <string name="summary_preference_faq_1">Tiếng Anh với Lidia Plus là một ứng dụng giúp bạn học tiếng Anh bằng cách đọc hoặc nghe các bài đăng trên blog được viết bởi Lidia, một giáo viên tiếng Anh.</string>
   <string name="question_2">Làm thế nào tôi có thể sử dụng ứng dụng?</string>

@@ -3,6 +3,10 @@
   <string name="app_short_description">Învață engleza și relaxează -te în același timp! 📚</string>
   <string name="find_us">Găsiți -ne pe</string>
   <string name="website">Site -ul web</string>
+  <string name="onboarding_welcome_title">Bine ai venit în limba engleză cu Lidia Plus</string>
+  <string name="onboarding_welcome_description">Fă cunoștință cu profesorul tău prietenos de engleză și începe o călătorie lingvistică relaxantă.</string>
+  <string name="onboarding_learn_title">Învățați cu lecții și podcasturi</string>
+  <string name="onboarding_learn_description">Citiți lecții ghidate sau ascultați povești audio captivante ori de câte ori vi se potrivește.</string>
   <string name="question_1">Ce este engleza cu Lidia Plus?</string>
   <string name="summary_preference_faq_1">Engleza cu Lidia Plus este o aplicație care te ajută să înveți limba engleză citind sau ascultând postări pe blog scrise de Lidia, profesor de engleză.</string>
   <string name="question_2">Cum pot folosi aplicația?</string>

@@ -3,6 +3,10 @@
   <string name="app_short_description">เรียนรู้ภาษาอังกฤษและผ่อนคลายในเวลาเดียวกัน!</string>
   <string name="find_us">ค้นหาเราใน</string>
   <string name="website">เว็บไซต์</string>
+  <string name="onboarding_welcome_title">ยินดีต้อนรับสู่ภาษาอังกฤษกับลีเดียพลัส</string>
+  <string name="onboarding_welcome_description">พบกับครูสอนภาษาอังกฤษที่เป็นมิตรของคุณและเริ่มต้นเส้นทางภาษาที่ผ่อนคลาย</string>
+  <string name="onboarding_learn_title">เรียนรู้ด้วยบทเรียนและพอดคาสต์</string>
+  <string name="onboarding_learn_description">อ่านบทเรียนที่มีคำแนะนำหรือฟังเรื่องราวเสียงที่น่าสนใจเมื่อใดก็ตามที่เหมาะกับคุณ</string>
   <string name="question_1">ภาษาอังกฤษกับ Lidia Plus คืออะไร?</string>
   <string name="summary_preference_faq_1">ภาษาอังกฤษกับ Lidia Plus เป็นแอพที่ช่วยให้คุณเรียนรู้ภาษาอังกฤษโดยการอ่านหรือฟังโพสต์บล็อกที่เขียนโดย Lidia ครูสอนภาษาอังกฤษ</string>
   <string name="question_2">ฉันจะใช้แอพได้อย่างไร?</string>
