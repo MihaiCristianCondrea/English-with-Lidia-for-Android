@@ -49,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
@@ -81,6 +82,9 @@ fun LessonContentLayout(
             when (contentItem.contentType) {
                 LessonContentTypes.HEADER -> {
                     StyledText(
+                        modifier = Modifier
+                            .animateItem()
+                            .animateVisibility(),
                         text = contentItem.contentText,
                         style = TextStyles.header(),
                         color = Colors.primaryText(),
@@ -89,6 +93,9 @@ fun LessonContentLayout(
 
                 LessonContentTypes.TEXT -> {
                     StyledText(
+                        modifier = Modifier
+                            .animateItem()
+                            .animateVisibility(),
                         text = contentItem.contentText,
                         style = TextStyles.body(),
                         color = Colors.secondaryText(),
@@ -103,6 +110,9 @@ fun LessonContentLayout(
                     val hasPlaybackError = lesson.hasPlaybackError
 
                     AudioCardView(
+                        modifier = Modifier
+                            .animateItem()
+                            .animateVisibility(),
                         onPlayClick = onPlayClick,
                         sliderPosition = sliderPosition.toFloat() / 1000f,
                         playbackDuration = playbackDuration.toFloat() / 1000f,
@@ -119,6 +129,9 @@ fun LessonContentLayout(
 
                 LessonContentTypes.IMAGE -> {
                     StyledImage(
+                        modifier = Modifier
+                            .animateItem()
+                            .animateVisibility(),
                         imageUrl = contentItem.contentImageUrl,
                         contentDescription = "Lesson Image",
                     )
@@ -148,6 +161,7 @@ fun LessonContentLayout(
 
 @Composable
 fun StyledText(
+    modifier: Modifier = Modifier,
     text: String,
     style: TextStyle = TextStyles.body(),
     color: Color = Colors.primaryText(),
@@ -155,6 +169,7 @@ fun StyledText(
     val annotatedString = remember(text) { AnnotatedString.fromHtml(text) }
 
     Text(
+        modifier = modifier,
         text = annotatedString,
         style = style,
         color = color,
@@ -181,6 +196,7 @@ fun StyledImage(
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AudioCardView(
+    modifier: Modifier = Modifier,
     onPlayClick: () -> Unit,
     sliderPosition: Float,
     playbackDuration: Float,
@@ -209,7 +225,7 @@ fun AudioCardView(
         label = "",
     )
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         OutlinedCard(
             modifier = Modifier
                 .fillMaxWidth()

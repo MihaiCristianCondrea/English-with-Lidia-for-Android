@@ -105,17 +105,11 @@ fun LessonListLayout(
                 )
                 LessonListItem.BannerAd ->
                     BannerAdView(
-                        modifier = Modifier
-                            .animateVisibility(index = index)
-                            .animateItem(),
                         adsConfig = bannerConfig,
                     )
 
                 LessonListItem.MediumRectangleAd ->
                     MediumRectangleAdView(
-                        modifier = Modifier
-                            .animateVisibility(index = index)
-                            .animateItem(),
                         adsConfig = mediumRectangleConfig,
                     )
 
