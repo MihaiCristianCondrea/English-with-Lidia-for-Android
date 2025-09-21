@@ -3,6 +3,10 @@
   <string name="app_short_description">英語を学び、同時にリラックスしてください！ 📚</string>
   <string name="find_us">私たちを見つけてください</string>
   <string name="website">Webサイト</string>
+  <string name="onboarding_welcome_title">Lidia Plusの英語へようこそ</string>
+  <string name="onboarding_welcome_description">フレンドリーな英語の先生に会い、リラックスした言語の旅を始めましょう。</string>
+  <string name="onboarding_learn_title">レッスンとポッドキャストで学ぼう</string>
+  <string name="onboarding_learn_description">ガイド付きレッスンを読んだり、自分に合ったときに魅力的なオーディオストーリーを聴いたりできます。</string>
   <string name="question_1">Lidia Plusの英語とは何ですか？</string>
   <string name="summary_preference_faq_1">Lidia Plusと英語は、英語の教師であるLidiaが書いたブログ投稿を読んだり聴いたりすることで、英語を学ぶのに役立つアプリです。</string>
   <string name="question_2">アプリを使用するにはどうすればよいですか？</string>

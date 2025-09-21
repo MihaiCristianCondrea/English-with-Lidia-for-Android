@@ -3,6 +3,10 @@
   <string name="app_short_description">Belajar bahasa Inggris dan bersantai dalam waktu yang sama! 📚</string>
   <string name="find_us">Temukan kami di</string>
   <string name="website">Situs web</string>
+  <string name="onboarding_welcome_title">Selamat datang di bahasa Inggris dengan Lidia Plus</string>
+  <string name="onboarding_welcome_description">Temui guru bahasa Inggris Anda yang ramah dan mulailah perjalanan bahasa yang santai.</string>
+  <string name="onboarding_learn_title">Belajar dengan pelajaran dan podcast</string>
+  <string name="onboarding_learn_description">Baca pelajaran berpemandu atau dengarkan cerita audio yang menarik kapan pun cocok untuk Anda.</string>
   <string name="question_1">Apa itu bahasa Inggris dengan lidia plus?</string>
   <string name="summary_preference_faq_1">Bahasa Inggris dengan Lidia Plus adalah aplikasi yang membantu Anda belajar bahasa Inggris dengan membaca atau mendengarkan posting blog yang ditulis oleh Lidia, seorang guru bahasa Inggris.</string>
   <string name="question_2">Bagaimana cara menggunakan aplikasi ini?</string>

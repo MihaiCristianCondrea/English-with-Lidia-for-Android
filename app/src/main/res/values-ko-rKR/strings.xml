@@ -3,6 +3,10 @@
   <string name="app_short_description">영어를 배우고 동시에 휴식을 취하십시오! 📚</string>
   <string name="find_us">우리를 찾으십시오</string>
   <string name="website">웹 사이트</string>
+  <string name="onboarding_welcome_title">Lidia Plus와 함께하는 영어 학습에 오신 것을 환영합니다</string>
+  <string name="onboarding_welcome_description">친절한 영어 선생님을 만나 편안한 언어 여행을 시작하세요.</string>
+  <string name="onboarding_learn_title">레슨과 팟캐스트로 배우기</string>
+  <string name="onboarding_learn_description">원할 때마다 가이드 레슨을 읽거나 매력적인 오디오 스토리를 들어보세요.</string>
   <string name="question_1">Lidia Plus와 함께 영어는 무엇입니까?</string>
   <string name="summary_preference_faq_1">Lidia Plus의 영어는 영어 교사 인 Lidia가 작성한 블로그 게시물을 읽거나 듣는 데 영어를 배우는 데 도움이되는 앱입니다.</string>
   <string name="question_2">앱을 어떻게 사용할 수 있습니까?</string>

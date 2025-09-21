@@ -3,6 +3,10 @@
   <string name="app_short_description">學習英語並同時放鬆！ 📚</string>
   <string name="find_us">找到我們</string>
   <string name="website">網站</string>
+  <string name="onboarding_welcome_title">歡迎來到Lidia Plus英語課程</string>
+  <string name="onboarding_welcome_description">認識友善的英語老師，開始一段輕鬆的語言之旅。</string>
+  <string name="onboarding_learn_title">透過課程和 Podcast 學習</string>
+  <string name="onboarding_learn_description">閱讀引導課程，或在適合您的情況下聆聽引人入勝的音訊故事。</string>
   <string name="question_1">Lidia Plus的英語是什麼？</string>
   <string name="summary_preference_faq_1">Lidia Plus的英語是一個應用程序，可以通過閱讀或聽英語老師Lidia撰寫的博客文章來幫助您學習英語。</string>
   <string name="question_2">如何使用該應用程序？</string>

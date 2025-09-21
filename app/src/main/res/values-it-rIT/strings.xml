@@ -3,6 +3,10 @@
   <string name="app_short_description">Impara l\'inglese e rilassati allo stesso tempo! 📚</string>
   <string name="find_us">Trovaci</string>
   <string name="website">Sito web</string>
+  <string name="onboarding_welcome_title">Benvenuto in inglese con Lidia Plus</string>
+  <string name="onboarding_welcome_description">Incontra il tuo simpatico insegnante di inglese e inizia un rilassante viaggio linguistico.</string>
+  <string name="onboarding_learn_title">Impara con lezioni e podcast</string>
+  <string name="onboarding_learn_description">Leggi lezioni guidate o ascolta storie audio coinvolgenti ogni volta che ti fa comodo.</string>
   <string name="question_1">Cos\'è l\'inglese con Lidia Plus?</string>
   <string name="summary_preference_faq_1">English with Lidia Plus è un\'app che ti aiuta a imparare l\'inglese leggendo o ascoltando i post del blog scritti da Lidia, un insegnante di inglese.</string>
   <string name="question_2">Come posso usare l\'app?</string>
