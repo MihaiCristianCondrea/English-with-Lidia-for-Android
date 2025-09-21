@@ -32,6 +32,9 @@ class LessonActivity : ActivityPlayer() {
                     mediumRectangleConfig = mediumRectangleConfig,
                     onBack = { finish() },
                     onPlayClick = { playPause() },
+                    onSeek = { positionInSeconds ->
+                        seekTo((positionInSeconds * 1000).toLong())
+                    },
                     onPreparePlayer = { content, lessonTitle ->
                         preparePlayer(
                             audioUrl = content.contentAudioUrl,

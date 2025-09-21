@@ -161,6 +161,8 @@ dependencies {
         isTransitive = true
     }
 
+    implementation(dependencyNotation = "ir.mahozad.multiplatform:wavy-slider:2.1.0")
+
 
     // AndroidX Media3
     implementation(dependencyNotation = libs.bundles.media3)
