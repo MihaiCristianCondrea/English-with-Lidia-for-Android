@@ -19,17 +19,20 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearWavyProgressIndicator
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.ProgressIndicatorDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,6 +50,7 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLess
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.Colors
 import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.TextStyles
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonContentTypes
+import ir.mahozad.multiplatform.wavyslider.material3.WavySlider as WavySlider3
 
 @Composable
 fun LessonContentLayout(
@@ -56,6 +60,7 @@ fun LessonContentLayout(
     bannerConfig: AdsConfig,
     mediumRectangleConfig: AdsConfig,
     onPlayClick: () -> Unit,
+    onSeek: (Float) -> Unit,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -99,6 +104,7 @@ fun LessonContentLayout(
                             sliderPosition = sliderPosition.toFloat() / 1000f,
                             playbackDuration = playbackDuration.toFloat() / 1000f,
                             isPlaying = isPlaying,
+                            onSeek = onSeek,
                         )
                     }
                 }
@@ -187,24 +193,24 @@ fun PlaybackErrorView() {
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@OptIn(ExperimentalMaterial3ExpressiveApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun AudioCardView(
     onPlayClick: () -> Unit,
     sliderPosition: Float,
     playbackDuration: Float,
     isPlaying: Boolean,
+    onSeek: (Float) -> Unit,
 ) {
-    val progress = if (playbackDuration > 0f) {
-        sliderPosition / playbackDuration
-    } else {
-        0f
+    val sliderMax = if (playbackDuration > 0f) playbackDuration else 1f
+    var sliderValue by remember { mutableFloatStateOf(sliderPosition.coerceIn(0f, sliderMax)) }
+    var isDragging by remember { mutableStateOf(false) }
+
+    LaunchedEffect(sliderPosition, sliderMax) {
+        if (!isDragging) {
+            sliderValue = sliderPosition.coerceIn(0f, sliderMax)
+        }
     }
-    val animatedProgress by animateFloatAsState(
-        targetValue = progress,
-        animationSpec = ProgressIndicatorDefaults.ProgressAnimationSpec,
-        label = "",
-    )
     val cornerRadius = animateFloatAsState(
         targetValue = if (isPlaying) 16f else 28f,
         animationSpec = tween(durationMillis = 200),
@@ -241,12 +247,24 @@ fun AudioCardView(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                LinearWavyProgressIndicator(
-                    progress = { animatedProgress },
+                WavySlider3(
+                    value = sliderValue,
+                    onValueChange = { value ->
+                        isDragging = true
+                        sliderValue = value
+                    },
+                    onValueChangeFinished = {
+                        val targetValue = sliderValue.coerceIn(0f, sliderMax)
+                        sliderValue = targetValue
+                        onSeek(targetValue)
+                        isDragging = false
+                    },
+                    valueRange = 0f..sliderMax,
+                    enabled = playbackDuration > 0f,
+                    waveHeight = if (isPlaying) 12.dp else 0.dp,
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(4f),
-                    amplitude = { if (isPlaying) 1f else 0f },
                 )
             }
         }
