@@ -56,6 +56,10 @@ class LessonViewModel(
         screenState.copyData { copy(isPlaying = isPlaying) }
     }
 
+    override fun updateIsBuffering(isBuffering: Boolean) {
+        screenState.copyData { copy(isBuffering = isBuffering) }
+    }
+
     override fun updatePlaybackDuration(duration: Long) {
         screenState.copyData { copy(playbackDuration = duration) }
     }
@@ -65,6 +69,8 @@ class LessonViewModel(
     }
 
     override fun onPlaybackError() {
-        screenState.copyData { copy(hasPlaybackError = true, isPlaying = false) }
+        screenState.copyData {
+            copy(hasPlaybackError = true, isPlaying = false, isBuffering = false)
+        }
     }
 }

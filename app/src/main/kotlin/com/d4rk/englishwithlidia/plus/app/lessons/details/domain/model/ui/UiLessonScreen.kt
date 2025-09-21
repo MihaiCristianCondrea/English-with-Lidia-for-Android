@@ -5,6 +5,7 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class UiLessonScreen(
     val isPlaying: Boolean = false,
+    val isBuffering: Boolean = false,
     val playbackPosition: Long = 0L,
     val playbackDuration: Long = 0L,
     val hasPlaybackError: Boolean = false,

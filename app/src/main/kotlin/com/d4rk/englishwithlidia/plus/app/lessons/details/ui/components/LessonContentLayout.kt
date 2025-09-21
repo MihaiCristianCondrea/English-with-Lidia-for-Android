@@ -1,5 +1,6 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +10,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
@@ -19,10 +22,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -94,18 +99,18 @@ fun LessonContentLayout(
                     val sliderPosition = lesson.playbackPosition
                     val playbackDuration = lesson.playbackDuration
                     val isPlaying = lesson.isPlaying
+                    val isBuffering = lesson.isBuffering
+                    val hasPlaybackError = lesson.hasPlaybackError
 
-                    if (lesson.hasPlaybackError) {
-                        PlaybackErrorView()
-                    } else {
-                        AudioCardView(
-                            onPlayClick = onPlayClick,
-                            sliderPosition = sliderPosition.toFloat() / 1000f,
-                            playbackDuration = playbackDuration.toFloat() / 1000f,
-                            isPlaying = isPlaying,
-                            onSeek = onSeek,
-                        )
-                    }
+                    AudioCardView(
+                        onPlayClick = onPlayClick,
+                        sliderPosition = sliderPosition.toFloat() / 1000f,
+                        playbackDuration = playbackDuration.toFloat() / 1000f,
+                        isPlaying = isPlaying,
+                        isBuffering = isBuffering,
+                        hasPlaybackError = hasPlaybackError,
+                        onSeek = onSeek,
+                    )
                 }
 
                 LessonContentTypes.TYPE_DIVIDER -> {
@@ -173,25 +178,6 @@ fun StyledImage(
         )
     }
 }
-@Composable
-fun PlaybackErrorView() {
-    OutlinedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        shape = RoundedCornerShape(28.dp),
-    ) {
-        Text(
-            text = "Playback unavailable",
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
-            style = TextStyles.body(),
-            color = Colors.secondaryText(),
-        )
-    }
-}
-
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AudioCardView(
@@ -199,6 +185,8 @@ fun AudioCardView(
     sliderPosition: Float,
     playbackDuration: Float,
     isPlaying: Boolean,
+    isBuffering: Boolean,
+    hasPlaybackError: Boolean,
     onSeek: (Float) -> Unit,
 ) {
     val sliderMax = if (playbackDuration > 0f) playbackDuration else 1f
@@ -211,58 +199,105 @@ fun AudioCardView(
         }
     }
     val cornerRadius = animateFloatAsState(
-        targetValue = if (isPlaying) 16f else 28f,
+        targetValue = if (isPlaying || isBuffering) 16f else 28f,
         animationSpec = tween(durationMillis = 200),
         label = "",
     ).value
+    val bottomCornerRadius by animateDpAsState(
+        targetValue = if (hasPlaybackError) 4.dp else 28.dp,
+        animationSpec = tween(durationMillis = 200),
+        label = "",
+    )
 
-    OutlinedCard(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
-        shape = RoundedCornerShape(28.dp),
-    ) {
-        Column(
+    Column(modifier = Modifier.fillMaxWidth()) {
+        OutlinedCard(
             modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+                .padding(top = 8.dp, bottom = if (hasPlaybackError) 0.dp else 8.dp),
+            shape = RoundedCornerShape(
+                topStart = 28.dp,
+                topEnd = 28.dp,
+                bottomStart = bottomCornerRadius,
+                bottomEnd = bottomCornerRadius,
+            ),
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth(),
             ) {
-                FloatingActionButton(
-                    onClick = onPlayClick,
-                    modifier = Modifier
-                        .bounceClick(),
-                    shape = RoundedCornerShape(cornerRadius.dp),
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    Icon(
-                        imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
-                        contentDescription = if (isPlaying) "Pause" else "Play",
+                    FloatingActionButton(
+                        onClick = onPlayClick,
+                        modifier = Modifier
+                            .bounceClick(),
+                        shape = RoundedCornerShape(cornerRadius.dp),
+                    ) {
+                        if (isBuffering) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(24.dp),
+                                strokeWidth = 2.dp,
+                                color = LocalContentColor.current,
+                            )
+                        } else {
+                            Icon(
+                                imageVector = if (isPlaying) Icons.Filled.Pause else Icons.Filled.PlayArrow,
+                                contentDescription = if (isPlaying) "Pause" else "Play",
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Slider(
+                        value = sliderValue,
+                        onValueChange = { value ->
+                            isDragging = true
+                            sliderValue = value
+                        },
+                        modifier = Modifier
+                            .weight(4f)
+                            .fillMaxWidth(),
+                        enabled = playbackDuration > 0f,
+                        valueRange = 0f..sliderMax,
+                        onValueChangeFinished = {
+                            val targetValue = sliderValue.coerceIn(0f, sliderMax)
+                            sliderValue = targetValue
+                            onSeek(targetValue)
+                            isDragging = false
+                        },
                     )
                 }
+            }
+        }
 
-                Spacer(modifier = Modifier.width(16.dp))
+        if (hasPlaybackError) {
+            Spacer(modifier = Modifier.height(4.dp))
 
-                Slider(
-                    value = sliderValue,
-                    onValueChange = { value ->
-                        isDragging = true
-                        sliderValue = value
-                    },
+            OutlinedCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
+                    .padding(bottom = 8.dp),
+                shape = RoundedCornerShape(
+                    topStart = 4.dp,
+                    topEnd = 4.dp,
+                    bottomStart = 28.dp,
+                    bottomEnd = 28.dp,
+                ),
+            ) {
+                Text(
+                    text = "Playback unavailable",
                     modifier = Modifier
-                        .weight(4f)
+                        .padding(16.dp)
                         .fillMaxWidth(),
-                    enabled = playbackDuration > 0f,
-                    valueRange = 0f..sliderMax,
-                    onValueChangeFinished = {
-                        val targetValue = sliderValue.coerceIn(0f, sliderMax)
-                        sliderValue = targetValue
-                        onSeek(targetValue)
-                        isDragging = false
-                    },
+                    style = TextStyles.body(),
+                    color = Colors.secondaryText(),
                 )
             }
         }
