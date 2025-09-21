@@ -50,13 +50,24 @@ abstract class ActivityPlayer : AppCompatActivity() {
                 }
 
                 override fun onPlaybackStateChanged(playbackState: Int) {
-                    if (playbackState == Player.STATE_READY) {
-                        val duration = player?.duration ?: 0L
-                        playbackHandler.updatePlaybackDuration(duration)
+                    when (playbackState) {
+                        Player.STATE_BUFFERING -> {
+                            val shouldShowBuffering = player?.playWhenReady == true
+                            playbackHandler.updateIsBuffering(shouldShowBuffering)
+                        }
+                        Player.STATE_READY -> {
+                            playbackHandler.updateIsBuffering(false)
+                            val duration = player?.duration ?: 0L
+                            playbackHandler.updatePlaybackDuration(duration)
+                        }
+                        Player.STATE_IDLE, Player.STATE_ENDED -> {
+                            playbackHandler.updateIsBuffering(false)
+                        }
                     }
                 }
                 override fun onPlayerError(error: PlaybackException) {
                     playbackHandler.updateIsPlaying(false)
+                    playbackHandler.updateIsBuffering(false)
                     playbackHandler.onPlaybackError()
                     positionJob?.cancel()
                 }
