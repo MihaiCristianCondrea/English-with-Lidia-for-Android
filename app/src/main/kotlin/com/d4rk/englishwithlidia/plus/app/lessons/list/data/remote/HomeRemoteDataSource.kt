@@ -10,7 +10,7 @@ import kotlinx.serialization.json.Json
 /**
  * Abstraction for fetching the remote home lessons payload.
  */
-interface HomeRemoteDataSource {
+fun interface HomeRemoteDataSource {
     suspend fun fetchHomeLessons(): ApiHomeResponse?
 }
 

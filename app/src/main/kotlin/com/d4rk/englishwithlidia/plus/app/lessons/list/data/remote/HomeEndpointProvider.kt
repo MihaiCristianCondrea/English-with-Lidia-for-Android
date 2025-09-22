@@ -3,7 +3,7 @@ package com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote
 /**
  * Provides the url used to retrieve the home lessons payload.
  */
-interface HomeEndpointProvider {
+fun interface HomeEndpointProvider {
     fun lessons(): String
 }
 
