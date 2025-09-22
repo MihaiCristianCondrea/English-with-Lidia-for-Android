@@ -26,13 +26,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -43,25 +40,20 @@ import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
-import com.d4rk.englishwithlidia.plus.app.main.ui.components.navigation.openLessonDetailActivity
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonConstants
-import org.koin.compose.koinInject
-import org.koin.core.qualifier.named
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LessonListLayout(
     lessons: List<UiHomeLesson>,
+    bannerAdsConfig: AdsConfig,
+    mediumRectangleAdsConfig: AdsConfig,
+    onLessonClick: (UiHomeLesson) -> Unit,
     paddingValues: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-    val bannerConfig: AdsConfig = koinInject()
-    val mediumRectangleConfig: AdsConfig =
-        koinInject(qualifier = named(name = "banner_medium_rectangle"))
     val listState = rememberLazyListState()
-    val items by remember(lessons) {
-        derivedStateOf { buildAppListItems(lessons) }
-    }
+    val items = remember(lessons) { buildAppListItems(lessons) }
 
     LazyColumn(
         modifier = modifier
@@ -105,16 +97,17 @@ fun LessonListLayout(
                 )
                 LessonListItem.BannerAd ->
                     BannerAdView(
-                        adsConfig = bannerConfig,
+                        adsConfig = bannerAdsConfig,
                     )
 
                 LessonListItem.MediumRectangleAd ->
                     MediumRectangleAdView(
-                        adsConfig = mediumRectangleConfig,
+                        adsConfig = mediumRectangleAdsConfig,
                     )
 
                 is LessonListItem.Lesson -> LessonCardItem(
                     lesson = item.lesson,
+                    onLessonClick = onLessonClick,
                     modifier = Modifier
                         .animateVisibility(index = index)
                         .animateItem()
@@ -192,16 +185,13 @@ private fun MediumRectangleAdView(
 @Composable
 private fun LessonCardItem(
     lesson: UiHomeLesson,
+    onLessonClick: (UiHomeLesson) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val context = LocalContext.current
-    val onLessonClick = remember(context, lesson) {
-        { openLessonDetailActivity(context = context, lesson = lesson) }
-    }
     LessonCard(
         title = lesson.lessonTitle,
         imageResource = lesson.lessonThumbnailImageUrl,
-        onClick = onLessonClick,
+        onClick = { onLessonClick(lesson) },
         modifier = modifier,
     )
 }
