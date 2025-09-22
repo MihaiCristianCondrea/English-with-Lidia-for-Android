@@ -14,6 +14,12 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLes
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.LessonViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.data.HomeMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.data.HomeRepositoryImpl
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.BuildConfigHomeEnvironmentResolver
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.DefaultHomeEndpointProvider
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.HomeEndpointProvider
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.HomeEnvironmentResolver
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.HomeRemoteDataSource
+import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.KtorHomeRemoteDataSource
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
@@ -22,6 +28,7 @@ import com.d4rk.englishwithlidia.plus.app.main.ui.MainViewModel
 import com.d4rk.englishwithlidia.plus.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
 import com.d4rk.englishwithlidia.plus.core.data.datastore.DataStore
+import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
@@ -48,12 +55,34 @@ val appModule: Module = module {
     single<String>(qualifier = named("developer_apps_base_url")) { BuildConfig.DEVELOPER_APPS_BASE_URL }
 
     // Lessons
+    single<Json>(qualifier = named("lessons_json_parser")) {
+        Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+    }
     single { HomeMapper() }
+    single<HomeEnvironmentResolver> {
+        BuildConfigHomeEnvironmentResolver(isDebugBuild = BuildConfig.DEBUG)
+    }
+    single<HomeEndpointProvider> {
+        DefaultHomeEndpointProvider(
+            baseRepositoryUrl = ApiConstants.BASE_REPOSITORY_URL,
+            environmentResolver = get(),
+        )
+    }
+    single<HomeRemoteDataSource> {
+        KtorHomeRemoteDataSource(
+            client = get(),
+            endpointProvider = get(),
+            jsonParser = get(named("lessons_json_parser")),
+        )
+    }
     single<HomeRepository> {
         HomeRepositoryImpl(
-            client = get(),
             dispatchers = get(),
-            mapper = get()
+            mapper = get(),
+            remoteDataSource = get(),
         )
     }
     factory { GetHomeLessonsUseCase(repository = get()) }
@@ -62,12 +91,6 @@ val appModule: Module = module {
 
     single { LessonMapper() }
     single { AudioCacheManager(context = get(), dispatchers = get()) }
-    single<Json>(qualifier = named("lessons_json_parser")) {
-        Json {
-            ignoreUnknownKeys = true
-            isLenient = true
-        }
-    }
     single<LessonRepository> {
         LessonRepositoryImpl(
             client = get(),
