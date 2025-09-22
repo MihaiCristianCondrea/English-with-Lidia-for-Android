@@ -15,6 +15,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -127,5 +128,40 @@ class HomeViewModelTest {
         assertEquals(expectedState, state)
         assertTrue(state.screenState is ScreenState.NoData)
         verify(exactly = 1) { repository.getHomeLessons() }
+    }
+
+    @Test
+    fun `retry sets state to loading before new emission`() = runTest {
+        val repository = mockk<HomeRepository>()
+        val sharedFlow = MutableSharedFlow<HomeScreen>()
+        every { repository.getHomeLessons() } returns sharedFlow
+
+        val viewModel = HomeViewModel(GetHomeLessonsUseCase(repository), HomeUiMapper())
+        advanceUntilIdle()
+
+        sharedFlow.emit(HomeScreen())
+        advanceUntilIdle()
+
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.NoData)
+
+        viewModel.onEvent(HomeEvent.FetchLessons)
+        advanceUntilIdle()
+
+        assertTrue(viewModel.uiState.value.screenState is ScreenState.IsLoading)
+
+        val lesson = HomeLesson(
+            lessonId = "1",
+            lessonTitle = "Sample lesson",
+            lessonType = "video",
+            lessonThumbnailImageUrl = "https://example.com/thumb.jpg",
+            lessonDeepLinkPath = "/lesson/1",
+        )
+        sharedFlow.emit(HomeScreen(lessons = listOf(lesson)))
+        advanceUntilIdle()
+
+        val state = viewModel.uiState.value
+        assertTrue(state.screenState is ScreenState.Success)
+        assertEquals(1, state.data.lessons.size)
+        verify(exactly = 2) { repository.getHomeLessons() }
     }
 }

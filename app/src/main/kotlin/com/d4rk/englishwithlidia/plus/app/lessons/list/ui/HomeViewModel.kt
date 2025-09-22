@@ -3,6 +3,7 @@ package com.d4rk.englishwithlidia.plus.app.lessons.list.ui
 import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeAction
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
@@ -33,6 +34,7 @@ class HomeViewModel(
 
     private fun getHomeLessons() {
         viewModelScope.launch {
+            screenState.setLoading()
             getHomeLessonsUseCase()
                 .catch { throwable ->
                     if (throwable is CancellationException) throw throwable
