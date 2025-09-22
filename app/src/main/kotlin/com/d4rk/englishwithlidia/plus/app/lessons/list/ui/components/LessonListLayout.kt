@@ -272,5 +272,5 @@ private fun UiHomeLesson.stableKey(contentType: String): String {
         ?: lessonTitle.takeIf { it.isNotBlank() }?.let { title ->
             "${lessonType.ifBlank { LessonContentType }}_$title"
         }
-        ?: "$contentType_${hashCode()}"
+        ?: "${contentType}_${hashCode()}"
 }
