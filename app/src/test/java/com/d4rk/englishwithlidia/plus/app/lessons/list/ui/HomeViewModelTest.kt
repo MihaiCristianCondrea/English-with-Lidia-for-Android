@@ -2,6 +2,7 @@ package com.d4rk.englishwithlidia.plus.app.lessons.list.ui
 
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
@@ -53,6 +54,20 @@ class HomeViewModelTest {
         advanceUntilIdle()
 
         verify(exactly = 1) { repository.getHomeLessons() }
+    }
+
+    @Test
+    fun `fetch event triggers lessons reload`() = runTest {
+        val repository = mockk<HomeRepository>()
+        every { repository.getHomeLessons() } returns flowOf(HomeScreen())
+
+        val viewModel = HomeViewModel(GetHomeLessonsUseCase(repository), HomeUiMapper())
+        advanceUntilIdle()
+
+        viewModel.onEvent(HomeEvent.FetchLessons)
+        advanceUntilIdle()
+
+        verify(exactly = 2) { repository.getHomeLessons() }
     }
 
     @Test
