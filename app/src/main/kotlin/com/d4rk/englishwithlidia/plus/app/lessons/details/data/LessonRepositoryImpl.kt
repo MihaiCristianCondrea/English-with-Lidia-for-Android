@@ -2,8 +2,7 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.data
 
 import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
 import com.d4rk.englishwithlidia.plus.BuildConfig
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonResponse
@@ -11,7 +10,9 @@ import com.d4rk.englishwithlidia.plus.core.utils.constants.api.ApiConstants
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.serialization.json.Json
 
 class LessonRepositoryImpl(
@@ -19,39 +20,39 @@ class LessonRepositoryImpl(
     private val dispatchers: DispatcherProvider,
     private val mapper: LessonMapper,
     private val audioCache: AudioCacheManager,
-    private val jsonParser: Json = Json {
-        ignoreUnknownKeys = true
-        isLenient = true
-    },
+    private val jsonParser: Json,
 ) : LessonRepository {
 
-    private val baseUrl = BuildConfig.DEBUG.let { isDebug ->
-        val environment = if (isDebug) "debug" else "release"
+    private val baseUrl: String by lazy {
+        val environment = if (BuildConfig.DEBUG) "debug" else "release"
         "${ApiConstants.BASE_REPOSITORY_URL}/$environment/ro/lessons"
     }
 
-    override suspend fun getLesson(lessonId: String): UiLessonScreen =
-        withContext(dispatchers.io) {
+    override fun getLesson(lessonId: String): Flow<Lesson?> {
+        return flow {
             val url = "$baseUrl/api_get_$lessonId.json"
             val jsonString = client.get(url).bodyAsText()
 
             val lessons = jsonString.takeUnless { it.isBlank() }
                 ?.let { jsonParser.decodeFromString<ApiLessonResponse>(it) }
-                ?.takeIf { it.data.isNotEmpty() }
-                ?.let { mapper.map(it) }
-                ?: emptyList()
+                ?.let(mapper::map)
+                .orEmpty()
 
             val cachedLessons = lessons.map { lesson ->
-                val updatedContent = mutableListOf<UiLessonContent>()
-                for (content in lesson.lessonContent) {
+                val cachedContent = lesson.lessonContent.map { content ->
                     val audioUrl = if (content.contentAudioUrl.isNotBlank()) {
                         audioCache.resolve(content.contentId, content.contentAudioUrl).toString()
-                    } else content.contentAudioUrl
-                    updatedContent += content.copy(contentAudioUrl = audioUrl)
+                    } else {
+                        content.contentAudioUrl
+                    }
+
+                    content.copy(contentAudioUrl = audioUrl)
                 }
-                lesson.copy(lessonContent = updatedContent)
+
+                lesson.copy(lessonContent = cachedContent)
             }
 
-            cachedLessons.firstOrNull() ?: UiLessonScreen()
-        }
+            emit(cachedLessons.firstOrNull())
+        }.flowOn(dispatchers.io)
+    }
 }

@@ -1,7 +1,7 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.data
 
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLesson
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonContent
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonResponse
@@ -14,12 +14,12 @@ class LessonMapperTest {
     private val mapper = LessonMapper()
 
     @Test
-    fun `map maps api response with data to ui lessons`() {
+    fun `map maps api response with data to domain lessons`() {
         val apiResponse = createLessonApiResponse()
 
         val result = mapper.map(apiResponse)
 
-        assertEquals(listOf(expectedUiLesson()), result)
+        assertEquals(listOf(expectedLesson()), result)
     }
 
     @Test
@@ -42,9 +42,9 @@ class LessonMapperTest {
 
     private fun createEmptyLessonApiResponse() = ApiLessonResponse(data = emptyList())
 
-    private fun expectedUiLesson() = UiLessonScreen(
+    private fun expectedLesson() = Lesson(
         lessonTitle = LESSON_TITLE,
-        lessonContent = sampleContents.map { it.toUi() },
+        lessonContent = sampleContents.map { it.toDomain() },
     )
 
     private data class LessonContentSample(
@@ -76,7 +76,7 @@ class LessonMapperTest {
             contentReleaseYear = releaseYear,
         )
 
-        fun toUi() = UiLessonContent(
+        fun toDomain() = LessonContent(
             contentId = id,
             contentType = type,
             contentText = text,

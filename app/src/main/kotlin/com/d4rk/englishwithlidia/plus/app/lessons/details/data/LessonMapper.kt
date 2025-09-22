@@ -1,16 +1,17 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.data
 
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
 import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonResponse
 
 class LessonMapper {
-    fun map(response: ApiLessonResponse): List<UiLessonScreen> {
+
+    fun map(response: ApiLessonResponse): List<Lesson> {
         return response.data.map { networkLesson ->
-            UiLessonScreen(
+            Lesson(
                 lessonTitle = networkLesson.lessonTitle,
                 lessonContent = networkLesson.lessonContent.map { networkContent ->
-                    UiLessonContent(
+                    LessonContent(
                         contentId = networkContent.contentId,
                         contentType = networkContent.contentType,
                         contentText = networkContent.contentText,

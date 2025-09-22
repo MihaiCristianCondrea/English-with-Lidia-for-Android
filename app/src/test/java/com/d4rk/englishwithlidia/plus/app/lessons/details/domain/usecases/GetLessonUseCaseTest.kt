@@ -1,10 +1,12 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases
 
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
-import io.mockk.coEvery
-import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.fail
@@ -16,28 +18,28 @@ class GetLessonUseCaseTest {
     private val useCase = GetLessonUseCase(repository)
 
     @Test
-    fun `invoke calls repository once`() = runTest {
-        coEvery { repository.getLesson("id") } returns UiLessonScreen()
+    fun `invoke calls repository once`() {
+        every { repository.getLesson("id") } returns flowOf(null)
 
         useCase("id")
 
-        coVerify(exactly = 1) { repository.getLesson("id") }
+        verify(exactly = 1) { repository.getLesson("id") }
     }
 
     @Test
-    fun `invoke returns repository value`() = runTest {
-        val expected = UiLessonScreen(lessonTitle = "title")
-        coEvery { repository.getLesson("id") } returns expected
+    fun `invoke returns repository flow`() = runTest {
+        val expected = Lesson(lessonTitle = "title")
+        every { repository.getLesson("id") } returns flowOf(expected)
 
         val result = useCase("id")
 
-        assertEquals(expected, result)
+        assertEquals(expected, result.single())
     }
 
     @Test
-    fun `invoke propagates exception`() = runTest {
+    fun `invoke propagates exception`() {
         val exception = RuntimeException("error")
-        coEvery { repository.getLesson("id") } throws exception
+        every { repository.getLesson("id") } throws exception
 
         try {
             useCase("id")

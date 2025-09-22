@@ -1,6 +1,5 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
-
 import androidx.lifecycle.viewModelScope
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -9,40 +8,57 @@ import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.setLoading
 import com.d4rk.android.libs.apptoolkit.core.ui.base.ScreenViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonAction
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.action.LessonEvent
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.mapper.LessonUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.player.PlaybackEventHandler
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class LessonViewModel(
     private val getLessonUseCase: GetLessonUseCase,
+    private val uiMapper: LessonUiMapper,
 ) : ScreenViewModel<UiLessonScreen, LessonEvent, LessonAction>(
     initialState = UiStateScreen(screenState = ScreenState.IsLoading(), data = UiLessonScreen())
 ), PlaybackEventHandler {
+
+    private var fetchLessonJob: Job? = null
 
     fun getLesson(lessonId: String) {
         onEvent(LessonEvent.FetchLesson(lessonId))
     }
 
     private fun fetchLesson(lessonId: String) {
-        viewModelScope.launch {
-            screenState.setLoading()
-            runCatching {
-                getLessonUseCase(lessonId)
-            }.onSuccess { lesson ->
-                screenState.update { current ->
-                    if (lesson.lessonContent.isEmpty()) {
+        fetchLessonJob?.cancel()
+        fetchLessonJob = viewModelScope.launch {
+            getLessonUseCase(lessonId)
+                .onStart { screenState.setLoading() }
+                .catch {
+                    screenState.update { current ->
                         current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
-                    } else {
-                        current.copy(screenState = ScreenState.Success(), data = lesson)
                     }
                 }
-            }.onFailure {
-                screenState.update { current ->
-                    current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
+                .collectLatest { lesson ->
+                    screenState.update { current ->
+                        val data = lesson?.let { domainLesson ->
+                            if (domainLesson.lessonContent.isEmpty()) {
+                                null
+                            } else {
+                                uiMapper.map(domainLesson)
+                            }
+                        }
+
+                        if (data == null) {
+                            current.copy(screenState = ScreenState.NoData(), data = UiLessonScreen())
+                        } else {
+                            current.copy(screenState = ScreenState.Success(), data = data)
+                        }
+                    }
                 }
-            }
         }
     }
 

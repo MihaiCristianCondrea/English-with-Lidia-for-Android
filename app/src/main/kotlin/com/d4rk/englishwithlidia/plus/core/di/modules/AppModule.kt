@@ -8,6 +8,7 @@ import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
 import com.d4rk.englishwithlidia.plus.BuildConfig
 import com.d4rk.englishwithlidia.plus.app.lessons.details.data.LessonMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.details.data.LessonRepositoryImpl
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.mapper.LessonUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.LessonViewModel
@@ -21,6 +22,7 @@ import com.d4rk.englishwithlidia.plus.app.main.ui.MainViewModel
 import com.d4rk.englishwithlidia.plus.app.onboarding.utils.interfaces.providers.AppOnboardingProvider
 import com.d4rk.englishwithlidia.plus.core.data.audio.AudioCacheManager
 import com.d4rk.englishwithlidia.plus.core.data.datastore.DataStore
+import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -60,14 +62,22 @@ val appModule: Module = module {
 
     single { LessonMapper() }
     single { AudioCacheManager(context = get(), dispatchers = get()) }
+    single<Json>(qualifier = named("lessons_json_parser")) {
+        Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }
+    }
     single<LessonRepository> {
         LessonRepositoryImpl(
             client = get(),
             dispatchers = get(),
             mapper = get(),
-            audioCache = get()
+            audioCache = get(),
+            jsonParser = get(named("lessons_json_parser")),
         )
     }
     factory { GetLessonUseCase(repository = get()) }
-    viewModel { LessonViewModel(getLessonUseCase = get()) }
+    single { LessonUiMapper() }
+    viewModel { LessonViewModel(getLessonUseCase = get(), uiMapper = get()) }
 }
