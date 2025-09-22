@@ -1,12 +1,16 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.mapper.LessonUiMapper
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
+import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.resetMain
@@ -23,6 +27,7 @@ import org.junit.jupiter.api.Test
 class LessonViewModelTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
+    private val uiMapper = LessonUiMapper()
 
     @BeforeEach
     fun setUp() {
@@ -37,7 +42,7 @@ class LessonViewModelTest {
     @Test
     fun `state is success when lesson available`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.SUCCESS)
-        val viewModel = LessonViewModel(useCase)
+        val viewModel = LessonViewModel(useCase, uiMapper)
 
         viewModel.getLesson("1")
         advanceUntilIdle()
@@ -53,7 +58,7 @@ class LessonViewModelTest {
     @Test
     fun `state is no data when lesson empty`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.EMPTY)
-        val viewModel = LessonViewModel(useCase)
+        val viewModel = LessonViewModel(useCase, uiMapper)
 
         viewModel.getLesson("1")
         advanceUntilIdle()
@@ -68,7 +73,7 @@ class LessonViewModelTest {
     @Test
     fun `state is no data when use case throws`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.ERROR)
-        val viewModel = LessonViewModel(useCase)
+        val viewModel = LessonViewModel(useCase, uiMapper)
 
         viewModel.getLesson("1")
         advanceUntilIdle()
@@ -79,7 +84,7 @@ class LessonViewModelTest {
     @Test
     fun `playback fields update correctly`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.SUCCESS)
-        val viewModel = LessonViewModel(useCase)
+        val viewModel = LessonViewModel(useCase, uiMapper)
 
         viewModel.updateIsPlaying(true)
         viewModel.updatePlaybackDuration(100L)
@@ -97,16 +102,18 @@ class LessonViewModelTest {
 
     private fun fakeGetLessonUseCase(result: ResultType): GetLessonUseCase {
         val repository = object : LessonRepository {
-            override suspend fun getLesson(lessonId: String): UiLessonScreen {
+            override fun getLesson(lessonId: String): Flow<Lesson?> {
                 return when (result) {
-                    ResultType.SUCCESS -> UiLessonScreen(
-                        lessonTitle = "Title",
-                        lessonContent = listOf(
-                            UiLessonContent(contentId = "1")
-                        )
+                    ResultType.SUCCESS -> flowOf(
+                        Lesson(
+                            lessonTitle = "Title",
+                            lessonContent = listOf(
+                                LessonContent(contentId = "1"),
+                            ),
+                        ),
                     )
-                    ResultType.EMPTY -> UiLessonScreen()
-                    ResultType.ERROR -> throw RuntimeException()
+                    ResultType.EMPTY -> flowOf(null)
+                    ResultType.ERROR -> flow { throw RuntimeException() }
                 }
             }
         }
