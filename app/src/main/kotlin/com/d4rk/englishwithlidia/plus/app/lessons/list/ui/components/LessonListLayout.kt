@@ -64,43 +64,30 @@ fun LessonListLayout(
     ) {
         itemsIndexed(
             items = items,
-            key = { index, item ->
-                when (item) {
-                    LessonListItem.BannerImage -> "banner_image_$index"
-                    LessonListItem.ActionButtons -> "action_buttons_$index"
-                    LessonListItem.BannerAd -> "banner_ad_$index"
-                    LessonListItem.MediumRectangleAd -> "medium_rectangle_ad_$index"
-                    is LessonListItem.Lesson ->
-                        item.lesson.lessonId.ifBlank { "${item.lesson.lessonType}_$index" }
-                }
+            key = { _, item ->
+                item.lesson.stableKey(item.contentType)
             },
             contentType = { _, item ->
-                when (item) {
-                    LessonListItem.BannerImage -> "banner_image"
-                    LessonListItem.ActionButtons -> "action_buttons"
-                    LessonListItem.BannerAd -> "banner_ad"
-                    LessonListItem.MediumRectangleAd -> "medium_rectangle_ad"
-                    is LessonListItem.Lesson -> "lesson"
-                }
+                item.contentType
             },
         ) { index, item ->
             when (item) {
-                LessonListItem.BannerImage -> LessonBannerImage(
+                is LessonListItem.BannerImage -> LessonBannerImage(
                     modifier = Modifier
                         .animateVisibility(index = index)
                         .animateItem(),
                 )
-                LessonListItem.ActionButtons -> LessonActionButtonsRow(
+                is LessonListItem.ActionButtons -> LessonActionButtonsRow(
                     modifier = Modifier
                         .animateVisibility(index = index)
                         .animateItem(),
                 )
-                LessonListItem.BannerAd ->
+                is LessonListItem.BannerAd ->
                     BannerAdView(
                         adsConfig = bannerAdsConfig,
                     )
 
-                LessonListItem.MediumRectangleAd ->
+                is LessonListItem.MediumRectangleAd ->
                     MediumRectangleAdView(
                         adsConfig = mediumRectangleAdsConfig,
                     )
@@ -235,11 +222,28 @@ fun LessonCard(
 }
 
 internal sealed interface LessonListItem {
-    data object BannerImage : LessonListItem
-    data object ActionButtons : LessonListItem
-    data object BannerAd : LessonListItem
-    data object MediumRectangleAd : LessonListItem
-    data class Lesson(val lesson: UiHomeLesson) : LessonListItem
+    val lesson: UiHomeLesson
+    val contentType: String
+
+    data class BannerImage(override val lesson: UiHomeLesson) : LessonListItem {
+        override val contentType: String = BannerImageContentType
+    }
+
+    data class ActionButtons(override val lesson: UiHomeLesson) : LessonListItem {
+        override val contentType: String = ActionButtonsContentType
+    }
+
+    data class BannerAd(override val lesson: UiHomeLesson) : LessonListItem {
+        override val contentType: String = BannerAdContentType
+    }
+
+    data class MediumRectangleAd(override val lesson: UiHomeLesson) : LessonListItem {
+        override val contentType: String = MediumRectangleAdContentType
+    }
+
+    data class Lesson(override val lesson: UiHomeLesson) : LessonListItem {
+        override val contentType: String = LessonContentType
+    }
 }
 
 internal fun buildAppListItems(
@@ -247,11 +251,26 @@ internal fun buildAppListItems(
 ): List<LessonListItem> = buildList {
     lessons.forEach { lesson ->
         when (lesson.lessonType) {
-            LessonConstants.TYPE_BANNER_IMAGE_LOCAL -> add(LessonListItem.BannerImage)
-            LessonConstants.TYPE_ROW_BUTTONS_LOCAL -> add(LessonListItem.ActionButtons)
-            LessonConstants.TYPE_AD_VIEW_BANNER -> add(LessonListItem.BannerAd)
-            LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> add(LessonListItem.MediumRectangleAd)
+            LessonConstants.TYPE_BANNER_IMAGE_LOCAL -> add(LessonListItem.BannerImage(lesson))
+            LessonConstants.TYPE_ROW_BUTTONS_LOCAL -> add(LessonListItem.ActionButtons(lesson))
+            LessonConstants.TYPE_AD_VIEW_BANNER -> add(LessonListItem.BannerAd(lesson))
+            LessonConstants.TYPE_AD_VIEW_BANNER_LARGE -> add(LessonListItem.MediumRectangleAd(lesson))
             else -> add(LessonListItem.Lesson(lesson))
         }
     }
+}
+
+private const val BannerImageContentType = "banner_image"
+private const val ActionButtonsContentType = "action_buttons"
+private const val BannerAdContentType = "banner_ad"
+private const val MediumRectangleAdContentType = "medium_rectangle_ad"
+private const val LessonContentType = "lesson"
+
+private fun UiHomeLesson.stableKey(contentType: String): String {
+    return lessonId.takeIf { it.isNotBlank() }
+        ?: lessonDeepLinkPath.takeIf { it.isNotBlank() }
+        ?: lessonTitle.takeIf { it.isNotBlank() }?.let { title ->
+            "${lessonType.ifBlank { LessonContentType }}_$title"
+        }
+        ?: "$contentType_${hashCode()}"
 }
