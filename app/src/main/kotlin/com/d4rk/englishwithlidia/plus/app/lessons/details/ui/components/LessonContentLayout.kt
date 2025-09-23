@@ -17,7 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
@@ -40,7 +40,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -100,11 +99,14 @@ fun LessonContentLayout(
         verticalArrangement = Arrangement.spacedBy(SizeConstants.MediumSize),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        items(
+        itemsIndexed(
             items = lesson.lessonContent,
-            key = { it.contentId },
-            contentType = { it.contentType },
-        ) { contentItem ->
+            key = { index, content ->
+                content.contentId.takeIf { it.isNotBlank() }
+                    ?: "${content.contentType}_${content.hashCode()}_$index"
+            },
+            contentType = { _, content -> content.contentType },
+        ) { _, contentItem ->
             when (contentItem.contentType) {
                 LessonContentTypes.HEADER -> LessonHeaderText(
                     text = contentItem.contentText,
@@ -262,23 +264,34 @@ private fun LessonAudioContent(
     }
     val sliderRange = remember(sliderMax) { 0f..sliderMax }
 
-    var sliderValue by remember(playbackState.playbackDuration) {
-        mutableFloatStateOf(playbackState.sliderPosition.coerceIn(sliderRange.start, sliderRange.endInclusive))
+    val targetSliderValue by remember(
+        playbackState.sliderPosition,
+        sliderRange,
+    ) {
+        derivedStateOf {
+            playbackState.sliderPosition.coerceIn(sliderRange.start, sliderRange.endInclusive)
+        }
     }
-    var isDragging by remember(playbackState.playbackDuration) { mutableStateOf(false) }
 
-    val targetSliderValue by rememberUpdatedState(
-        playbackState.sliderPosition.coerceIn(sliderRange.start, sliderRange.endInclusive)
-    )
-    val isSliderEnabled = playbackState.playbackDuration > 0f && !playbackState.hasPlaybackError
+    var sliderValue by remember(sliderRange.endInclusive) {
+        mutableFloatStateOf(targetSliderValue)
+    }
+    var isDragging by remember(sliderRange.endInclusive) { mutableStateOf(false) }
 
-    LaunchedEffect(targetSliderValue, sliderRange, isDragging) {
+    val isSliderEnabled by remember(
+        playbackState.playbackDuration,
+        playbackState.hasPlaybackError,
+    ) {
+        derivedStateOf { playbackState.playbackDuration > 0f && !playbackState.hasPlaybackError }
+    }
+
+    LaunchedEffect(targetSliderValue, sliderRange.endInclusive, isDragging) {
         if (!isDragging) {
             sliderValue = targetSliderValue
         }
     }
 
-    LaunchedEffect(isSliderEnabled, targetSliderValue) {
+    LaunchedEffect(isSliderEnabled, targetSliderValue, sliderRange.endInclusive) {
         if (!isSliderEnabled) {
             isDragging = false
             sliderValue = targetSliderValue
