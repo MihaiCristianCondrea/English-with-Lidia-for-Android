@@ -35,10 +35,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -71,13 +73,23 @@ fun LessonContentLayout(
     onSeek: (Float) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val playbackState = LessonPlaybackUiState(
-        sliderPosition = lesson.playbackPosition.toSeconds(),
-        playbackDuration = lesson.playbackDuration.toSeconds(),
-        isPlaying = lesson.isPlaying,
-        isBuffering = lesson.isBuffering,
-        hasPlaybackError = lesson.hasPlaybackError,
-    )
+    val playbackState by remember(
+        lesson.playbackPosition,
+        lesson.playbackDuration,
+        lesson.isPlaying,
+        lesson.isBuffering,
+        lesson.hasPlaybackError,
+    ) {
+        derivedStateOf {
+            LessonPlaybackUiState(
+                sliderPosition = lesson.playbackPosition.toSeconds(),
+                playbackDuration = lesson.playbackDuration.toSeconds(),
+                isPlaying = lesson.isPlaying,
+                isBuffering = lesson.isBuffering,
+                hasPlaybackError = lesson.hasPlaybackError,
+            )
+        }
+    }
 
     LazyColumn(
         modifier = modifier
@@ -91,6 +103,7 @@ fun LessonContentLayout(
         items(
             items = lesson.lessonContent,
             key = { it.contentId },
+            contentType = { it.contentType },
         ) { contentItem ->
             when (contentItem.contentType) {
                 LessonContentTypes.HEADER -> LessonHeaderText(
@@ -244,14 +257,52 @@ private fun LessonAudioContent(
         label = "playback_corner",
     )
 
+    val sliderMax = remember(playbackState.playbackDuration) {
+        playbackState.playbackDuration.takeIf { it > 0f } ?: 1f
+    }
+    val sliderRange = remember(sliderMax) { 0f..sliderMax }
+
+    var sliderValue by remember(playbackState.playbackDuration) {
+        mutableFloatStateOf(playbackState.sliderPosition.coerceIn(sliderRange.start, sliderRange.endInclusive))
+    }
+    var isDragging by remember(playbackState.playbackDuration) { mutableStateOf(false) }
+
+    val targetSliderValue by rememberUpdatedState(
+        playbackState.sliderPosition.coerceIn(sliderRange.start, sliderRange.endInclusive)
+    )
+    val isSliderEnabled = playbackState.playbackDuration > 0f && !playbackState.hasPlaybackError
+
+    LaunchedEffect(targetSliderValue, sliderRange, isDragging) {
+        if (!isDragging) {
+            sliderValue = targetSliderValue
+        }
+    }
+
+    LaunchedEffect(isSliderEnabled, targetSliderValue) {
+        if (!isSliderEnabled) {
+            isDragging = false
+            sliderValue = targetSliderValue
+        }
+    }
+
     Column(modifier = modifier.fillMaxWidth()) {
         LessonPlaybackControlsCard(
             onPlayClick = onPlayClick,
-            sliderPosition = playbackState.sliderPosition,
-            playbackDuration = playbackState.playbackDuration,
+            sliderValue = sliderValue,
+            sliderRange = sliderRange,
+            isSliderEnabled = isSliderEnabled,
             isPlaying = playbackState.isPlaying,
             isBuffering = playbackState.isBuffering,
-            onSeek = onSeek,
+            onSliderValueChange = { value ->
+                isDragging = true
+                sliderValue = value
+            },
+            onSliderValueChangeFinished = {
+                val targetValue = sliderValue.coerceIn(sliderRange.start, sliderRange.endInclusive)
+                sliderValue = targetValue
+                onSeek(targetValue)
+                isDragging = false
+            },
             playButtonCorner = playButtonCorner,
             bottomCornerRadius = bottomCornerRadius,
             showError = playbackState.hasPlaybackError,
@@ -264,25 +315,17 @@ private fun LessonAudioContent(
 @Composable
 private fun LessonPlaybackControlsCard(
     onPlayClick: () -> Unit,
-    sliderPosition: Float,
-    playbackDuration: Float,
+    sliderValue: Float,
+    sliderRange: ClosedFloatingPointRange<Float>,
+    isSliderEnabled: Boolean,
     isPlaying: Boolean,
     isBuffering: Boolean,
-    onSeek: (Float) -> Unit,
+    onSliderValueChange: (Float) -> Unit,
+    onSliderValueChangeFinished: () -> Unit,
     playButtonCorner: Float,
     bottomCornerRadius: Dp,
     showError: Boolean,
 ) {
-    val sliderMax = if (playbackDuration > 0f) playbackDuration else 1f
-    var sliderValue by remember { mutableFloatStateOf(sliderPosition.coerceIn(0f, sliderMax)) }
-    var isDragging by remember { mutableStateOf(false) }
-
-    LaunchedEffect(sliderPosition, sliderMax) {
-        if (!isDragging) {
-            sliderValue = sliderPosition.coerceIn(0f, sliderMax)
-        }
-    }
-
     OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
@@ -329,21 +372,13 @@ private fun LessonPlaybackControlsCard(
 
                 Slider(
                     value = sliderValue,
-                    onValueChange = { value ->
-                        isDragging = true
-                        sliderValue = value
-                    },
+                    onValueChange = onSliderValueChange,
                     modifier = Modifier
                         .weight(4f)
                         .fillMaxWidth(),
-                    enabled = playbackDuration > 0f,
-                    valueRange = 0f..sliderMax,
-                    onValueChangeFinished = {
-                        val targetValue = sliderValue.coerceIn(0f, sliderMax)
-                        sliderValue = targetValue
-                        onSeek(targetValue)
-                        isDragging = false
-                    },
+                    enabled = isSliderEnabled,
+                    valueRange = sliderRange,
+                    onValueChangeFinished = onSliderValueChangeFinished,
                 )
             }
         }
