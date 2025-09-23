@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -244,7 +245,7 @@ private fun lessonListItemContentType(item: LessonListItem): String = when (item
 }
 
 @Composable
-private fun LessonListEntry(
+private fun LazyItemScope.LessonListEntry(
     index: Int,
     item: LessonListItem,
     onLessonClick: (UiHomeLesson) -> Unit,
@@ -276,7 +277,7 @@ private fun LessonListEntry(
 }
 
 @Composable
-private fun animatedLessonModifier(index: Int): Modifier =
+private fun LazyItemScope.animatedLessonModifier(index: Int): Modifier =
     Modifier
         .animateVisibility(index = index)
         .animateItem()
