@@ -26,7 +26,7 @@ class LessonActivity : ActivityPlayer() {
 
         setContent {
             AppTheme {
-                LessonScreen(
+                LessonRoute(
                     viewModel = viewModel,
                     bannerConfig = bannerConfig,
                     mediumRectangleConfig = mediumRectangleConfig,
