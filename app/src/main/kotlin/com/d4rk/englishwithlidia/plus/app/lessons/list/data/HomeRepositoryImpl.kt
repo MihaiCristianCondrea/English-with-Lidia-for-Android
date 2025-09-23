@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 class HomeRepositoryImpl(
     private val dispatchers: DispatcherProvider,
@@ -17,16 +18,16 @@ class HomeRepositoryImpl(
 ) : HomeRepository {
 
     override fun getHomeLessons(): Flow<HomeScreen> =
-        flow {
-            val response = remoteDataSource.fetchHomeLessons()
-            val homeScreen = response
-                ?.takeIf { it.data.isNotEmpty() }
-                ?.let(mapper::map)
-                ?: HomeScreen()
-
-            emit(homeScreen)
-        }.catch { throwable ->
-            if (throwable is CancellationException) throw throwable
-            emit(HomeScreen())
-        }.flowOn(dispatchers.io)
+        flow { emit(remoteDataSource.fetchHomeLessons()) }
+            .map { response ->
+                response
+                    ?.takeIf { it.data.isNotEmpty() }
+                    ?.let(mapper::map)
+                    ?: HomeScreen()
+            }
+            .flowOn(dispatchers.io)
+            .catch { throwable ->
+                if (throwable is CancellationException) throw throwable
+                emit(HomeScreen())
+            }
 }
