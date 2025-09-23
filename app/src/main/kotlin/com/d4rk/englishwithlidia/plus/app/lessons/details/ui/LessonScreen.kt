@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -37,17 +38,24 @@ fun LessonRoute(
     val screenState: UiStateScreen<UiLessonScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     var preparedContentId by rememberSaveable { mutableStateOf<String?>(null) }
+    val currentOnPreparePlayer by rememberUpdatedState(newValue = onPreparePlayer)
 
     LaunchedEffect(screenState.data?.lessonContent) {
-        screenState.data?.let { lesson ->
-            val content =
-                lesson.lessonContent.firstOrNull { it.contentType == LessonContentTypes.CONTENT_PLAYER }
-            if (content == null) {
-                preparedContentId = null
-            } else if (preparedContentId != content.contentId) {
-                onPreparePlayer(content, lesson.lessonTitle)
-                preparedContentId = content.contentId
-            }
+        val lesson = screenState.data
+        if (lesson == null) {
+            preparedContentId = null
+            return@LaunchedEffect
+        }
+
+        val content = lesson.lessonContent.firstOrNull {
+            it.contentType == LessonContentTypes.CONTENT_PLAYER
+        }
+
+        if (content == null) {
+            preparedContentId = null
+        } else if (preparedContentId != content.contentId) {
+            currentOnPreparePlayer(content, lesson.lessonTitle)
+            preparedContentId = content.contentId
         }
     }
 
