@@ -1,5 +1,6 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -73,32 +74,33 @@ fun LessonScreen(
     listState: LazyListState,
     modifier: Modifier = Modifier,
 ) {
-    LargeTopAppBarWithScaffold(
-        modifier = modifier,
-        title = screenState.data?.lessonTitle ?: "",
-        onBackClicked = onBack
-    ) { paddingValues ->
+    Box(modifier = modifier) {
+        LargeTopAppBarWithScaffold(
+            title = screenState.data?.lessonTitle ?: "",
+            onBackClicked = onBack
+        ) { paddingValues ->
 
-        ScreenStateHandler(
-            screenState = screenState,
-            onLoading = {
-                LoadingScreen()
-            },
-            onEmpty = {
-                NoDataScreen()
-            },
-            onSuccess = { lesson ->
-                LessonContentLayout(
-                    paddingValues = paddingValues,
-                    listState = listState,
-                    lesson = lesson,
-                    bannerConfig = bannerConfig,
-                    mediumRectangleConfig = mediumRectangleConfig,
-                    onPlayClick = onPlayClick,
-                    onSeek = onSeek,
-                )
-            },
-        )
+            ScreenStateHandler(
+                screenState = screenState,
+                onLoading = {
+                    LoadingScreen()
+                },
+                onEmpty = {
+                    NoDataScreen()
+                },
+                onSuccess = { lesson ->
+                    LessonContentLayout(
+                        paddingValues = paddingValues,
+                        listState = listState,
+                        lesson = lesson,
+                        bannerConfig = bannerConfig,
+                        mediumRectangleConfig = mediumRectangleConfig,
+                        onPlayClick = onPlayClick,
+                        onSeek = onSeek,
+                    )
+                },
+            )
+        }
     }
 }
 
