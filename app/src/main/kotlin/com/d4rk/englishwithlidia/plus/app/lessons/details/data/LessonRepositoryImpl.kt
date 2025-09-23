@@ -11,8 +11,10 @@ import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.serialization.json.Json
 
 class LessonRepositoryImpl(
@@ -31,28 +33,29 @@ class LessonRepositoryImpl(
     override fun getLesson(lessonId: String): Flow<Lesson?> {
         return flow {
             val url = "$baseUrl/api_get_$lessonId.json"
-            val jsonString = client.get(url).bodyAsText()
+            emit(client.get(url).bodyAsText())
+        }
+            .map { jsonString ->
+                jsonString.takeUnless { it.isBlank() }
+                    ?.let { jsonParser.decodeFromString<ApiLessonResponse>(it) }
+                    ?.let(mapper::map)
+                    .orEmpty()
+            }
+            .map { lessons ->
+                lessons.map { lesson ->
+                    val cachedContent = lesson.lessonContent.map { content ->
+                        val cachedUrl = content.contentAudioUrl.takeUnless { it.isBlank() }
+                            ?.let { audioCache.resolve(content.contentId, it).toString() }
+                            ?: content.contentAudioUrl
 
-            val lessons = jsonString.takeUnless { it.isBlank() }
-                ?.let { jsonParser.decodeFromString<ApiLessonResponse>(it) }
-                ?.let(mapper::map)
-                .orEmpty()
-
-            val cachedLessons = lessons.map { lesson ->
-                val cachedContent = lesson.lessonContent.map { content ->
-                    val audioUrl = if (content.contentAudioUrl.isNotBlank()) {
-                        audioCache.resolve(content.contentId, content.contentAudioUrl).toString()
-                    } else {
-                        content.contentAudioUrl
+                        content.copy(contentAudioUrl = cachedUrl)
                     }
 
-                    content.copy(contentAudioUrl = audioUrl)
+                    lesson.copy(lessonContent = cachedContent)
                 }
-
-                lesson.copy(lessonContent = cachedContent)
             }
-
-            emit(cachedLessons.firstOrNull())
-        }.flowOn(dispatchers.io)
+            .map { lessons -> lessons.firstOrNull() }
+            .flowOn(dispatchers.io)
+            .catch { emit(null) }
     }
 }
