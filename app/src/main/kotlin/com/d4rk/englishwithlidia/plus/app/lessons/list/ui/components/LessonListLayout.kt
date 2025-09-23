@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -53,6 +54,29 @@ fun LessonListLayout(
     modifier: Modifier = Modifier,
 ) {
     val listState = rememberLazyListState()
+
+    LessonListLayout(
+        lessons = lessons,
+        bannerAdsConfig = bannerAdsConfig,
+        mediumRectangleAdsConfig = mediumRectangleAdsConfig,
+        onLessonClick = onLessonClick,
+        paddingValues = paddingValues,
+        listState = listState,
+        modifier = modifier,
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun LessonListLayout(
+    lessons: List<UiHomeLesson>,
+    bannerAdsConfig: AdsConfig,
+    mediumRectangleAdsConfig: AdsConfig,
+    onLessonClick: (UiHomeLesson) -> Unit,
+    paddingValues: PaddingValues,
+    listState: LazyListState,
+    modifier: Modifier = Modifier,
+) {
     val items = remember(lessons) { buildAppListItems(lessons) }
 
     LazyColumn(
