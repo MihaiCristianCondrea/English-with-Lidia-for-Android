@@ -1,13 +1,15 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
@@ -22,7 +24,7 @@ import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonCont
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LessonScreen(
+fun LessonRoute(
     viewModel: LessonViewModel,
     bannerConfig: AdsConfig,
     mediumRectangleConfig: AdsConfig,
@@ -31,22 +33,48 @@ fun LessonScreen(
     onSeek: (Float) -> Unit,
     onPreparePlayer: (UiLessonContent, String) -> Unit,
 ) {
-    val listState = rememberLazyListState()
     val screenState: UiStateScreen<UiLessonScreen> by viewModel.uiState.collectAsStateWithLifecycle()
-    var isPlayerPrepared by remember { mutableStateOf(false) }
+    val listState = rememberLazyListState()
+    var preparedContentId by rememberSaveable { mutableStateOf<String?>(null) }
 
     LaunchedEffect(screenState.data?.lessonContent) {
         screenState.data?.let { lesson ->
             val content =
                 lesson.lessonContent.firstOrNull { it.contentType == LessonContentTypes.CONTENT_PLAYER }
-            if (!isPlayerPrepared && content != null) {
+            if (content == null) {
+                preparedContentId = null
+            } else if (preparedContentId != content.contentId) {
                 onPreparePlayer(content, lesson.lessonTitle)
-                isPlayerPrepared = true
+                preparedContentId = content.contentId
             }
         }
     }
 
+    LessonScreen(
+        screenState = screenState,
+        bannerConfig = bannerConfig,
+        mediumRectangleConfig = mediumRectangleConfig,
+        onBack = onBack,
+        onPlayClick = onPlayClick,
+        onSeek = onSeek,
+        listState = listState,
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun LessonScreen(
+    screenState: UiStateScreen<UiLessonScreen>,
+    bannerConfig: AdsConfig,
+    mediumRectangleConfig: AdsConfig,
+    onBack: () -> Unit,
+    onPlayClick: () -> Unit,
+    onSeek: (Float) -> Unit,
+    listState: LazyListState,
+    modifier: Modifier = Modifier,
+) {
     LargeTopAppBarWithScaffold(
+        modifier = modifier,
         title = screenState.data?.lessonTitle ?: "",
         onBackClicked = onBack
     ) { paddingValues ->
