@@ -1,6 +1,8 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.list.ui
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.WifiTetheringError
 import androidx.compose.runtime.Composable
@@ -30,6 +32,7 @@ fun HomeRoute(
 ) {
     val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val lessonListState = rememberLazyListState()
     val bannerAdsConfig: AdsConfig = koinInject()
     val mediumRectangleAdsConfig: AdsConfig =
         koinInject(qualifier = named(name = "banner_medium_rectangle"))
@@ -49,6 +52,7 @@ fun HomeRoute(
         bannerAdsConfig = bannerAdsConfig,
         mediumRectangleAdsConfig = mediumRectangleAdsConfig,
         paddingValues = paddingValues,
+        lessonListState = lessonListState,
     )
 }
 
@@ -61,6 +65,7 @@ fun HomeScreen(
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
     paddingValues: PaddingValues,
+    lessonListState: LazyListState,
     modifier: Modifier = Modifier,
 ) {
     ScreenStateHandler(
@@ -80,6 +85,7 @@ fun HomeScreen(
                 mediumRectangleAdsConfig = mediumRectangleAdsConfig,
                 onLessonClick = onLessonSelected,
                 paddingValues = paddingValues,
+                listState = lessonListState,
                 modifier = modifier,
             )
         },
