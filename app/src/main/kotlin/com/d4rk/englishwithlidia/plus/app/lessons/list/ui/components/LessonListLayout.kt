@@ -19,7 +19,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Language
@@ -44,29 +43,6 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonConstants
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun LessonListLayout(
-    lessons: List<UiHomeLesson>,
-    bannerAdsConfig: AdsConfig,
-    mediumRectangleAdsConfig: AdsConfig,
-    onLessonClick: (UiHomeLesson) -> Unit,
-    paddingValues: PaddingValues,
-    modifier: Modifier = Modifier,
-) {
-    val listState = rememberLazyListState()
-
-    LessonListLayout(
-        lessons = lessons,
-        bannerAdsConfig = bannerAdsConfig,
-        mediumRectangleAdsConfig = mediumRectangleAdsConfig,
-        onLessonClick = onLessonClick,
-        paddingValues = paddingValues,
-        listState = listState,
-        modifier = modifier,
-    )
-}
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
