@@ -36,6 +36,9 @@ fun HomeRoute(
     val bannerAdsConfig: AdsConfig = koinInject()
     val mediumRectangleAdsConfig: AdsConfig =
         koinInject(qualifier = named(name = "banner_medium_rectangle"))
+    val onRetryAction = remember(viewModel) {
+        { viewModel.onEvent(event = HomeEvent.FetchLessons) }
+    }
     val onLessonSelected: (UiHomeLesson) -> Unit = remember(context) {
         { lesson ->
             openLessonDetailActivity(
@@ -47,7 +50,7 @@ fun HomeRoute(
 
     HomeScreen(
         screenState = screenState,
-        onRetry = { viewModel.onEvent(event = HomeEvent.FetchLessons) },
+        onRetry = onRetryAction,
         onLessonSelected = onLessonSelected,
         bannerAdsConfig = bannerAdsConfig,
         mediumRectangleAdsConfig = mediumRectangleAdsConfig,
@@ -79,15 +82,36 @@ fun HomeScreen(
             )
         },
         onSuccess = { uiHomeScreen ->
-            LessonListLayout(
-                lessons = uiHomeScreen.lessons,
+            HomeContent(
+                uiHomeScreen = uiHomeScreen,
+                onLessonSelected = onLessonSelected,
                 bannerAdsConfig = bannerAdsConfig,
                 mediumRectangleAdsConfig = mediumRectangleAdsConfig,
-                onLessonClick = onLessonSelected,
                 paddingValues = paddingValues,
-                listState = lessonListState,
+                lessonListState = lessonListState,
                 modifier = modifier,
             )
         },
+    )
+}
+
+@Composable
+private fun HomeContent(
+    uiHomeScreen: UiHomeScreen,
+    onLessonSelected: (UiHomeLesson) -> Unit,
+    bannerAdsConfig: AdsConfig,
+    mediumRectangleAdsConfig: AdsConfig,
+    paddingValues: PaddingValues,
+    lessonListState: LazyListState,
+    modifier: Modifier = Modifier,
+) {
+    LessonListLayout(
+        lessons = uiHomeScreen.lessons,
+        bannerAdsConfig = bannerAdsConfig,
+        mediumRectangleAdsConfig = mediumRectangleAdsConfig,
+        onLessonClick = onLessonSelected,
+        paddingValues = paddingValues,
+        listState = lessonListState,
+        modifier = modifier,
     )
 }
