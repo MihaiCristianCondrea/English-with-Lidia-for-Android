@@ -181,14 +181,22 @@ abstract class ActivityPlayer : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         positionJob?.cancel()
+
+        val shouldStopPlayback = isFinishing
+
         player?.let { controller ->
-            if (controller.isPlaying) {
-                controller.pause()
+            if (shouldStopPlayback) {
+                if (controller.isPlaying) {
+                    controller.pause()
+                }
+                controller.stop()
+                controller.clearMediaItems()
+                playbackHandler.updateIsPlaying(false)
+                playbackHandler.updateIsBuffering(false)
             }
-            controller.stop()
-            controller.clearMediaItems()
             controller.removeListener(playerListener)
         }
+
         player = null
         controllerFuture?.let { MediaController.releaseFuture(it) }
         controllerFuture = null

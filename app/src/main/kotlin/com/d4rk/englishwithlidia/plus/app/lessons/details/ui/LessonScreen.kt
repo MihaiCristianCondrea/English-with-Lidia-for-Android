@@ -48,7 +48,7 @@ fun LessonRoute(
     DisposableEffect(lifecycleOwner) {
         val lifecycle = lifecycleOwner.lifecycle
         val observer = LifecycleEventObserver { _, event ->
-            if (event == Lifecycle.Event.ON_STOP) {
+            if (event == Lifecycle.Event.ON_DESTROY) {
                 preparedContentId = null
             }
         }
