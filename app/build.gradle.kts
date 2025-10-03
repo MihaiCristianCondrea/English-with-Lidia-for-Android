@@ -21,7 +21,7 @@ android {
         applicationId = "com.d4rk.englishwithlidia.plus"
         minSdk = 23
         targetSdk = 36
-        versionCode = 68
+        versionCode = 69
         versionName = "5.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
@@ -158,7 +158,7 @@ android {
 dependencies {
 
     // App Core
-    implementation(dependencyNotation = "com.github.MihaiCristianCondrea:App-Toolkit-for-Android:1.1.2") {
+    implementation(dependencyNotation = "com.github.MihaiCristianCondrea:App-Toolkit-for-Android:1.1.3") {
         isTransitive = true
     }
 
