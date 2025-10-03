@@ -7,8 +7,6 @@ import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLes
 
 fun openLessonDetailActivity(context: Context, lesson: UiHomeLesson) {
     Intent(Intent.ACTION_VIEW, lesson.lessonDeepLinkPath.toUri()).let { intent: Intent ->
-        intent.resolveActivity(context.packageManager)?.let {
-            context.startActivity(intent)
-        }
+        context.startActivity(intent)
     }
 }

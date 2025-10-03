@@ -3,7 +3,6 @@ package com.d4rk.englishwithlidia.plus.app.onboarding.utils.interfaces.providers
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Translate
@@ -59,12 +58,9 @@ class AppOnboardingProvider : OnboardingProvider {
     }
 
     override fun onOnboardingFinished(context: Context) {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.resolveActivity(context.packageManager)?.let {
-            context.startActivity(intent)
-            if (context is Activity) {
-                context.finish()
-            }
-        } ?: Log.w("AppOnboardingProvider", "MainActivity not found to handle intent")
+        context.startActivity(Intent(context, MainActivity::class.java))
+        if (context is Activity) {
+            context.finish()
+        }
     }
 }

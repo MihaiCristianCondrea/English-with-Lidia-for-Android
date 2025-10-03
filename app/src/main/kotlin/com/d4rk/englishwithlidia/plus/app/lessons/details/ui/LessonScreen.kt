@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -12,7 +13,10 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
@@ -39,8 +43,21 @@ fun LessonRoute(
     val listState = rememberLazyListState()
     var preparedContentId by rememberSaveable { mutableStateOf<String?>(null) }
     val currentOnPreparePlayer by rememberUpdatedState(newValue = onPreparePlayer)
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(screenState.data?.lessonContent) {
+    DisposableEffect(lifecycleOwner) {
+        val lifecycle = lifecycleOwner.lifecycle
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_STOP) {
+                preparedContentId = null
+            }
+        }
+
+        lifecycle.addObserver(observer)
+        onDispose { lifecycle.removeObserver(observer) }
+    }
+
+    LaunchedEffect(screenState.data?.lessonContent, preparedContentId) {
         val lesson = screenState.data
         if (lesson == null) {
             preparedContentId = null

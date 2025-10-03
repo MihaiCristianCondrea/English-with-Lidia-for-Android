@@ -181,7 +181,14 @@ abstract class ActivityPlayer : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         positionJob?.cancel()
-        player?.removeListener(playerListener)
+        player?.let { controller ->
+            if (controller.isPlaying) {
+                controller.pause()
+            }
+            controller.stop()
+            controller.clearMediaItems()
+            controller.removeListener(playerListener)
+        }
         player = null
         controllerFuture?.let { MediaController.releaseFuture(it) }
         controllerFuture = null
