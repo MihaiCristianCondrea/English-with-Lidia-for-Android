@@ -15,6 +15,7 @@ import androidx.media3.session.SessionToken
 import com.d4rk.englishwithlidia.plus.core.utils.extensions.await
 import com.d4rk.englishwithlidia.plus.playback.AudioPlaybackService
 import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -29,49 +30,83 @@ abstract class ActivityPlayer : AppCompatActivity() {
     protected var player: Player? = null
     private var positionJob: Job? = null
 
+    private val playerListener = object : Player.Listener {
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            playbackHandler.updateIsPlaying(isPlaying)
+            if (isPlaying) {
+                startPositionUpdates()
+            } else {
+                positionJob?.cancel()
+            }
+        }
+
+        override fun onPlaybackStateChanged(playbackState: Int) {
+            when (playbackState) {
+                Player.STATE_BUFFERING -> {
+                    val shouldShowBuffering = player?.playWhenReady == true
+                    playbackHandler.updateIsBuffering(shouldShowBuffering)
+                }
+
+                Player.STATE_READY -> {
+                    playbackHandler.updateIsBuffering(false)
+                    val duration = player?.duration ?: 0L
+                    playbackHandler.updatePlaybackDuration(duration)
+                }
+
+                Player.STATE_IDLE, Player.STATE_ENDED -> {
+                    playbackHandler.updateIsBuffering(false)
+                }
+            }
+        }
+
+        override fun onPlayerError(error: PlaybackException) {
+            playbackHandler.updateIsPlaying(false)
+            playbackHandler.updateIsBuffering(false)
+            playbackHandler.onPlaybackError()
+            positionJob?.cancel()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val context = applicationContext
         val intent = Intent(context, AudioPlaybackService::class.java)
         context.startService(intent)
-        val sessionToken =
-            SessionToken(context, ComponentName(context, AudioPlaybackService::class.java))
-        controllerFuture = MediaController.Builder(context, sessionToken).buildAsync()
-        lifecycleScope.launch {
-            player = controllerFuture?.await()
-            player?.addListener(object : Player.Listener {
-                override fun onIsPlayingChanged(isPlaying: Boolean) {
-                    playbackHandler.updateIsPlaying(isPlaying)
-                    if (isPlaying) {
-                        startPositionUpdates()
-                    } else {
-                        positionJob?.cancel()
-                    }
-                }
+    }
 
-                override fun onPlaybackStateChanged(playbackState: Int) {
-                    when (playbackState) {
-                        Player.STATE_BUFFERING -> {
-                            val shouldShowBuffering = player?.playWhenReady == true
-                            playbackHandler.updateIsBuffering(shouldShowBuffering)
-                        }
-                        Player.STATE_READY -> {
-                            playbackHandler.updateIsBuffering(false)
-                            val duration = player?.duration ?: 0L
-                            playbackHandler.updatePlaybackDuration(duration)
-                        }
-                        Player.STATE_IDLE, Player.STATE_ENDED -> {
-                            playbackHandler.updateIsBuffering(false)
-                        }
-                    }
+    override fun onStart() {
+        super.onStart()
+        if (controllerFuture != null) return
+
+        val context = applicationContext
+        val sessionToken = SessionToken(context, ComponentName(context, AudioPlaybackService::class.java))
+        val future = MediaController.Builder(context, sessionToken).buildAsync()
+        controllerFuture = future
+        lifecycleScope.launch {
+            try {
+                val controller = future.await()
+                if (controllerFuture != future) {
+                    return@launch
                 }
-                override fun onPlayerError(error: PlaybackException) {
-                    playbackHandler.updateIsPlaying(false)
-                    playbackHandler.updateIsBuffering(false)
-                    playbackHandler.onPlaybackError()
-                    positionJob?.cancel()
+                player = controller
+                controller.addListener(playerListener)
+                playbackHandler.updateIsPlaying(controller.isPlaying)
+                val isBuffering =
+                    controller.playbackState == Player.STATE_BUFFERING && controller.playWhenReady
+                playbackHandler.updateIsBuffering(isBuffering)
+                if (controller.playbackState == Player.STATE_READY) {
+                    playbackHandler.updatePlaybackDuration(controller.duration)
                 }
-            })
+                if (controller.isPlaying) {
+                    startPositionUpdates()
+                }
+            } catch (_: CancellationException) {
+                // Ignored. The controller future was cancelled, typically because the Activity stopped.
+            } catch (_: Exception) {
+                controllerFuture = null
+                player = null
+                MediaController.releaseFuture(future)
+            }
         }
     }
 
@@ -86,7 +121,8 @@ abstract class ActivityPlayer : AppCompatActivity() {
         releaseYear: Int? = null
     ) {
         lifecycleScope.launch {
-            controllerFuture?.await()?.let { controller ->
+            val controller = player ?: controllerFuture?.await()
+            controller?.let {
                 val metadataBuilder = MediaMetadata.Builder()
                     .setTitle(title)
                     .setArtworkUri(thumbnailUrl?.toUri())
@@ -101,9 +137,9 @@ abstract class ActivityPlayer : AppCompatActivity() {
                     .setMediaMetadata(metadataBuilder.build())
                     .build()
 
-                controller.setMediaItem(mediaItem)
-                controller.prepare()
-                controller.playWhenReady = false
+                it.setMediaItem(mediaItem)
+                it.prepare()
+                it.playWhenReady = false
             }
         }
     }
@@ -142,10 +178,17 @@ abstract class ActivityPlayer : AppCompatActivity() {
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        positionJob?.cancel()
+        player?.removeListener(playerListener)
+        player = null
+        controllerFuture?.let { MediaController.releaseFuture(it) }
+        controllerFuture = null
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         positionJob?.cancel()
-        controllerFuture?.let { MediaController.releaseFuture(it) }
     }
-
 }
