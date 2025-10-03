@@ -49,6 +49,8 @@ class AudioPlaybackService : MediaSessionService() {
                 player.clearMediaItems()
                 val singleMediaItem: MediaItem = mediaItems.first()
                 player.setMediaItem(singleMediaItem)
+                player.prepare()
+                player.play()
                 return Futures.immediateFuture(mutableListOf(singleMediaItem))
             }
             return Futures.immediateFuture(mutableListOf())

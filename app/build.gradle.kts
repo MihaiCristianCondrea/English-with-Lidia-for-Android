@@ -24,7 +24,8 @@ android {
         versionCode = 68
         versionName = "5.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        @Suppress("UnstableApiUsage") androidResources.localeFilters += listOf(
+        @Suppress("UnstableApiUsage")
+        androidResources.localeFilters += listOf(
             "ar-rEG",
             "bg-rBG",
             "bn-rBD",
