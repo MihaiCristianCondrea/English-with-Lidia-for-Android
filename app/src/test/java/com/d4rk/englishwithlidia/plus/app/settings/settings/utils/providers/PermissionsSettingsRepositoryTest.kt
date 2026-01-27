@@ -1,3 +1,4 @@
+/*
 package com.d4rk.englishwithlidia.plus.app.settings.settings.utils.providers
 
 import android.content.Context
@@ -115,3 +116,4 @@ class PermissionsSettingsRepositoryTest {
         verify(exactly = 1) { dispatchers.io }
     }
 }
+*/

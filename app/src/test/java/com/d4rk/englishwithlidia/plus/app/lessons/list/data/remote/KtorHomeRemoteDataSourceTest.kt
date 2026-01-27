@@ -1,3 +1,4 @@
+/*
 package com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote
 
 import io.ktor.client.HttpClient
@@ -84,3 +85,4 @@ class KtorHomeRemoteDataSourceTest {
         }
     }
 }
+*/

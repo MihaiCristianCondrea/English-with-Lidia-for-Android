@@ -1,17 +1,16 @@
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 import kotlin.toString
 
 plugins {
-    alias(notation = libs.plugins.androidApplication)
-    alias(notation = libs.plugins.jetbrainsKotlinAndroid)
-    alias(notation = libs.plugins.jetbrainsKotlinParcelize)
-    alias(notation = libs.plugins.kotlin.serialization)
-    alias(notation = libs.plugins.googlePlayServices)
-    alias(notation = libs.plugins.about.libraries)
-    alias(notation = libs.plugins.googleFirebase)
+    alias(notation = libs.plugins.android.application)
     alias(notation = libs.plugins.compose.compiler)
+    alias(notation = libs.plugins.about.libraries)
     alias(notation = libs.plugins.mannodermaus)
+    alias(notation = libs.plugins.googlePlayServices)
+    alias(notation = libs.plugins.googleFirebase)
+    alias(notation = libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -19,9 +18,9 @@ android {
     namespace = "com.d4rk.englishwithlidia.plus"
     defaultConfig {
         applicationId = "com.d4rk.englishwithlidia.plus"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 36
-        versionCode = 69
+        versionCode = 70
         versionName = "5.2.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
@@ -61,22 +60,11 @@ android {
         val githubFile = rootProject.file("github.properties")
         val githubToken = if (githubFile.exists()) {
             githubProps.load(githubFile.inputStream())
-            githubProps["GITHUB_TOKEN"]
-                ?.toString()
-                ?.trim()
-                ?.trim('"')
-                ?: ""
+            githubProps["GITHUB_TOKEN"].toString()
         } else {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
-
-        val developerAppsBaseUrl = project.findProperty("developerAppsBaseUrl")
-            ?.toString()
-            ?.trim()
-            ?.trim('"')
-            ?: ""
-        buildConfigField("String", "DEVELOPER_APPS_BASE_URL", "\"$developerAppsBaseUrl\"")
     }
 
     signingConfigs {
@@ -108,17 +96,22 @@ android {
                 null
             }
             isDebuggable = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            configure<CrashlyticsExtension> {
+                mappingFileUploadEnabled = true
+            }
         }
         debug {
             isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 
     buildTypes.forEach { buildType ->
         with(receiver = buildType) {
             multiDexEnabled = true
-            isMinifyEnabled = false
-            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile(name = "proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -144,13 +137,15 @@ android {
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes.add("META-INF/INDEX.LIST")
+            excludes.add("META-INF/io.netty.versions.properties")
         }
     }
 
-    bundle {
-        storeArchive {
-            enable = true
+    testOptions {
+        unitTests.all {
+            it.useJUnitPlatform()
+            it.jvmArgs("-XX:+EnableDynamicAgentLoading")
         }
     }
 }
@@ -158,7 +153,7 @@ android {
 dependencies {
 
     // App Core
-    implementation(dependencyNotation = "com.github.MihaiCristianCondrea:App-Toolkit-for-Android:1.1.3") {
+    implementation(dependencyNotation = "com.github.MihaiCristianCondrea:App-Toolkit-for-Android:2.0.1") {
         isTransitive = true
     }
 

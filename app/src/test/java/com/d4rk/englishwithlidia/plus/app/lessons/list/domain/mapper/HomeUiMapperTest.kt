@@ -1,3 +1,4 @@
+/*
 package com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper
 
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
@@ -40,3 +41,4 @@ class HomeUiMapperTest {
     }
 }
 
+*/

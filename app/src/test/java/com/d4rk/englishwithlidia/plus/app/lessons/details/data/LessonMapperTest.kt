@@ -2,9 +2,6 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.data
 
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
-import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLesson
-import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonContent
-import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiLessonResponse
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test

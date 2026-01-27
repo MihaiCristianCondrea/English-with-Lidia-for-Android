@@ -84,7 +84,7 @@
         </service>
 
         <service
-            android:name=".playback.AudioPlaybackService"
+            android:name=".player.playback.AudioPlaybackService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback"
             tools:ignore="ExportedService">

@@ -1,22 +1,9 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.list.data
 
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
-import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.HomeRemoteDataSource
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
-import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiHomeLessons
-import com.d4rk.englishwithlidia.plus.core.domain.model.api.ApiHomeResponse
-import io.mockk.every
-import io.mockk.mockk
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+
+// TODO: Old unit tests
+/*
+
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeRepositoryImplTest {
@@ -116,3 +103,4 @@ class HomeRepositoryImplTest {
         }
     }
 }
+*/

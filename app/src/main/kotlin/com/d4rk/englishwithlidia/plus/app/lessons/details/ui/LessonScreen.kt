@@ -17,15 +17,15 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
-import com.d4rk.android.libs.apptoolkit.core.ui.components.navigation.LargeTopAppBarWithScaffold
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
-import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.components.LessonContentLayout
+import com.d4rk.android.libs.apptoolkit.core.ui.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.state.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.ScreenStateHandler
+import com.d4rk.android.libs.apptoolkit.core.ui.views.navigation.LargeTopAppBarWithScaffold
+import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonContent
+import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.views.LessonContentLayout
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonContentTypes
 
 @OptIn(ExperimentalMaterial3Api::class)

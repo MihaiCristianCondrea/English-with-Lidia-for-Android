@@ -14,13 +14,14 @@ import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.Setti
 import com.d4rk.android.libs.apptoolkit.app.settings.settings.domain.model.SettingsPreference
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.constants.SettingsContent
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.interfaces.SettingsProvider
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.extensions.context.openAppNotificationSettings
 import com.d4rk.englishwithlidia.plus.app.settings.settings.utils.constants.SettingsConstants
 
 class AppSettingsProvider : SettingsProvider {
     override fun provideSettingsConfig(context: Context): SettingsConfig {
         return SettingsConfig(
-            title = context.getString(R.string.settings), categories = listOf(
+            title = context.getString(R.string.settings),
+            categories = listOf(
                 SettingsCategory(
                     preferences = listOf(
                         SettingsPreference(
@@ -28,7 +29,17 @@ class AppSettingsProvider : SettingsProvider {
                             icon = Icons.Outlined.Notifications,
                             title = context.getString(R.string.notifications),
                             summary = context.getString(R.string.summary_preference_settings_notifications),
-                            action = { IntentsHelper.openAppNotificationSettings(context = context) }),
+                            action = {
+                                val opened = context.openAppNotificationSettings()
+                                if (!opened) {
+                                    GeneralSettingsActivity.start(
+                                        context = context,
+                                        title = context.getString(R.string.security_and_privacy),
+                                        contentKey = SettingsContent.SECURITY_AND_PRIVACY,
+                                    )
+                                }
+                            },
+                        ),
                         SettingsPreference(
                             key = SettingsContent.DISPLAY,
                             icon = Icons.Outlined.Palette,
@@ -38,12 +49,12 @@ class AppSettingsProvider : SettingsProvider {
                                 GeneralSettingsActivity.start(
                                     context = context,
                                     title = context.getString(R.string.display),
-                                    contentKey = SettingsContent.DISPLAY
+                                    contentKey = SettingsContent.DISPLAY,
                                 )
-                            })
-                    )
+                            },
+                        ),
+                    ),
                 ),
-
                 SettingsCategory(
                     preferences = listOf(
                         SettingsPreference(
@@ -55,9 +66,11 @@ class AppSettingsProvider : SettingsProvider {
                                 GeneralSettingsActivity.start(
                                     context = context,
                                     title = context.getString(R.string.security_and_privacy),
-                                    contentKey = SettingsContent.SECURITY_AND_PRIVACY
+                                    contentKey = SettingsContent.SECURITY_AND_PRIVACY,
                                 )
-                            }), SettingsPreference(
+                            },
+                        ),
+                        SettingsPreference(
                             key = SettingsContent.ADVANCED,
                             icon = Icons.Outlined.Build,
                             title = context.getString(R.string.advanced),
@@ -66,9 +79,11 @@ class AppSettingsProvider : SettingsProvider {
                                 GeneralSettingsActivity.start(
                                     context = context,
                                     title = context.getString(R.string.advanced),
-                                    contentKey = SettingsContent.ADVANCED
+                                    contentKey = SettingsContent.ADVANCED,
                                 )
-                            }), SettingsPreference(
+                            },
+                        ),
+                        SettingsPreference(
                             key = SettingsContent.ABOUT,
                             icon = Icons.Outlined.Info,
                             title = context.getString(R.string.about),
@@ -77,12 +92,13 @@ class AppSettingsProvider : SettingsProvider {
                                 GeneralSettingsActivity.start(
                                     context = context,
                                     title = context.getString(R.string.about),
-                                    contentKey = SettingsContent.ABOUT
+                                    contentKey = SettingsContent.ABOUT,
                                 )
-                            })
-                    )
+                            },
+                        ),
+                    ),
                 ),
-            )
+            ),
         )
     }
 }

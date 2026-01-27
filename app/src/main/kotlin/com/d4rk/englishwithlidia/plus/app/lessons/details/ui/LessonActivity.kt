@@ -3,9 +3,9 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.d4rk.android.libs.apptoolkit.app.theme.style.AppTheme
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.englishwithlidia.plus.app.player.ActivityPlayer
+import com.d4rk.android.libs.apptoolkit.app.theme.ui.style.AppTheme
+import com.d4rk.android.libs.apptoolkit.core.ui.model.ads.AdsConfig
+import com.d4rk.englishwithlidia.plus.player.ActivityPlayer
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.qualifier.named

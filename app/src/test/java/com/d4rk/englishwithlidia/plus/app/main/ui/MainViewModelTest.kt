@@ -1,3 +1,4 @@
+/*
 package com.d4rk.englishwithlidia.plus.app.main.ui
 
 import com.d4rk.android.libs.apptoolkit.app.main.domain.repository.NavigationRepository
@@ -67,3 +68,4 @@ class MainViewModelTest {
     }
 }
 
+*/

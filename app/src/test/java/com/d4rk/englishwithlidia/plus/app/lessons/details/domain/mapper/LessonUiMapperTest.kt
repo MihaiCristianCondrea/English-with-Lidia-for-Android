@@ -2,8 +2,8 @@ package com.d4rk.englishwithlidia.plus.app.lessons.details.domain.mapper
 
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonContent
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.ui.UiLessonScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonContent
+import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonScreen
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test

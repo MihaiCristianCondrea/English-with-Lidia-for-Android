@@ -4,9 +4,9 @@ import android.content.Context
 import com.d4rk.android.libs.apptoolkit.app.settings.utils.providers.BuildInfoProvider
 import com.d4rk.englishwithlidia.plus.BuildConfig
 
-class AppBuildInfoProvider(val context: Context) : BuildInfoProvider {
+class AppBuildInfoProvider : BuildInfoProvider {
 
-    override val packageName: String get() = "AppToolkit"
+    override val packageName: String get() = BuildConfig.APPLICATION_ID
 
     override val appVersion: String get() = BuildConfig.VERSION_NAME
 

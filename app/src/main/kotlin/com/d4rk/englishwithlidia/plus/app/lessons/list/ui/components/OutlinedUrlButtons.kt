@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import com.d4rk.android.libs.apptoolkit.core.utils.helpers.IntentsHelper
+import com.d4rk.android.libs.apptoolkit.core.utils.extensions.context.openUrl
 
 @Composable
 fun OutlinedUrlButtons(
@@ -26,7 +26,7 @@ fun OutlinedUrlButtons(
     val context = LocalContext.current
 
     OutlinedButton(
-        onClick = { IntentsHelper.openUrl(context = context, url = url) },
+        onClick = { context.openUrl(url = url) },
         modifier = modifier,
     ) {
         if (painterIcon != null) {

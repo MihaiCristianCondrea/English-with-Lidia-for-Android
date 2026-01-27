@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Generic -->
+    <string name="error_generic">Something went wrong. Please try again.</string>
+    <string name="error_no_internet">No internet connection.</string>
+    <string name="error_connection">Connection problem. Please try again.</string>
+    <string name="error_timeout">Request timed out. Please try again.</string>
+    <string name="error_ssl">Secure connection failed.</string>
+    <string name="error_rate_limited">Too many requests. Try again in a moment.</string>
+    <string name="error_http_client">Request failed. Please try again.</string>
+    <string name="error_http_server">Server error. Please try again later.</string>
+    <string name="error_http_redirect">Unexpected redirect. Please try again.</string>
+    <string name="error_parsing">Couldn’t read server response.</string>
+    <string name="error_no_data">No data available.</string>
+
+    <!-- Lessons list -->
+    <string name="error_failed_to_load_lessons">Couldn’t load lessons. Please try again.</string>
+    <string name="error_failed_to_parse_lessons">Couldn’t read lessons list.</string>
+
+    <!-- Lesson details -->
+    <string name="error_failed_to_load_lesson">Couldn’t load this lesson. Please try again.</string>
+    <string name="error_invalid_lesson_id">Invalid lesson.</string>
+    <string name="error_lesson_not_found">Lesson not found.</string>
+    <string name="error_lesson_empty">This lesson has no content yet.</string>
+    <string name="error_invalid_lesson_response">Invalid lesson data received.</string>
+    <string name="error_failed_to_parse_lesson">Couldn’t parse lesson content.</string>
+
+    <!-- Audio -->
+    <string name="error_audio_playback">Audio playback failed.</string>
+    <string name="error_audio_not_available">Audio is not available for this item.</string>
+    <string name="error_failed_to_cache_audio">Couldn’t prepare audio. Streaming will be used.</string>
+
+</resources>

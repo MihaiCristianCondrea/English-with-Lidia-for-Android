@@ -6,5 +6,5 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.github.GithubConsta
 
 class AppAdvancedSettingsProvider(val context: Context) : AdvancedSettingsProvider {
     override val bugReportUrl: String
-        get() = "${GithubConstants.GITHUB_BASE}AppToolkit${GithubConstants.GITHUB_ISSUES_SUFFIX}"
+        get() = "${GithubConstants.GITHUB_BASE}English-with-Lidia-for-Android${GithubConstants.GITHUB_ISSUES_SUFFIX}"
 }

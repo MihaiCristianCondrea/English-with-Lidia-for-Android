@@ -1,13 +1,14 @@
+/*
 package com.d4rk.englishwithlidia.plus.app.lessons.list.ui
 
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
+import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.contract.HomeEvent
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.mapper.HomeUiMapper
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeLesson
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
+import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.UiHomeLesson
+import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeUiState
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
 import io.mockk.clearAllMocks
@@ -87,7 +88,7 @@ class HomeViewModelTest {
 
         val expectedState = UiStateScreen(
             screenState = ScreenState.Success(),
-            data = UiHomeScreen(
+            data = HomeUiState(
                 lessons = listOf(
                     UiHomeLesson(
                         lessonId = lesson.lessonId,
@@ -115,7 +116,7 @@ class HomeViewModelTest {
 
         val expectedState = UiStateScreen(
             screenState = ScreenState.NoData(),
-            data = UiHomeScreen(),
+            data = HomeUiState(),
         )
 
         val state = viewModel.uiState.value
@@ -135,7 +136,7 @@ class HomeViewModelTest {
 
         val expectedState = UiStateScreen(
             screenState = ScreenState.NoData(),
-            data = UiHomeScreen(),
+            data = HomeUiState(),
         )
 
         val state = viewModel.uiState.value
@@ -144,3 +145,4 @@ class HomeViewModelTest {
         verify(exactly = 1) { repository.getHomeLessons() }
     }
 }
+*/

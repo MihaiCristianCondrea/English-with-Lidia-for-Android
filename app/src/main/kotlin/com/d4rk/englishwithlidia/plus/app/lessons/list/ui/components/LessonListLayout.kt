@@ -35,22 +35,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.android.libs.apptoolkit.core.ui.components.ads.AdBanner
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.animateVisibility
-import com.d4rk.android.libs.apptoolkit.core.ui.components.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.ui.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.views.ads.AdBanner
+import com.d4rk.android.libs.apptoolkit.core.ui.views.modifiers.animateVisibility
+import com.d4rk.android.libs.apptoolkit.core.ui.views.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.englishwithlidia.plus.R
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
+import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeLessonUiModel
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonConstants
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LessonListLayout(
-    lessons: List<UiHomeLesson>,
+    lessons: List<HomeLessonUiModel>, // FIXME: Parameter 'lessons' has runtime-determined stability
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
-    onLessonClick: (UiHomeLesson) -> Unit,
+    onLessonClick: (HomeLessonUiModel) -> Unit,
     paddingValues: PaddingValues,
     listState: LazyListState,
     modifier: Modifier = Modifier,
@@ -145,8 +145,8 @@ private fun MediumRectangleAdView(
 
 @Composable
 private fun LessonCardItem(
-    lesson: UiHomeLesson,
-    onLessonClick: (UiHomeLesson) -> Unit,
+    lesson: HomeLessonUiModel,
+    onLessonClick: (HomeLessonUiModel) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LessonCard(
@@ -201,7 +201,7 @@ internal sealed interface LessonListItem {
     data object ActionButtons : LessonListItem
     data object BannerAd : LessonListItem
     data object MediumRectangleAd : LessonListItem
-    data class Lesson(val lesson: UiHomeLesson) : LessonListItem
+    data class Lesson(val lesson: HomeLessonUiModel) : LessonListItem
 }
 
 private fun lessonListItemKey(index: Int, item: LessonListItem): Any = when (item) {
@@ -224,7 +224,7 @@ private fun lessonListItemContentType(item: LessonListItem): String = when (item
 private fun LazyItemScope.LessonListEntry(
     index: Int,
     item: LessonListItem,
-    onLessonClick: (UiHomeLesson) -> Unit,
+    onLessonClick: (HomeLessonUiModel) -> Unit,
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
 ) {
@@ -253,13 +253,13 @@ private fun LazyItemScope.LessonListEntry(
 }
 
 @Composable
-private fun LazyItemScope.animatedLessonModifier(index: Int): Modifier =
+private fun LazyItemScope.animatedLessonModifier(index: Int): Modifier = // FIXME: Modifier factory functions should be extensions on Modifier
     Modifier
         .animateVisibility(index = index)
         .animateItem()
 
 internal fun buildAppListItems(
-    lessons: List<UiHomeLesson>,
+    lessons: List<HomeLessonUiModel>,
 ): List<LessonListItem> = buildList {
     lessons.forEach { lesson ->
         when (lesson.lessonType) {

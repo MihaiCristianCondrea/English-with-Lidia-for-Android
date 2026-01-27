@@ -1,20 +1,20 @@
 [versions]
-agp = "8.13.0"
-aboutlibraries = "12.2.4"
-kotlin = "2.2.20"
-google-services = "4.4.3"
+agp = "9.0.0"
+aboutlibraries = "14.0.0-b02"
+kotlin = "2.3.0"
+google-services = "4.4.4"
 google-firebase-crashlytics = "3.0.6"
-media3 = "1.8.0"
+media3 = "1.9.0"
 junittest = "3.7.0"
-mannodermaus = "1.13.4.0"
-mockk = "1.14.6"
-jupiter = "6.0.0"
+mannodermaus = "2.0.1"
+mockk = "1.14.7"
+jupiter = "6.0.2"
 testCorutines = "1.10.2"
 testTurbine = "1.2.1"
 truth = "1.7.0"
-testManifestTestJunit4Android = "1.9.2"
+testManifestTestJunit4Android = "1.10.1"
 slf4j = "2.0.17"
-ktor = "3.3.0"
+ktor = "3.4.0"
 
 [libraries]
 media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
@@ -40,15 +40,13 @@ androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-man
 androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "testManifestTestJunit4Android" }
 
 [plugins]
-androidApplication = { id = "com.android.application", version.ref = "agp" }
-androidLibrary = { id = "com.android.library", version.ref = "agp" }
-jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-googlePlayServices = { id = "com.google.gms.google-services", version.ref = "google-services" }
-googleFirebase = { id = "com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics" }
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-jetbrainsKotlinParcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
+about-libraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutlibraries" }
+googlePlayServices = { id = "com.google.gms.google-services", version.ref = "google-services" }
+googleFirebase = { id = "com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics" }
 mannodermaus = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermaus" }
 
 [bundles]

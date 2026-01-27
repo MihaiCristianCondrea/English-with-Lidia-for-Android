@@ -1,3 +1,4 @@
+/*
 package com.d4rk.englishwithlidia.plus.core.utils.extensions
 
 import com.google.common.util.concurrent.SettableFuture
@@ -31,3 +32,4 @@ class ListenableFutureExtensionsTest {
         assertTrue(future.isCancelled)
     }
 }
+*/

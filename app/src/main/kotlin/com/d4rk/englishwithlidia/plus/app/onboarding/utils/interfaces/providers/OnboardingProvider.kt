@@ -6,10 +6,10 @@ import android.content.Intent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Translate
-import com.d4rk.android.libs.apptoolkit.app.onboarding.domain.data.model.ui.OnboardingPage
-import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.CrashlyticsOnboardingPageTab
-import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.FinalOnboardingPageTab
-import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.components.pages.ThemeOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.model.OnboardingPage
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.CrashlyticsOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.FinalOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.ThemeOnboardingPageTab
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.main.ui.MainActivity

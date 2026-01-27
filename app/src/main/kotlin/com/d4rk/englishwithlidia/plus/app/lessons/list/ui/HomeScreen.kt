@@ -11,16 +11,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.UiStateScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.LoadingScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.NoDataScreen
-import com.d4rk.android.libs.apptoolkit.core.ui.components.layouts.ScreenStateHandler
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ads.AdsConfig
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.action.HomeEvent
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeLesson
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.ui.UiHomeScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.model.ads.AdsConfig
+import com.d4rk.android.libs.apptoolkit.core.ui.state.UiStateScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.LoadingScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.NoDataScreen
+import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.ScreenStateHandler
+import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.contract.HomeEvent
+import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeUiState
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.components.LessonListLayout
-import com.d4rk.englishwithlidia.plus.app.main.ui.components.navigation.openLessonDetailActivity
+import com.d4rk.englishwithlidia.plus.app.main.ui.views.navigation.openLessonDetailActivity
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.qualifier.named
@@ -28,18 +27,20 @@ import org.koin.core.qualifier.named
 @Composable
 fun HomeRoute(
     paddingValues: PaddingValues,
-    viewModel: HomeViewModel = koinViewModel(),
 ) {
-    val screenState: UiStateScreen<UiHomeScreen> by viewModel.uiState.collectAsStateWithLifecycle()
+
+    val viewModel: HomeViewModel = koinViewModel()
+
+    val screenState: UiStateScreen<HomeUiState> by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val lessonListState = rememberLazyListState()
     val bannerAdsConfig: AdsConfig = koinInject()
     val mediumRectangleAdsConfig: AdsConfig =
         koinInject(qualifier = named(name = "banner_medium_rectangle"))
     val onRetryAction = remember(viewModel) {
-        { viewModel.onEvent(event = HomeEvent.FetchLessons) }
+        { viewModel.onEvent(event = HomeEvent.LoadLessons) }
     }
-    val onLessonSelected: (UiHomeLesson) -> Unit = remember(context) {
+    val onLessonSelected: (HomeUiState) -> Unit = remember(context) {
         { lesson ->
             openLessonDetailActivity(
                 context = context,
@@ -62,9 +63,9 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    screenState: UiStateScreen<UiHomeScreen>,
+    screenState: UiStateScreen<HomeUiState>,
     onRetry: () -> Unit,
-    onLessonSelected: (UiHomeLesson) -> Unit,
+    onLessonSelected: (HomeUiState) -> Unit,
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
     paddingValues: PaddingValues,
@@ -97,8 +98,8 @@ fun HomeScreen(
 
 @Composable
 private fun HomeContent(
-    uiHomeScreen: UiHomeScreen,
-    onLessonSelected: (UiHomeLesson) -> Unit,
+    uiHomeScreen: HomeUiState,
+    onLessonSelected: (HomeUiState) -> Unit,
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
     paddingValues: PaddingValues,
@@ -106,10 +107,10 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
 ) {
     LessonListLayout(
-        lessons = uiHomeScreen.lessons,
+        lessons = uiHomeScreen.lessons, // FIXME: Argument type mismatch: actual type is 'ImmutableList<HomeLessonUiModel>', but 'List<HomeUiState>' was expected.
         bannerAdsConfig = bannerAdsConfig,
         mediumRectangleAdsConfig = mediumRectangleAdsConfig,
-        onLessonClick = onLessonSelected,
+        onLessonClick = onLessonSelected, // FIXME: Argument type mismatch: actual type is 'Function1<HomeUiState, Unit>', but 'Function1<HomeLessonUiModel, Unit>' was expected.
         paddingValues = paddingValues,
         listState = lessonListState,
         modifier = modifier,

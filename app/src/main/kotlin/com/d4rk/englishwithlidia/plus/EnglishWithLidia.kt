@@ -8,15 +8,26 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.d4rk.android.libs.apptoolkit.app.theme.ui.style.AppThemeConfig
+import com.d4rk.android.libs.apptoolkit.app.theme.ui.style.colors.ColorPalette
+import com.d4rk.android.libs.apptoolkit.app.theme.ui.style.colors.ThemePaletteProvider
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.colorscheme.StaticPaletteIds
+import com.d4rk.android.libs.apptoolkit.core.utils.extensions.date.isChristmasSeason
+import com.d4rk.android.libs.apptoolkit.core.utils.extensions.date.isHalloweenSeason
 import com.d4rk.android.libs.apptoolkit.data.core.BaseCoreManager
 import com.d4rk.android.libs.apptoolkit.data.core.ads.AdsCoreManager
+import com.d4rk.android.libs.apptoolkit.data.local.datastore.CommonDataStore
 import com.d4rk.englishwithlidia.plus.core.di.initializeKoin
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ads.AdsConstants
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.supervisorScope
 import org.koin.android.ext.android.getKoin
+import java.time.LocalDate
+import java.time.ZoneId
 
 class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
     private var currentActivity: Activity? = null
@@ -25,7 +36,9 @@ class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
 
     override fun onCreate() {
         initializeKoin(context = this)
+        applyDefaultColorPalette()
         super<BaseCoreManager>.onCreate()
+        registerActivityLifecycleCallbacks(this)
         ProcessLifecycleOwner.get().lifecycle.addObserver(observer = this)
     }
 
@@ -35,6 +48,37 @@ class EnglishWithLidia : BaseCoreManager(), DefaultLifecycleObserver {
 
     private suspend fun initializeAds() {
         adsCoreManager.initializeAds(AdsConstants.APP_OPEN_UNIT_ID)
+    }
+
+    private fun applyDefaultColorPalette() {
+        val colorPalette: ColorPalette = resolveDefaultColorPalette()
+        AppThemeConfig.customLightScheme = colorPalette.lightColorScheme
+        AppThemeConfig.customDarkScheme = colorPalette.darkColorScheme
+        ThemePaletteProvider.defaultPalette = colorPalette
+    }
+
+    private fun resolveDefaultColorPalette(): ColorPalette {
+        val dataStore: CommonDataStore = CommonDataStore.getInstance(context = this)
+
+        val hasInteractedWithSettings: Boolean = runBlocking {
+            dataStore.settingsInteracted.first()
+        }
+
+        if (!hasInteractedWithSettings) {
+            val staticPaletteId: String = runBlocking { dataStore.staticPaletteId.first() }
+            val today: LocalDate = LocalDate.now(ZoneId.systemDefault())
+            val shouldUseSeasonalPalette: Boolean = staticPaletteId == StaticPaletteIds.DEFAULT
+
+            if (shouldUseSeasonalPalette) {
+                return when {
+                    today.isHalloweenSeason -> ThemePaletteProvider.paletteById(StaticPaletteIds.HALLOWEEN)
+                    today.isChristmasSeason -> ThemePaletteProvider.paletteById(StaticPaletteIds.CHRISTMAS)
+                    else -> getKoin().get()
+                }
+            }
+        }
+
+        return getKoin().get()
     }
 
     override fun onStart(owner: LifecycleOwner) {

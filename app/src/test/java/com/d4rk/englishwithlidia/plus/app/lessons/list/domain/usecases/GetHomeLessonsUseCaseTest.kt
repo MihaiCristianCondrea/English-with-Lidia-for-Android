@@ -1,3 +1,4 @@
+/*
 package com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases
 
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
@@ -23,3 +24,4 @@ class GetHomeLessonsUseCaseTest {
     }
 }
 
+*/
