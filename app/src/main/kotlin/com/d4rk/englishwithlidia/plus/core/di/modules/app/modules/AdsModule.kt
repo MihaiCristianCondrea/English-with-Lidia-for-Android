@@ -36,6 +36,10 @@ val adsModule: Module = module {
         )
     }
 
+    single<AdsConfig> {
+        AdsConfig(bannerAdUnitId = AdsConstants.BANNER_AD_UNIT_ID)
+    }
+
     single<AdsConfig>(named(name = "native_ad")) {
         AdsConfig(bannerAdUnitId = AdsConstants.NATIVE_AD_UNIT_ID)
     }
@@ -58,8 +62,15 @@ val adsModule: Module = module {
 
     single<AdsConfig>(named(name = "help_large_banner_ad")) {
         AdsConfig(
-            bannerAdUnitId = AdsConstants.HELP_NATIVE_AD_UNIT_ID,
+            bannerAdUnitId = AdsConstants.HELP_LARGE_BANNER_AD_UNIT_ID,
             adSize = AdSize.LARGE_BANNER
+        )
+    }
+
+    single<AdsConfig>(named(name = "banner_medium_rectangle")) {
+        AdsConfig(
+            bannerAdUnitId = AdsConstants.SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID,
+            adSize = AdSize.MEDIUM_RECTANGLE,
         )
     }
 

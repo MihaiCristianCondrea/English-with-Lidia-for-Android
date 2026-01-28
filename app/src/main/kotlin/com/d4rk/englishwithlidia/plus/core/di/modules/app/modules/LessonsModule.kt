@@ -1,17 +1,16 @@
 package com.d4rk.englishwithlidia.plus.core.di.modules.app.modules
 
-import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.KtorLessonRemoteDataSource
 import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.LessonRemoteDataSource
 import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.repository.LessonRepositoryImpl
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.LessonViewModel
-import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.HomeRemoteDataSource
-import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.KtorHomeRemoteDataSource
-import com.d4rk.englishwithlidia.plus.app.lessons.list.data.repository.HomeRepositoryImpl
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
-import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
-import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.HomeViewModel
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.data.remote.KtorListingDataSource
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.data.remote.ListingDataSource
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.data.repository.ListingRepositoryImpl
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.domain.repository.ListingRepository
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.domain.usecases.GetListingLessonsUseCase
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.ListingViewModel
 import com.d4rk.englishwithlidia.plus.player.audio.AudioCacheManager
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
@@ -29,26 +28,26 @@ val lessonsModule: Module = module {
     }
 
     // -----------------------------
-    // Home lessons (list)
+    // Listing lessons
     // -----------------------------
 
-    single<HomeRemoteDataSource> {
-        KtorHomeRemoteDataSource(
+    single<ListingDataSource> {
+        KtorListingDataSource(
             client = get(),
             jsonParser = get(named("lessons_json_parser")),
         )
     }
 
-    single<HomeRepository> {
-        HomeRepositoryImpl(
+    single<ListingRepository> {
+        ListingRepositoryImpl(
             remoteDataSource = get(),
         )
     }
 
-    single { GetHomeLessonsUseCase(repository = get()) }
+    single { GetListingLessonsUseCase(repository = get()) }
     viewModel {
-        HomeViewModel(
-            getHomeLessonsUseCase = get(),
+        ListingViewModel(
+            getListingLessonsUseCase = get(),
             dispatchers = get(),
             firebaseController = get()
         )
@@ -59,8 +58,8 @@ val lessonsModule: Module = module {
     // -----------------------------
     single<AudioCacheManager> { AudioCacheManager(context = get(), dispatchers = get()) }
 
-    single<LessonRemoteDataSource> {
-        KtorLessonRemoteDataSource(
+    single {
+        LessonRemoteDataSource(
             client = get(),
             jsonParser = get(named("lessons_json_parser")),
         )

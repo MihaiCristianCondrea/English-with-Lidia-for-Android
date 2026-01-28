@@ -4,8 +4,6 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonContent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonScreen
-
-// TODO: This could be moved to domain to bring the data to the screen already mapped
 internal fun Lesson.toUiModel(): UiLessonScreen =
     UiLessonScreen(
         lessonTitle = lessonTitle,

@@ -3,7 +3,7 @@ package com.d4rk.englishwithlidia.plus.core.utils.constants.ads
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ads.DebugAdsConstants
 import com.d4rk.englishwithlidia.plus.BuildConfig
 
-object AdsConstants { // TODO: Check which of them are used
+object AdsConstants { // REMINDER: Check which of them are used and bring back the deleted ad unit id's
 
     private fun bannerAdUnitId(releaseId: String): String =
         if (BuildConfig.DEBUG) {
@@ -19,13 +19,6 @@ object AdsConstants { // TODO: Check which of them are used
             releaseId
         }
 
-    val BANNER_AD_UNIT_ID: String
-        get() = if (BuildConfig.DEBUG) {
-            DebugAdsConstants.BANNER_AD_UNIT_ID
-        } else {
-            "ca-app-pub-5294151573817700/8479403125"
-        }
-
     val APP_OPEN_UNIT_ID: String
         get() = if (BuildConfig.DEBUG) {
             DebugAdsConstants.APP_OPEN_AD_UNIT_ID
@@ -33,19 +26,14 @@ object AdsConstants { // TODO: Check which of them are used
             "ca-app-pub-5294151573817700/2885662643"
         }
 
+    val BANNER_AD_UNIT_ID: String
+        get() = bannerAdUnitId("ca-app-pub-5294151573817700/8479403125")
+
     val HELP_LARGE_BANNER_AD_UNIT_ID: String
-        get() = if (BuildConfig.DEBUG) {
-            DebugAdsConstants.BANNER_AD_UNIT_ID
-        } else {
-            "ca-app-pub-5294151573817700/4295246186"
-        }
+        get() = bannerAdUnitId("ca-app-pub-5294151573817700/4295246186")
 
     val SUPPORT_MEDIUM_RECTANGLE_BANNER_AD_UNIT_ID: String
-        get() = if (BuildConfig.DEBUG) {
-            DebugAdsConstants.BANNER_AD_UNIT_ID
-        } else {
-            "ca-app-pub-5294151573817700/4767671864"
-        }
+        get() = bannerAdUnitId("ca-app-pub-5294151573817700/4767671864")
 
     val NATIVE_AD_UNIT_ID: String
         get() = nativeAdUnitId("ca-app-pub-5294151573817700/5578142927")

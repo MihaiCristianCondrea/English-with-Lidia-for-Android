@@ -7,8 +7,8 @@ import androidx.compose.runtime.Stable
 import androidx.core.net.toUri
 import com.d4rk.android.libs.apptoolkit.core.ui.navigation.NavigationEntryBuilder
 import com.d4rk.android.libs.apptoolkit.core.ui.window.AppWindowWidthSizeClass
-import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.navigation.brightnessEntryBuilder
-import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeUiState
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.navigation.listingEntryBuilder
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.state.ListingLessonUiModel
 import com.d4rk.englishwithlidia.plus.app.main.utils.constants.AppNavKey
 
 /**
@@ -34,10 +34,10 @@ fun appNavigationEntryBuilders(
 private fun defaultAppNavigationEntryBuilders(
     context: AppNavigationEntryContext,
 ): List<NavigationEntryBuilder<AppNavKey>> = listOf(
-    brightnessEntryBuilder(context),
+    listingEntryBuilder(context),
 )
 
-fun openLessonDetailActivity(context: Context, lesson: HomeUiState) {
+fun openLessonDetailActivity(context: Context, lesson: ListingLessonUiModel) {
     Intent(Intent.ACTION_VIEW, lesson.lessonDeepLinkPath.toUri()).let { intent: Intent ->
         context.startActivity(intent)
     }

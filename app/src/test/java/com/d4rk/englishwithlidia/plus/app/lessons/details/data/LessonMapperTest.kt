@@ -1,5 +1,9 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.data
 
+import com.d4rk.englishwithlidia.plus.app.lessons.details.data.mapper.firstLessonOrNull
+import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.model.LessonContentDto
+import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.model.LessonDto
+import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.model.LessonResponseDto
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -7,37 +11,34 @@ import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 class LessonMapperTest {
-
-    private val mapper = LessonMapper()
-
     @Test
-    fun `map maps api response with data to domain lessons`() {
+    fun `firstLessonOrNull maps api response with data to domain lesson`() {
         val apiResponse = createLessonApiResponse()
 
-        val result = mapper.map(apiResponse)
+        val result = apiResponse.firstLessonOrNull()
 
-        assertEquals(listOf(expectedLesson()), result)
+        assertEquals(expectedLesson(), result)
     }
 
     @Test
-    fun `map returns empty list when response has no data`() {
+    fun `firstLessonOrNull returns null when response has no data`() {
         val emptyApiResponse = createEmptyLessonApiResponse()
 
-        val result = mapper.map(emptyApiResponse)
+        val result = emptyApiResponse.firstLessonOrNull()
 
-        assertTrue(result.isEmpty())
+        assertTrue(result == null)
     }
 
-    private fun createLessonApiResponse() = ApiLessonResponse(
+    private fun createLessonApiResponse() = LessonResponseDto(
         data = listOf(
-            ApiLesson(
+            LessonDto(
                 lessonTitle = LESSON_TITLE,
-                lessonContent = sampleContents.map { it.toApi() },
+                lessonContent = sampleContents.map { it.toDto() },
             ),
         ),
     )
 
-    private fun createEmptyLessonApiResponse() = ApiLessonResponse(data = emptyList())
+    private fun createEmptyLessonApiResponse() = LessonResponseDto(data = emptyList())
 
     private fun expectedLesson() = Lesson(
         lessonTitle = LESSON_TITLE,
@@ -58,7 +59,7 @@ class LessonMapperTest {
         val description: String,
         val releaseYear: Int?,
     ) {
-        fun toApi() = ApiLessonContent(
+        fun toDto() = LessonContentDto(
             contentId = id,
             contentType = type,
             contentText = text,
