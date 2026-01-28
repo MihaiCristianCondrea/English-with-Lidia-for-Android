@@ -79,7 +79,7 @@ class ListingViewModel(
                         }
                     }
                     .onFailure { error ->
-                        screenState.updateState(newValues = ScreenState.Error())
+                        screenState.updateState(newValues = ScreenState.NoData())
                         screenState.showSnackbar(
                             UiSnackbar(
                                 message = error.toErrorMessage(),
@@ -99,7 +99,7 @@ class ListingViewModel(
                     throwable = it,
                 )
 
-                screenState.updateState(newValues = ScreenState.Error())
+                screenState.updateState(newValues = ScreenState.NoData())
                 screenState.showSnackbar(
                     UiSnackbar(
                         message = UiTextHelper.StringResource(R.string.error_failed_to_load_lessons),

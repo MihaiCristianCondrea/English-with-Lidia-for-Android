@@ -78,7 +78,7 @@ class LessonViewModel(
                         }
                     }
                     .onFailure { error: AppErrors ->
-                        screenState.updateState(newValues = ScreenState.Error())
+                        screenState.updateState(newValues = ScreenState.NoData())
                         screenState.showSnackbar(
                             UiSnackbar(
                                 message = error.toErrorMessage(),
@@ -98,7 +98,7 @@ class LessonViewModel(
                     throwable = it,
                 )
 
-                screenState.updateState(newValues = ScreenState.Error())
+                screenState.updateState(newValues = ScreenState.NoData())
                 screenState.showSnackbar(
                     UiSnackbar(
                         message = UiTextHelper.StringResource(R.string.error_failed_to_load_lesson),

@@ -1,11 +1,16 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui
 
-import com.d4rk.android.libs.apptoolkit.core.domain.model.ui.ScreenState
-import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.mapper.LessonUiMapper
+import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
+import com.d4rk.android.libs.apptoolkit.core.domain.repository.FirebaseController
+import com.d4rk.android.libs.apptoolkit.core.ui.state.ScreenState
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
+import com.d4rk.englishwithlidia.plus.core.domain.model.network.AppErrors
+import io.mockk.every
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
@@ -27,7 +32,12 @@ import org.junit.jupiter.api.Test
 class LessonViewModelTest {
 
     private val testDispatcher = UnconfinedTestDispatcher()
-    private val uiMapper = LessonUiMapper()
+    private val dispatchers: DispatcherProvider = mockk {
+        every { io } returns testDispatcher
+        every { main } returns testDispatcher
+        every { default } returns testDispatcher
+    }
+    private val firebaseController: FirebaseController = mockk(relaxed = true)
 
     @BeforeEach
     fun setUp() {
@@ -42,7 +52,7 @@ class LessonViewModelTest {
     @Test
     fun `state is success when lesson available`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.SUCCESS)
-        val viewModel = LessonViewModel(useCase, uiMapper)
+        val viewModel = LessonViewModel(useCase, dispatchers, firebaseController)
 
         viewModel.getLesson("1")
         advanceUntilIdle()
@@ -58,7 +68,7 @@ class LessonViewModelTest {
     @Test
     fun `state is no data when lesson empty`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.EMPTY)
-        val viewModel = LessonViewModel(useCase, uiMapper)
+        val viewModel = LessonViewModel(useCase, dispatchers, firebaseController)
 
         viewModel.getLesson("1")
         advanceUntilIdle()
@@ -71,9 +81,9 @@ class LessonViewModelTest {
     }
 
     @Test
-    fun `state is no data when use case throws`() = runTest {
+    fun `state is no data when use case returns error`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.ERROR)
-        val viewModel = LessonViewModel(useCase, uiMapper)
+        val viewModel = LessonViewModel(useCase, dispatchers, firebaseController)
 
         viewModel.getLesson("1")
         advanceUntilIdle()
@@ -84,7 +94,7 @@ class LessonViewModelTest {
     @Test
     fun `playback fields update correctly`() = runTest {
         val useCase = fakeGetLessonUseCase(ResultType.SUCCESS)
-        val viewModel = LessonViewModel(useCase, uiMapper)
+        val viewModel = LessonViewModel(useCase, dispatchers, firebaseController)
 
         viewModel.updateIsPlaying(true)
         viewModel.updatePlaybackDuration(100L)
@@ -102,22 +112,22 @@ class LessonViewModelTest {
 
     private fun fakeGetLessonUseCase(result: ResultType): GetLessonUseCase {
         val repository = object : LessonRepository {
-            override fun getLesson(lessonId: String): Flow<Lesson?> {
-                return when (result) {
+            override fun getLesson(lessonId: String): Flow<DataState<Lesson, AppErrors>> =
+                when (result) {
                     ResultType.SUCCESS -> flowOf(
-                        Lesson(
-                            lessonTitle = "Title",
-                            lessonContent = listOf(
-                                LessonContent(contentId = "1"),
+                        DataState.Success(
+                            Lesson(
+                                lessonTitle = "Title",
+                                lessonContent = listOf(LessonContent(contentId = "1")),
                             ),
                         ),
                     )
-                    ResultType.EMPTY -> flowOf(null)
-                    ResultType.ERROR -> flow { throw RuntimeException() }
+                    ResultType.EMPTY -> flowOf(DataState.Success(Lesson(lessonTitle = "Title")))
+                    ResultType.ERROR -> flow {
+                        emit(DataState.Error(AppErrors.UseCase.LESSON_NOT_FOUND))
+                    }
                 }
-            }
         }
         return GetLessonUseCase(repository)
     }
 }
-

@@ -1,4 +1,4 @@
-package com.d4rk.englishwithlidia.plus.app.lessons.details.domain.mapper
+package com.d4rk.englishwithlidia.plus.app.lessons.details.ui.mappers
 
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.LessonContent
@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 
 class LessonUiMapperTest {
-
-    private val mapper = LessonUiMapper()
-
     @Test
     fun `map maps lesson to ui screen`() {
         val lesson = Lesson(
@@ -34,7 +31,7 @@ class LessonUiMapperTest {
             ),
         )
 
-        val result = mapper.map(lesson)
+        val result = lesson.toUiModel()
 
         val expected = UiLessonScreen(
             lessonTitle = lesson.lessonTitle,
@@ -63,7 +60,7 @@ class LessonUiMapperTest {
     fun `map handles empty content`() {
         val lesson = Lesson(lessonTitle = "Lesson", lessonContent = emptyList())
 
-        val result = mapper.map(lesson)
+        val result = lesson.toUiModel()
 
         assertEquals(UiLessonScreen(lessonTitle = "Lesson"), result)
         assertNotNull(result.lessonContent)

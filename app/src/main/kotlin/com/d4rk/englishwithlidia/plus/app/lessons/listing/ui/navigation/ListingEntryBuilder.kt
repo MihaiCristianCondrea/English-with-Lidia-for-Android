@@ -6,7 +6,7 @@ import com.d4rk.englishwithlidia.plus.app.main.ui.views.navigation.AppNavigation
 import com.d4rk.englishwithlidia.plus.app.main.utils.constants.AppNavKey
 import com.d4rk.englishwithlidia.plus.app.main.utils.constants.BrightnessRoute
 
-fun brightnessEntryBuilder(
+fun listingEntryBuilder(
     context: AppNavigationEntryContext,
 ): NavigationEntryBuilder<AppNavKey> = {
     entry<BrightnessRoute> {
