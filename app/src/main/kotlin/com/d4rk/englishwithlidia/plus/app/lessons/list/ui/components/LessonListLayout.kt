@@ -43,11 +43,12 @@ import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeLessonUiModel
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonConstants
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LessonListLayout(
-    lessons: List<HomeLessonUiModel>, // FIXME: Parameter 'lessons' has runtime-determined stability
+    lessons: ImmutableList<HomeLessonUiModel>,
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
     onLessonClick: (HomeLessonUiModel) -> Unit,
@@ -230,11 +231,11 @@ private fun LazyItemScope.LessonListEntry(
 ) {
     when (item) {
         LessonListItem.BannerImage -> LessonBannerImage(
-            modifier = animatedLessonModifier(index),
+            modifier = Modifier.animatedLessonModifier(index),
         )
 
         LessonListItem.ActionButtons -> LessonActionButtonsRow(
-            modifier = animatedLessonModifier(index),
+            modifier = Modifier.animatedLessonModifier(index),
         )
 
         LessonListItem.BannerAd -> BannerAdView(adsConfig = bannerAdsConfig)
@@ -246,20 +247,18 @@ private fun LazyItemScope.LessonListEntry(
         is LessonListItem.Lesson -> LessonCardItem(
             lesson = item.lesson,
             onLessonClick = onLessonClick,
-            modifier = animatedLessonModifier(index)
+            modifier = Modifier.animatedLessonModifier(index)
                 .padding(horizontal = SizeConstants.LargeSize),
         )
     }
 }
 
 @Composable
-private fun LazyItemScope.animatedLessonModifier(index: Int): Modifier = // FIXME: Modifier factory functions should be extensions on Modifier
-    Modifier
-        .animateVisibility(index = index)
-        .animateItem()
+private fun Modifier.animatedLessonModifier(index: Int): Modifier =
+    animateVisibility(index = index).animateItem()
 
 internal fun buildAppListItems(
-    lessons: List<HomeLessonUiModel>,
+    lessons: ImmutableList<HomeLessonUiModel>,
 ): List<LessonListItem> = buildList {
     lessons.forEach { lesson ->
         when (lesson.lessonType) {

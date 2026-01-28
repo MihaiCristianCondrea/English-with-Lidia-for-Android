@@ -5,8 +5,6 @@ import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.model.HomeScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeLessonUiModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeUiState
 import kotlinx.collections.immutable.toImmutableList
-
-// TODO: Maybe moving mapping to use case domain
 internal fun HomeScreen.toUiState(): HomeUiState =
     HomeUiState(lessons = lessons.map(HomeLesson::toUiModel).toImmutableList())
 

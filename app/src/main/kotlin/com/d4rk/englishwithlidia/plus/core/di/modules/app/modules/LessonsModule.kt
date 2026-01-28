@@ -1,13 +1,11 @@
 package com.d4rk.englishwithlidia.plus.core.di.modules.app.modules
 
-import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.KtorLessonRemoteDataSource
 import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.LessonRemoteDataSource
 import com.d4rk.englishwithlidia.plus.app.lessons.details.data.remote.repository.LessonRepositoryImpl
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.usecases.GetLessonUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.LessonViewModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.HomeRemoteDataSource
-import com.d4rk.englishwithlidia.plus.app.lessons.list.data.remote.KtorHomeRemoteDataSource
 import com.d4rk.englishwithlidia.plus.app.lessons.list.data.repository.HomeRepositoryImpl
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.repository.HomeRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.list.domain.usecases.GetHomeLessonsUseCase
@@ -32,8 +30,8 @@ val lessonsModule: Module = module {
     // Home lessons (list)
     // -----------------------------
 
-    single<HomeRemoteDataSource> {
-        KtorHomeRemoteDataSource(
+    single {
+        HomeRemoteDataSource(
             client = get(),
             jsonParser = get(named("lessons_json_parser")),
         )
@@ -59,8 +57,8 @@ val lessonsModule: Module = module {
     // -----------------------------
     single<AudioCacheManager> { AudioCacheManager(context = get(), dispatchers = get()) }
 
-    single<LessonRemoteDataSource> {
-        KtorLessonRemoteDataSource(
+    single {
+        LessonRemoteDataSource(
             client = get(),
             jsonParser = get(named("lessons_json_parser")),
         )

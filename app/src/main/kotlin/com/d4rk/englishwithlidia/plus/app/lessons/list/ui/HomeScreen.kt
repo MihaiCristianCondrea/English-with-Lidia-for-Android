@@ -17,6 +17,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.LoadingScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.NoDataScreen
 import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.ScreenStateHandler
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.contract.HomeEvent
+import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeLessonUiModel
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.state.HomeUiState
 import com.d4rk.englishwithlidia.plus.app.lessons.list.ui.components.LessonListLayout
 import com.d4rk.englishwithlidia.plus.app.main.ui.views.navigation.openLessonDetailActivity
@@ -40,7 +41,7 @@ fun HomeRoute(
     val onRetryAction = remember(viewModel) {
         { viewModel.onEvent(event = HomeEvent.LoadLessons) }
     }
-    val onLessonSelected: (HomeUiState) -> Unit = remember(context) {
+    val onLessonSelected: (HomeLessonUiModel) -> Unit = remember(context) {
         { lesson ->
             openLessonDetailActivity(
                 context = context,
@@ -65,7 +66,7 @@ fun HomeRoute(
 fun HomeScreen(
     screenState: UiStateScreen<HomeUiState>,
     onRetry: () -> Unit,
-    onLessonSelected: (HomeUiState) -> Unit,
+    onLessonSelected: (HomeLessonUiModel) -> Unit,
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
     paddingValues: PaddingValues,
@@ -99,7 +100,7 @@ fun HomeScreen(
 @Composable
 private fun HomeContent(
     uiHomeScreen: HomeUiState,
-    onLessonSelected: (HomeUiState) -> Unit,
+    onLessonSelected: (HomeLessonUiModel) -> Unit,
     bannerAdsConfig: AdsConfig,
     mediumRectangleAdsConfig: AdsConfig,
     paddingValues: PaddingValues,
@@ -107,10 +108,10 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
 ) {
     LessonListLayout(
-        lessons = uiHomeScreen.lessons, // FIXME: Argument type mismatch: actual type is 'ImmutableList<HomeLessonUiModel>', but 'List<HomeUiState>' was expected.
+        lessons = uiHomeScreen.lessons,
         bannerAdsConfig = bannerAdsConfig,
         mediumRectangleAdsConfig = mediumRectangleAdsConfig,
-        onLessonClick = onLessonSelected, // FIXME: Argument type mismatch: actual type is 'Function1<HomeUiState, Unit>', but 'Function1<HomeLessonUiModel, Unit>' was expected.
+        onLessonClick = onLessonSelected,
         paddingValues = paddingValues,
         listState = lessonListState,
         modifier = modifier,

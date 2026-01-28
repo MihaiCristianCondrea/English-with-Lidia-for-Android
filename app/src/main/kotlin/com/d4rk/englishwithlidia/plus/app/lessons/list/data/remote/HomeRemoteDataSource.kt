@@ -6,17 +6,12 @@ import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.json.Json
 
-// TODO: Review
-fun interface HomeRemoteDataSource {
-    suspend fun fetchHomeLessons(urlString: String): HomeLessonsResponseDto
-}
-
-class KtorHomeRemoteDataSource(
+class HomeRemoteDataSource(
     private val client: HttpClient,
     private val jsonParser: Json,
-) : HomeRemoteDataSource {
+) {
 
-    override suspend fun fetchHomeLessons(urlString: String): HomeLessonsResponseDto {
+    suspend fun fetchHomeLessons(urlString: String): HomeLessonsResponseDto {
         val jsonString = client.get(urlString).bodyAsText()
 
         return jsonString
