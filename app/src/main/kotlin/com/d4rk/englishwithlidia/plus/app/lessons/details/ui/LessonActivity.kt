@@ -35,7 +35,7 @@ class LessonActivity : ActivityPlayer() {
                     onSeek = { positionInSeconds ->
                         seekTo((positionInSeconds * 1000).toLong())
                     },
-                    onPreparePlayer = { content, lessonTitle ->
+                    onPreparePlayer = { content, lessonTitle, playWhenReady ->
                         preparePlayer(
                             audioUrl = content.contentAudioUrl,
                             title = content.contentTitle.ifBlank { lessonTitle },
@@ -44,7 +44,8 @@ class LessonActivity : ActivityPlayer() {
                             albumTitle = content.contentAlbumTitle,
                             genre = content.contentGenre,
                             description = content.contentDescription,
-                            releaseYear = content.contentReleaseYear
+                            releaseYear = content.contentReleaseYear,
+                            playWhenReady = playWhenReady,
                         )
                     },
                 )

@@ -11,7 +11,6 @@ import com.d4rk.englishwithlidia.plus.app.lessons.listing.data.repository.Listin
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.domain.repository.ListingRepository
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.domain.usecases.GetListingLessonsUseCase
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.ListingViewModel
-import com.d4rk.englishwithlidia.plus.player.audio.AudioCacheManager
 import kotlinx.serialization.json.Json
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
@@ -56,8 +55,6 @@ val lessonsModule: Module = module {
     // -----------------------------
     // Lesson details
     // -----------------------------
-    single<AudioCacheManager> { AudioCacheManager(context = get(), dispatchers = get()) }
-
     single {
         LessonRemoteDataSource(
             client = get(),
@@ -68,7 +65,6 @@ val lessonsModule: Module = module {
     single<LessonRepository> {
         LessonRepositoryImpl(
             remoteDataSource = get(),
-            audioCache = get(),
         )
     }
 

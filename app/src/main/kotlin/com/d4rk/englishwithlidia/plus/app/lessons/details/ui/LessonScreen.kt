@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberUpdatedState
@@ -37,12 +36,13 @@ fun LessonRoute(
     onBack: () -> Unit,
     onPlayClick: () -> Unit,
     onSeek: (Float) -> Unit,
-    onPreparePlayer: (UiLessonContent, String) -> Unit,
+    onPreparePlayer: (UiLessonContent, String, Boolean) -> Unit,
 ) {
     val screenState: UiStateScreen<UiLessonScreen> by viewModel.uiState.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
     var preparedContentId by rememberSaveable { mutableStateOf<String?>(null) }
     val currentOnPreparePlayer by rememberUpdatedState(newValue = onPreparePlayer)
+    val currentOnPlayClick by rememberUpdatedState(newValue = onPlayClick)
     val lifecycleOwner = LocalLifecycleOwner.current
 
     DisposableEffect(lifecycleOwner) {
@@ -57,22 +57,22 @@ fun LessonRoute(
         onDispose { lifecycle.removeObserver(observer) }
     }
 
-    LaunchedEffect(screenState.data?.lessonContent, preparedContentId) {
+    val handlePlayClick: () -> Unit = {
         val lesson = screenState.data
-        if (lesson == null) {
-            preparedContentId = null
-            return@LaunchedEffect
-        }
-
-        val content = lesson.lessonContent.firstOrNull {
+        val content = lesson?.lessonContent?.firstOrNull {
             it.contentType == LessonContentTypes.CONTENT_PLAYER
         }
 
-        if (content == null) {
-            preparedContentId = null
-        } else if (preparedContentId != content.contentId) {
-            currentOnPreparePlayer(content, lesson.lessonTitle)
+        if (lesson == null || content == null) {
+            currentOnPlayClick()
+            return@handlePlayClick
+        }
+
+        if (preparedContentId != content.contentId) {
+            currentOnPreparePlayer(content, lesson.lessonTitle, true)
             preparedContentId = content.contentId
+        } else {
+            currentOnPlayClick()
         }
     }
 
@@ -81,7 +81,7 @@ fun LessonRoute(
         bannerConfig = bannerConfig,
         mediumRectangleConfig = mediumRectangleConfig,
         onBack = onBack,
-        onPlayClick = onPlayClick,
+        onPlayClick = { handlePlayClick() },
         onSeek = onSeek,
         listState = listState,
     )
@@ -128,4 +128,3 @@ fun LessonScreen(
         }
     }
 }
-
