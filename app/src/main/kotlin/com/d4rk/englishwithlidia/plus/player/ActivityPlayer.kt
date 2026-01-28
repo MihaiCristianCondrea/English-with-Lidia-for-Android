@@ -118,7 +118,8 @@ abstract class ActivityPlayer : AppCompatActivity() {
         albumTitle: String? = null,
         genre: String? = null,
         description: String? = null,
-        releaseYear: Int? = null
+        releaseYear: Int? = null,
+        playWhenReady: Boolean = false,
     ) {
         lifecycleScope.launch {
             val controller = player ?: controllerFuture?.await()
@@ -139,7 +140,7 @@ abstract class ActivityPlayer : AppCompatActivity() {
 
                 it.setMediaItem(mediaItem)
                 it.prepare()
-                it.playWhenReady = false
+                it.playWhenReady = playWhenReady
             }
         }
     }

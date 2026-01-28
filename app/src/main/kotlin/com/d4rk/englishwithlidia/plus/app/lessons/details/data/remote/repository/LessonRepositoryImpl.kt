@@ -11,7 +11,6 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.model.Lesson
 import com.d4rk.englishwithlidia.plus.app.lessons.details.domain.repository.LessonRepository
 import com.d4rk.englishwithlidia.plus.core.domain.model.network.AppErrors
 import com.d4rk.englishwithlidia.plus.core.utils.constants.api.EnglishWithLidiaApiEndpoints
-import com.d4rk.englishwithlidia.plus.player.audio.AudioCacheManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -20,7 +19,6 @@ import kotlinx.serialization.SerializationException
 
 class LessonRepositoryImpl(
     private val remoteDataSource: LessonRemoteDataSource,
-    private val audioCache: AudioCacheManager,
 ) : LessonRepository {
 
     override fun getLesson(lessonId: String): Flow<DataState<Lesson, AppErrors>> =
@@ -46,9 +44,7 @@ class LessonRepositoryImpl(
                 return@flow
             }
 
-            val cachedLesson = lesson.withCachedAudioUrls()
-
-            emit(DataState.Success(data = cachedLesson))
+            emit(DataState.Success(data = lesson))
         }.catch { throwable ->
             if (throwable is CancellationException) throw throwable
 
@@ -62,22 +58,4 @@ class LessonRepositoryImpl(
             emit(DataState.Error(error = error))
         }
 
-    private suspend fun Lesson.withCachedAudioUrls(): Lesson {
-        if (lessonContent.isEmpty()) return this
-
-        val cachedContent = lessonContent.map { content ->
-            val remoteUrl = content.contentAudioUrl
-            if (remoteUrl.isBlank()) return@map content
-
-            val cachedUrl = try {
-                audioCache.resolve(content.contentId, remoteUrl).toString()
-            } catch (_: Throwable) {
-                remoteUrl
-            }
-
-            content.copy(contentAudioUrl = cachedUrl)
-        }
-
-        return copy(lessonContent = cachedContent)
-    }
 }
