@@ -1,3 +1,9 @@
+# Version 5.3.0:
+
+- **New**: Added new colorful themes
+- **Minor**: Updated the app and optimized the speed
+- **Patch**: Fixed the current known issues
+
 # Version 5.2.0:
 
 - **Major**: We've made some major changes to the app's internal structure. Think of it like reorganizing a big library to make it easier to find books and add new ones. This helps the app run smoother and makes it easier for us to add new things in the future.
