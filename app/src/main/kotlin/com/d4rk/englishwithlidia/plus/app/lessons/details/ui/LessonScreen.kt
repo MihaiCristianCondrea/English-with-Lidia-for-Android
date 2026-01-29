@@ -63,18 +63,16 @@ fun LessonRoute(
             it.contentType == LessonContentTypes.CONTENT_PLAYER
         }
 
-        if (lesson == null || content == null) {
-            currentOnPlayClick()
-            return@handlePlayClick
-        }
-
-        if (preparedContentId != content.contentId) {
-            currentOnPreparePlayer(content, lesson.lessonTitle, true)
-            preparedContentId = content.contentId
-        } else {
-            currentOnPlayClick()
+        when {
+            lesson == null || content == null -> currentOnPlayClick()
+            preparedContentId != content.contentId -> {
+                currentOnPreparePlayer(content, lesson.lessonTitle, true)
+                preparedContentId = content.contentId
+            }
+            else -> currentOnPlayClick()
         }
     }
+
 
     LessonScreen(
         screenState = screenState,
