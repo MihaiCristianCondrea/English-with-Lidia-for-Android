@@ -1,4 +1,4 @@
-package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.components
+package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views
 
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Spacer

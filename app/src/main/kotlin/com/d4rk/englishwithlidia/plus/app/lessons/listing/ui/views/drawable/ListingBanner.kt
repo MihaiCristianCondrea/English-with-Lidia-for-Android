@@ -1,4 +1,4 @@
-package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.components
+package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views.drawable
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable

@@ -1,6 +1,6 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.mapping
 
-import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.components.LessonListItem
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views.LessonListItem
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.state.ListingLessonUiModel
 import com.d4rk.englishwithlidia.plus.core.utils.constants.ui.lessons.LessonConstants
 import kotlinx.collections.immutable.ImmutableList

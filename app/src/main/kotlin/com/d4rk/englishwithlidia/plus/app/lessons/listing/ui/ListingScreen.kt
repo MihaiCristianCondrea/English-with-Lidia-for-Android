@@ -19,7 +19,7 @@ import com.d4rk.android.libs.apptoolkit.core.ui.views.layouts.ScreenStateHandler
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.contract.ListingEvent
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.state.ListingLessonUiModel
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.state.ListingUiState
-import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.components.LessonListLayout
+import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views.LessonListLayout
 import com.d4rk.englishwithlidia.plus.app.main.ui.views.navigation.openLessonDetailActivity
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -84,36 +84,15 @@ fun ListingScreen(
             )
         },
         onSuccess = { uiListingScreen ->
-            ListingContent(
-                uiListingScreen = uiListingScreen,
-                onLessonSelected = onLessonSelected,
+            LessonListLayout(
+                lessons = uiListingScreen.lessons,
                 bannerAdsConfig = bannerAdsConfig,
                 mediumRectangleAdsConfig = mediumRectangleAdsConfig,
+                onLessonClick = onLessonSelected,
                 paddingValues = paddingValues,
-                lessonListState = lessonListState,
+                listState = lessonListState,
                 modifier = modifier,
             )
         },
-    )
-}
-
-@Composable
-private fun ListingContent(
-    uiListingScreen: ListingUiState,
-    onLessonSelected: (ListingLessonUiModel) -> Unit,
-    bannerAdsConfig: AdsConfig,
-    mediumRectangleAdsConfig: AdsConfig,
-    paddingValues: PaddingValues,
-    lessonListState: LazyListState,
-    modifier: Modifier = Modifier,
-) {
-    LessonListLayout(
-        lessons = uiListingScreen.lessons,
-        bannerAdsConfig = bannerAdsConfig,
-        mediumRectangleAdsConfig = mediumRectangleAdsConfig,
-        onLessonClick = onLessonSelected,
-        paddingValues = paddingValues,
-        listState = lessonListState,
-        modifier = modifier,
     )
 }
