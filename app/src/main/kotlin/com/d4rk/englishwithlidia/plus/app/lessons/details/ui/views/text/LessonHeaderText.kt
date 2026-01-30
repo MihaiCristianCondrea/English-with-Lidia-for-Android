@@ -1,9 +1,8 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.details.ui.views.text
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.Colors
-import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.TextStyles
 
 @Composable
 fun LessonHeaderText(
@@ -13,7 +12,7 @@ fun LessonHeaderText(
     LessonHtmlText(
         modifier = modifier,
         text = text,
-        style = TextStyles.header(),
-        color = Colors.primaryText(),
+        style = MaterialTheme.typography.headlineMedium,
+        color = MaterialTheme.colorScheme.onBackground,
     )
 }

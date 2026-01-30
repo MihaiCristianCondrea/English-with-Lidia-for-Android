@@ -22,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -39,8 +40,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.d4rk.android.libs.apptoolkit.core.ui.views.modifiers.bounceClick
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.views.LessonPlaybackUiState
-import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.Colors
-import com.d4rk.englishwithlidia.plus.app.settings.display.theme.style.TextStyles
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -152,8 +151,8 @@ fun LessonPlaybackErrorMessage(isVisible: Boolean) {
                     modifier = Modifier
                         .padding(16.dp)
                         .fillMaxWidth(),
-                    style = TextStyles.body(),
-                    color = Colors.secondaryText(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
