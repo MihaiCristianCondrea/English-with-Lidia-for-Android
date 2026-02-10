@@ -114,18 +114,9 @@ class LessonViewModelTest {
         val repository = object : LessonRepository {
             override fun getLesson(lessonId: String): Flow<DataState<Lesson, AppErrors>> =
                 when (result) {
-                    ResultType.SUCCESS -> flowOf(
-                        DataState.Success(
-                            Lesson(
-                                lessonTitle = "Title",
-                                lessonContent = listOf(LessonContent(contentId = "1")),
-                            ),
-                        ),
-                    )
+                    ResultType.SUCCESS -> flowOf(DataState.Success(Lesson(lessonTitle = "Title", lessonContent = listOf(LessonContent(contentId = "1")))))
                     ResultType.EMPTY -> flowOf(DataState.Success(Lesson(lessonTitle = "Title")))
-                    ResultType.ERROR -> flow {
-                        emit(DataState.Error(AppErrors.UseCase.LESSON_NOT_FOUND))
-                    }
+                    ResultType.ERROR -> flowOf(DataState.Error(error = AppErrors.UseCase.LESSON_NOT_FOUND))
                 }
         }
         return GetLessonUseCase(repository)

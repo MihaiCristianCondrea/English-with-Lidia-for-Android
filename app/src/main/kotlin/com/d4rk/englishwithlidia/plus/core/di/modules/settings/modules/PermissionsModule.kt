@@ -7,18 +7,14 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-val permissionsModule: Module =
-    module {
-        single<PermissionsRepository> {
-            PermissionsRepositoryImpl(
-                context = get(),
-                dispatchers = get()
-            )
-        }
-        viewModel {
-            PermissionsViewModel(
-                permissionsRepository = get(),
-                firebaseController = get(),
-            )
-        }
+val permissionsModule: Module = module {
+    single<PermissionsRepository> { PermissionsRepositoryImpl(context = get(), dispatchers = get(), firebaseController = get()) }
+
+    viewModel {
+        PermissionsViewModel(
+            permissionsRepository = get(),
+            dispatchers = get(),
+            firebaseController = get(),
+        )
     }
+}

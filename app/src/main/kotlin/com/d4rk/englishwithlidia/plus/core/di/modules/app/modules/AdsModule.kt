@@ -16,15 +16,9 @@ import org.koin.dsl.module
 
 val adsModule: Module = module {
 
-    single<AdsSettingsRepository> {
-        AdsSettingsRepositoryImpl(
-            dataStore = get(),
-            buildInfoProvider = get<BuildInfoProvider>(),
-        )
-    }
-
-    single { ObserveAdsEnabledUseCase(repo = get()) }
-    single { SetAdsEnabledUseCase(repo = get()) }
+    single<AdsSettingsRepository> { AdsSettingsRepositoryImpl(dataStore = get(), buildInfoProvider = get<BuildInfoProvider>(), firebaseController = get()) }
+    single<ObserveAdsEnabledUseCase> { ObserveAdsEnabledUseCase(repo = get(), firebaseController = get()) }
+    single<SetAdsEnabledUseCase> { SetAdsEnabledUseCase(repo = get(), firebaseController = get()) }
 
     viewModel {
         AdsSettingsViewModel(
@@ -32,6 +26,7 @@ val adsModule: Module = module {
             dispatchers = get(),
             observeAdsEnabled = get(),
             setAdsEnabled = get(),
+            requestConsentUseCase = get(),
             firebaseController = get(),
         )
     }

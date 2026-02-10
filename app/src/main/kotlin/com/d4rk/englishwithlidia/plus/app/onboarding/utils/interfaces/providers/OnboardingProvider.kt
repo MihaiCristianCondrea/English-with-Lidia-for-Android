@@ -7,9 +7,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Translate
 import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.model.OnboardingPage
-import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.CrashlyticsOnboardingPageTab
-import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.FinalOnboardingPageTab
-import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.ThemeOnboardingPageTab
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.finish.FinishOnbardingPage
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.firebase.FirebaseOnboardingPage
+import com.d4rk.android.libs.apptoolkit.app.onboarding.ui.views.pages.theme.ThemeOnboardingPageTab
 import com.d4rk.android.libs.apptoolkit.app.onboarding.utils.interfaces.providers.OnboardingProvider
 import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.main.ui.MainActivity
@@ -39,14 +39,14 @@ class AppOnboardingProvider : OnboardingProvider {
             ),
             OnboardingPage.CustomPage(
                 key = OnboardingKeys.CRASHLYTICS_OPTIONS,
-                content = {
-                    CrashlyticsOnboardingPageTab()
+                content = { isSelected ->
+                    FirebaseOnboardingPage(isSelected = isSelected)
                 }
             ),
             OnboardingPage.CustomPage(
                 key = OnboardingKeys.ONBOARDING_COMPLETE,
                 content = {
-                    FinalOnboardingPageTab()
+                    FinishOnbardingPage()
                 }
             ),
         ).filter {

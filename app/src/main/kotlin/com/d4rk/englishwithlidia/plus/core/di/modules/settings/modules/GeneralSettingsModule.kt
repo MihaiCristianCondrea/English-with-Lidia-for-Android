@@ -16,7 +16,7 @@ val generalSettingsModule: Module = module {
     single<DisplaySettingsProvider> { AppDisplaySettingsProvider(context = get()) }
     single<GeneralSettingsContentProvider> { GeneralSettingsContentProvider() }
     single<PrivacySettingsProvider> { AppPrivacySettingsProvider(context = get()) }
-    single<GeneralSettingsRepository> { GeneralSettingsRepositoryImpl() }
+    single<GeneralSettingsRepository> { GeneralSettingsRepositoryImpl(firebaseController = get()) }
 
     viewModel {
         GeneralSettingsViewModel(
