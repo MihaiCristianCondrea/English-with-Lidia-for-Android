@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">কিছু ভুল হয়েছে আবার চেষ্টা করুন.</string>
+    <string name="error_no_internet">ইন্টারনেট সংযোগ নেই।</string>
+    <string name="error_connection">সংযোগ সমস্যা। আবার চেষ্টা করুন.</string>
+    <string name="error_timeout">অনুরোধের সময় শেষ। আবার চেষ্টা করুন.</string>
+    <string name="error_ssl">নিরাপদ সংযোগ ব্যর্থ হয়েছে৷</string>
+    <string name="error_rate_limited">অনেক অনুরোধ. কিছুক্ষণের মধ্যে আবার চেষ্টা করুন।</string>
+    <string name="error_http_client">অনুরোধ ব্যর্থ হয়েছে. আবার চেষ্টা করুন.</string>
+    <string name="error_http_server">সার্ভার ত্রুটি. পরে আবার চেষ্টা করুন.</string>
+    <string name="error_http_redirect">অপ্রত্যাশিত পুনঃনির্দেশ। আবার চেষ্টা করুন.</string>
+    <string name="error_parsing">সার্ভার প্রতিক্রিয়া পড়া যায়নি.</string>
+    <string name="error_no_data">কোন তথ্য উপলব্ধ নেই.</string>
+    <string name="error_failed_to_load_lessons">পাঠ লোড করা যায়নি। আবার চেষ্টা করুন.</string>
+    <string name="error_failed_to_parse_lessons">পাঠের তালিকা পড়তে পারিনি।</string>
+    <string name="error_failed_to_load_lesson">এই পাঠটি লোড করা যায়নি। আবার চেষ্টা করুন.</string>
+    <string name="error_invalid_lesson_id">অবৈধ পাঠ।</string>
+    <string name="error_lesson_not_found">পাঠ পাওয়া যায়নি।</string>
+    <string name="error_lesson_empty">এই পাঠের কোন বিষয়বস্তু নেই.</string>
+    <string name="error_invalid_lesson_response">অবৈধ পাঠ তথ্য প্রাপ্ত.</string>
+    <string name="error_failed_to_parse_lesson">পাঠের বিষয়বস্তু পার্স করা যায়নি।</string>
+    <string name="error_audio_playback">অডিও প্লেব্যাক ব্যর্থ হয়েছে.</string>
+    <string name="error_audio_not_available">এই আইটেমটির জন্য অডিও উপলব্ধ নয়৷</string>
+    <string name="error_failed_to_cache_audio">অডিও প্রস্তুত করা যায়নি। স্ট্রিমিং ব্যবহার করা হবে।</string>
+</resources>

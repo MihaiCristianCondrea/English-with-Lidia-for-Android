@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">エラーが発生しました。もう一度お試しください。</string>
+    <string name="error_no_internet">インターネット接続がありません。</string>
+    <string name="error_connection">接続の問題が発生しました。 もう一度お試しください。</string>
+    <string name="error_timeout">リクエストがタイムアウトしました。もう一度お試しください。</string>
+    <string name="error_ssl">安全な接続ができませんでした</string>
+    <string name="error_rate_limited">リクエストが多すぎます。しばらくしてからもう一度お試しください。</string>
+    <string name="error_http_client">要求に失敗しました。もう一度お試しください。</string>
+    <string name="error_http_server">サーバーがエラーを返しました。のちほどお試しください。</string>
+    <string name="error_http_redirect">予期しないリダイレクトです。もう一度お試しください。</string>
+    <string name="error_parsing">サーバーの応答を読み取れませんでした。</string>
+    <string name="error_no_data">データはありません。</string>
+    <string name="error_failed_to_load_lessons">レッスンを読み込めませんでした。もう一度お試しください。</string>
+    <string name="error_failed_to_parse_lessons">レッスンリストを読み取れませんでした。</string>
+    <string name="error_failed_to_load_lesson">このレッスンを読み込めませんでした。もう一度お試しください。</string>
+    <string name="error_invalid_lesson_id">無効なレッスンです。</string>
+    <string name="error_lesson_not_found">レッスンが見つかりません。</string>
+    <string name="error_lesson_empty">このレッスンにはまだ内容がありません。</string>
+    <string name="error_invalid_lesson_response">無効なレッスンデータを受信しました。</string>
+    <string name="error_failed_to_parse_lesson">レッスン内容を解析できませんでした。</string>
+    <string name="error_audio_playback">オーディオの再生に失敗しました。</string>
+    <string name="error_audio_not_available">このアイテムではオーディオを使用できません。</string>
+    <string name="error_failed_to_cache_audio">オーディオを準備できませんでした。ストリーミングが使用されます。</string>
+</resources>

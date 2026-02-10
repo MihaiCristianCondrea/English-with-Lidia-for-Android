@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Qualcosa non ha funzionato. Riprova.</string>
+    <string name="error_no_internet">Nessuna connessione Internet attiva.</string>
+    <string name="error_connection">Problema di connessione. Riprova.</string>
+    <string name="error_timeout">Richiesta scaduta. Riprova.</string>
+    <string name="error_ssl">Connessione sicura non riuscita</string>
+    <string name="error_rate_limited">Troppe richieste. Riprova tra un momento.</string>
+    <string name="error_http_client">Richiesta fallita. Per favore riprova.</string>
+    <string name="error_http_server">Errore, riprovare più tardi</string>
+    <string name="error_http_redirect">Reindirizzamento imprevisto. Riprova.</string>
+    <string name="error_parsing">Impossibile leggere la risposta del server.</string>
+    <string name="error_no_data">Nessun dato disponibile.</string>
+    <string name="error_failed_to_load_lessons">Impossibile caricare le lezioni. Riprova.</string>
+    <string name="error_failed_to_parse_lessons">Impossibile leggere l\'elenco delle lezioni.</string>
+    <string name="error_failed_to_load_lesson">Impossibile caricare questa lezione. Riprova.</string>
+    <string name="error_invalid_lesson_id">D lezione non valido.</string>
+    <string name="error_lesson_not_found">Lezione non trovata.</string>
+    <string name="error_lesson_empty">Questa lezione non ha contenuto</string>
+    <string name="error_invalid_lesson_response">Ricevuti dati lezione non validi.</string>
+    <string name="error_failed_to_parse_lesson">Impossibile analizzare il contenuto della lezione.</string>
+    <string name="error_audio_playback">Riproduzione audio non riuscita.</string>
+    <string name="error_audio_not_available">L\'audio non è disponibile per questo elemento.</string>
+    <string name="error_failed_to_cache_audio">Impossibile preparare l\'audio. Verrà utilizzato lo streaming.</string>
+</resources>

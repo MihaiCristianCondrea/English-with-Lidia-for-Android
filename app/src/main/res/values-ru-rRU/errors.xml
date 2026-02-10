@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Что-то пошло не так. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_no_internet">Отсутствует подключение к Интернету.</string>
+    <string name="error_connection">Проблема с подключением / CURL, пожалуйста, попробуйте еще раз.</string>
+    <string name="error_timeout">Время запроса истекло. Пожалуйста, попробуйте еще раз.</string>
+    <string name="error_ssl">Ошибка защищенного соединения</string>
+    <string name="error_rate_limited">Слишком много запросов, пожалуйста, попробуйте еще раз через мгновение.</string>
+    <string name="error_http_client">Не удалось отправить запрос. Пожалуйста, попробуйте еще раз</string>
+    <string name="error_http_server">Ошибка сервера. Пожалуйста, попробуйте позже</string>
+    <string name="error_http_redirect">Неожиданное перенаправление. Повторите попытку.</string>
+    <string name="error_parsing">Не удалось прочитать ответ сервера.</string>
+    <string name="error_no_data">Данные отсутствуют.</string>
+    <string name="error_failed_to_load_lessons">Не удалось загрузить уроки. Повторите попытку.</string>
+    <string name="error_failed_to_parse_lessons">Не удалось прочитать список уроков.</string>
+    <string name="error_failed_to_load_lesson">Не удалось загрузить этот урок. Повторите попытку.</string>
+    <string name="error_invalid_lesson_id">Неверный урок</string>
+    <string name="error_lesson_not_found">Урок не найден.</string>
+    <string name="error_lesson_empty">В этом уроке пока нет контента.</string>
+    <string name="error_invalid_lesson_response">Получены недопустимые данные урока.</string>
+    <string name="error_failed_to_parse_lesson">Не удалось разобрать содержимое урока.</string>
+    <string name="error_audio_playback">Не удалось воспроизвести аудио.</string>
+    <string name="error_audio_not_available">Аудио недоступно для этого элемента.</string>
+    <string name="error_failed_to_cache_audio">Не удалось подготовить аудио. Будет использоваться потоковая передача.</string>
+</resources>

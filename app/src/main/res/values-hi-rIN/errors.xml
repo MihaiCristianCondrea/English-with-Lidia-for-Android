@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">कुछ गलत हो गया। कृपया पुन: प्रयास करें।</string>
+    <string name="error_no_internet">कोई इंटरनेट कनेक्शन नहीं।</string>
+    <string name="error_connection">कनेक्शन समस्या। कृपया पुन: प्रयास करें।</string>
+    <string name="error_timeout">अनुरोध का समय समाप्त हो गया. कृपया पुन: प्रयास करें।</string>
+    <string name="error_ssl">सुरक्षित कनेक्शन विफल.</string>
+    <string name="error_rate_limited">बहुत सारे अनुरोध. थोड़ी देर में पुनः प्रयास करें.</string>
+    <string name="error_http_client">अनुरोध विफल रहा। कृपया पुन: प्रयास करें।</string>
+    <string name="error_http_server">सर्वर त्रुटि. कृपया बाद में पुन: प्रयास करें।</string>
+    <string name="error_http_redirect">अप्रत्याशित पुनर्निर्देशन. कृपया पुन: प्रयास करें।</string>
+    <string name="error_parsing">सर्वर प्रतिक्रिया नहीं पढ़ सका.</string>
+    <string name="error_no_data">कोई डेटा मौजूद नहीं।</string>
+    <string name="error_failed_to_load_lessons">पाठ लोड नहीं किये जा सके. कृपया पुन: प्रयास करें।</string>
+    <string name="error_failed_to_parse_lessons">पाठ सूची नहीं पढ़ी जा सकी.</string>
+    <string name="error_failed_to_load_lesson">यह पाठ लोड नहीं किया जा सका. कृपया पुन: प्रयास करें।</string>
+    <string name="error_invalid_lesson_id">अमान्य पाठ.</string>
+    <string name="error_lesson_not_found">सबक नहीं मिला.</string>
+    <string name="error_lesson_empty">इस पाठ में अभी तक कोई सामग्री नहीं है.</string>
+    <string name="error_invalid_lesson_response">अमान्य पाठ डेटा प्राप्त हुआ.</string>
+    <string name="error_failed_to_parse_lesson">पाठ सामग्री को पार्स नहीं किया जा सका.</string>
+    <string name="error_audio_playback">ऑडियो प्लेबैक विफल रहा.</string>
+    <string name="error_audio_not_available">इस आइटम के लिए ऑडियो उपलब्ध नहीं है.</string>
+    <string name="error_failed_to_cache_audio">ऑडियो तैयार नहीं किया जा सका. स्ट्रीमिंग का उपयोग किया जाएगा.</string>
+</resources>

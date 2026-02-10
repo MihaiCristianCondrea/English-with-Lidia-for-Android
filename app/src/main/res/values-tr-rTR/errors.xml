@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Bir şeyler yanlış gitti. Lütfen tekrar deneyin.</string>
+    <string name="error_no_internet">İnternet bağlantısı yok. </string>
+    <string name="error_connection">Bağlantı sorunu. Lütfen tekrar deneyin.</string>
+    <string name="error_timeout">İstek zaman aşımına uğradı. Lütfen tekrar deneyin.</string>
+    <string name="error_ssl">Güvenli bağlantı başarısız oldu.</string>
+    <string name="error_rate_limited">Çok fazla istek var. Kısa süre içinde yeniden deneyin.</string>
+    <string name="error_http_client">İsteği tamamlanamadı, lütfen yeniden deneyin</string>
+    <string name="error_http_server">Hata, lütfen daha sonra tekrar deneyin</string>
+    <string name="error_http_redirect">Beklenmeyen yönlendirme. Lütfen tekrar deneyin.</string>
+    <string name="error_parsing">Sunucu yanıtı okunamadı.</string>
+    <string name="error_no_data">Veri mevcut değil.</string>
+    <string name="error_failed_to_load_lessons">Dersler yüklenemedi. Lütfen tekrar deneyin.</string>
+    <string name="error_failed_to_parse_lessons">Ders listesi okunamadı.</string>
+    <string name="error_failed_to_load_lesson">Bu ders yüklenemedi. Lütfen tekrar deneyin.</string>
+    <string name="error_invalid_lesson_id">Geçersiz Ders ID.</string>
+    <string name="error_lesson_not_found">Ders bulunamadı.</string>
+    <string name="error_lesson_empty">Bu dersin içeriği yok</string>
+    <string name="error_invalid_lesson_response">Geçersiz ders verisi alındı.</string>
+    <string name="error_failed_to_parse_lesson">Ders içeriği ayrıştırılamadı.</string>
+    <string name="error_audio_playback">Ses oynatımı başarısız oldu.</string>
+    <string name="error_audio_not_available">Bu öğe için ses mevcut değil.</string>
+    <string name="error_failed_to_cache_audio">Ses hazırlanamadı. Akış kullanılacaktır.</string>
+</resources>

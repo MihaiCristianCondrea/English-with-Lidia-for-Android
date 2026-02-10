@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Algo salió mal. Por favor inténtalo de nuevo.</string>
+    <string name="error_no_internet">Sin conexión a Internet.</string>
+    <string name="error_connection">Problema de conexión. Por favor inténtalo de nuevo.</string>
+    <string name="error_timeout">Se agotó el tiempo de espera de la solicitud. Por favor inténtalo de nuevo.</string>
+    <string name="error_ssl">La conexión segura falló.</string>
+    <string name="error_rate_limited">Demasiadas solicitudes. Inténtalo de nuevo en un momento.</string>
+    <string name="error_http_client">La solicitud falló. Por favor inténtalo de nuevo.</string>
+    <string name="error_http_server">Error del servidor. Inténtelo de nuevo más tarde.</string>
+    <string name="error_http_redirect">Redirección inesperada. Por favor inténtalo de nuevo.</string>
+    <string name="error_parsing">No se pudo leer la respuesta del servidor.</string>
+    <string name="error_no_data">No hay datos disponibles.</string>
+    <string name="error_failed_to_load_lessons">No se pudieron cargar las lecciones. Por favor inténtalo de nuevo.</string>
+    <string name="error_failed_to_parse_lessons">No se pudo leer la lista de lecciones.</string>
+    <string name="error_failed_to_load_lesson">No se pudo cargar esta lección. Por favor inténtalo de nuevo.</string>
+    <string name="error_invalid_lesson_id">Lección no válida.</string>
+    <string name="error_lesson_not_found">Lección no encontrada.</string>
+    <string name="error_lesson_empty">Esta lección aún no tiene contenido.</string>
+    <string name="error_invalid_lesson_response">Se recibieron datos de lección no válidos.</string>
+    <string name="error_failed_to_parse_lesson">No se pudo analizar el contenido de la lección.</string>
+    <string name="error_audio_playback">Error en la reproducción de audio.</string>
+    <string name="error_audio_not_available">El audio no está disponible para este artículo.</string>
+    <string name="error_failed_to_cache_audio">No se pudo preparar el audio. Se utilizará streaming.</string>
+</resources>

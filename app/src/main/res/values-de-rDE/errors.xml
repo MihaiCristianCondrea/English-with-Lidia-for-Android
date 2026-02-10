@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Etwas ist schief gelaufen. Bitte versuchen Sie es erneut.</string>
+    <string name="error_no_internet">Keine Internetverbindung.</string>
+    <string name="error_connection">Verbindungsproblem. Bitte versuchen Sie es erneut.</string>
+    <string name="error_timeout">Zeitüberschreitung bei der Anfrage. Bitte versuchen Sie es erneut.</string>
+    <string name="error_ssl">Die sichere Verbindung ist fehlgeschlagen.</string>
+    <string name="error_rate_limited">Zu viele Anfragen. Versuchen Sie es gleich noch einmal.</string>
+    <string name="error_http_client">Die Anfrage ist fehlgeschlagen. Bitte versuchen Sie es erneut.</string>
+    <string name="error_http_server">Serverfehler. Bitte versuchen Sie es später noch einmal.</string>
+    <string name="error_http_redirect">Unerwartete Weiterleitung. Bitte versuchen Sie es erneut.</string>
+    <string name="error_parsing">Serverantwort konnte nicht gelesen werden.</string>
+    <string name="error_no_data">Keine Daten verfügbar.</string>
+    <string name="error_failed_to_load_lessons">Die Lektionen konnten nicht geladen werden. Bitte versuchen Sie es erneut.</string>
+    <string name="error_failed_to_parse_lessons">Die Lektionsliste konnte nicht gelesen werden.</string>
+    <string name="error_failed_to_load_lesson">Diese Lektion konnte nicht geladen werden. Bitte versuchen Sie es erneut.</string>
+    <string name="error_invalid_lesson_id">Ungültige Lektion.</string>
+    <string name="error_lesson_not_found">Lektion nicht gefunden.</string>
+    <string name="error_lesson_empty">Diese Lektion hat noch keinen Inhalt.</string>
+    <string name="error_invalid_lesson_response">Es wurden ungültige Unterrichtsdaten empfangen.</string>
+    <string name="error_failed_to_parse_lesson">Der Unterrichtsinhalt konnte nicht analysiert werden.</string>
+    <string name="error_audio_playback">Die Audiowiedergabe ist fehlgeschlagen.</string>
+    <string name="error_audio_not_available">Für diesen Artikel ist kein Audio verfügbar.</string>
+    <string name="error_failed_to_cache_audio">Audio konnte nicht vorbereitet werden. Es wird Streaming verwendet.</string>
+</resources>

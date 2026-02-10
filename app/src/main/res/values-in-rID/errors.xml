@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Ada yang tidak beres. Silakan coba lagi.</string>
+    <string name="error_no_internet">Tidak ada koneksi internet.</string>
+    <string name="error_connection">Masalah koneksi. Silakan coba lagi.</string>
+    <string name="error_timeout">Waktu permintaan habis. Silakan coba lagi.</string>
+    <string name="error_ssl">Koneksi aman gagal.</string>
+    <string name="error_rate_limited">Terlalu banyak permintaan. Coba lagi sebentar lagi.</string>
+    <string name="error_http_client">Permintaan gagal. Silakan coba lagi.</string>
+    <string name="error_http_server">Kesalahan server. Silakan coba lagi nanti.</string>
+    <string name="error_http_redirect">Pengalihan tak terduga. Silakan coba lagi.</string>
+    <string name="error_parsing">Tidak dapat membaca respons server.</string>
+    <string name="error_no_data">Tidak ada data yang tersedia.</string>
+    <string name="error_failed_to_load_lessons">Tidak dapat memuat pelajaran. Silakan coba lagi.</string>
+    <string name="error_failed_to_parse_lessons">Tidak dapat membaca daftar pelajaran.</string>
+    <string name="error_failed_to_load_lesson">Tidak dapat memuat pelajaran ini. Silakan coba lagi.</string>
+    <string name="error_invalid_lesson_id">Pelajaran tidak valid.</string>
+    <string name="error_lesson_not_found">Pelajaran tidak ditemukan.</string>
+    <string name="error_lesson_empty">Pelajaran ini belum memiliki konten.</string>
+    <string name="error_invalid_lesson_response">Data pelajaran yang diterima tidak valid.</string>
+    <string name="error_failed_to_parse_lesson">Tidak dapat menguraikan konten pelajaran.</string>
+    <string name="error_audio_playback">Pemutaran audio gagal.</string>
+    <string name="error_audio_not_available">Audio tidak tersedia untuk item ini.</string>
+    <string name="error_failed_to_cache_audio">Tidak dapat menyiapkan audio. Streaming akan digunakan.</string>
+</resources>

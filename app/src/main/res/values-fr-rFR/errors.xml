@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Quelque chose s\'est mal passé. Veuillez réessayer.</string>
+    <string name="error_no_internet">Pas de connexion Internet.</string>
+    <string name="error_connection">Problème de connexion. Veuillez réessayer.</string>
+    <string name="error_timeout">La demande a expiré. Veuillez réessayer.</string>
+    <string name="error_ssl">La connexion sécurisée a échoué.</string>
+    <string name="error_rate_limited">Trop de demandes. Réessayez dans un instant.</string>
+    <string name="error_http_client">La demande a échoué. Veuillez réessayer.</string>
+    <string name="error_http_server">Erreur de serveur. Veuillez réessayer plus tard.</string>
+    <string name="error_http_redirect">Redirection inattendue. Veuillez réessayer.</string>
+    <string name="error_parsing">Impossible de lire la réponse du serveur.</string>
+    <string name="error_no_data">Aucune donnée disponible.</string>
+    <string name="error_failed_to_load_lessons">Impossible de charger les leçons. Veuillez réessayer.</string>
+    <string name="error_failed_to_parse_lessons">Impossible de lire la liste des leçons.</string>
+    <string name="error_failed_to_load_lesson">Impossible de charger cette leçon. Veuillez réessayer.</string>
+    <string name="error_invalid_lesson_id">Leçon invalide.</string>
+    <string name="error_lesson_not_found">Leçon introuvable.</string>
+    <string name="error_lesson_empty">Cette leçon n\'a pas encore de contenu.</string>
+    <string name="error_invalid_lesson_response">Données de cours non valides reçues.</string>
+    <string name="error_failed_to_parse_lesson">Impossible d\'analyser le contenu de la leçon.</string>
+    <string name="error_audio_playback">La lecture audio a échoué.</string>
+    <string name="error_audio_not_available">L\'audio n\'est pas disponible pour cet élément.</string>
+    <string name="error_failed_to_cache_audio">Impossible de préparer l\'audio. Le streaming sera utilisé.</string>
+</resources>

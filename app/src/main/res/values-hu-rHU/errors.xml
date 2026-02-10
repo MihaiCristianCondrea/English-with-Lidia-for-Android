@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Valami elromlott. Kérjük, próbálja újra.</string>
+    <string name="error_no_internet">Nincs internet kapcsolat.</string>
+    <string name="error_connection">Csatlakozási probléma. Kérjük, próbálja újra.</string>
+    <string name="error_timeout">A kérés lejárt. Kérjük, próbálja újra.</string>
+    <string name="error_ssl">A biztonságos kapcsolat nem sikerült.</string>
+    <string name="error_rate_limited">Túl sok kérés. Próbálja újra egy pillanat múlva.</string>
+    <string name="error_http_client">A kérés sikertelen. Kérjük, próbálja újra.</string>
+    <string name="error_http_server">Szerver hiba. Kérjük, próbálja újra később.</string>
+    <string name="error_http_redirect">Váratlan átirányítás. Kérjük, próbálja újra.</string>
+    <string name="error_parsing">Nem sikerült beolvasni a szerver választ.</string>
+    <string name="error_no_data">Nincs adat.</string>
+    <string name="error_failed_to_load_lessons">Nem sikerült betölteni a leckéket. Kérjük, próbálja újra.</string>
+    <string name="error_failed_to_parse_lessons">Nem sikerült elolvasni a leckék listáját.</string>
+    <string name="error_failed_to_load_lesson">Nem sikerült betölteni ezt a leckét. Kérjük, próbálja újra.</string>
+    <string name="error_invalid_lesson_id">Érvénytelen lecke.</string>
+    <string name="error_lesson_not_found">A lecke nem található.</string>
+    <string name="error_lesson_empty">Ennek a leckének még nincs tartalma.</string>
+    <string name="error_invalid_lesson_response">Érvénytelen óraadat érkezett.</string>
+    <string name="error_failed_to_parse_lesson">Nem sikerült elemezni a lecke tartalmát.</string>
+    <string name="error_audio_playback">A hanglejátszás nem sikerült.</string>
+    <string name="error_audio_not_available">Hang nem érhető el ehhez az elemhez.</string>
+    <string name="error_failed_to_cache_audio">Nem sikerült hangot előkészíteni. A streamelést használni fogják.</string>
+</resources>

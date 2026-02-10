@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Щось пішло не так. Будь ласка спробуйте ще раз.</string>
+    <string name="error_no_internet">Немає інтернет-з\'єднання. </string>
+    <string name="error_connection">Проблема зі з \'єднанням. Спробуйте ще раз.</string>
+    <string name="error_timeout">Час очікування запиту минув. Повторіть спробу.</string>
+    <string name="error_ssl">Помилка безпечного з \'єднання.</string>
+    <string name="error_rate_limited">Забагато запитів, спробуйте ще раз за мить.</string>
+    <string name="error_http_client">Не вдалося надіслати запит. Спробуйте ще раз.</string>
+    <string name="error_http_server">Помилка! Будь-ласка спробуйте пізніше.</string>
+    <string name="error_http_redirect">Несподіване переспрямування. Спробуйте ще раз.</string>
+    <string name="error_parsing">Не вдалося прочитати відповідь сервера.</string>
+    <string name="error_no_data">Немає наявних даних.</string>
+    <string name="error_failed_to_load_lessons">Не вдалося завантажити уроки. Спробуйте ще раз.</string>
+    <string name="error_failed_to_parse_lessons">Не вдалося прочитати список уроків.</string>
+    <string name="error_failed_to_load_lesson">Не вдалося завантажити цей урок. Спробуйте ще раз.</string>
+    <string name="error_invalid_lesson_id">Недійсний урок.</string>
+    <string name="error_lesson_not_found">Урок не знайдено.</string>
+    <string name="error_lesson_empty">Цей урок ще не має змісту.</string>
+    <string name="error_invalid_lesson_response">Отримано недійсні дані уроку.</string>
+    <string name="error_failed_to_parse_lesson">Не вдалося проаналізувати вміст уроку.</string>
+    <string name="error_audio_playback">Помилка відтворення аудіо.</string>
+    <string name="error_audio_not_available">Аудіо недоступне для цього елемента.</string>
+    <string name="error_failed_to_cache_audio">Не вдалося підготувати аудіо. Буде використовуватися потокове передавання.</string>
+</resources>

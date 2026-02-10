@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Nagkaproblema. Pakisubukang muli.</string>
+    <string name="error_no_internet">Walang koneksyon sa internet.</string>
+    <string name="error_connection">Problema sa koneksyon. Pakisubukang muli.</string>
+    <string name="error_timeout">Nag-time out ang kahilingan. Pakisubukang muli.</string>
+    <string name="error_ssl">Nabigo ang secure na koneksyon.</string>
+    <string name="error_rate_limited">Masyadong maraming kahilingan. Subukan muli sa isang sandali.</string>
+    <string name="error_http_client">Nabigo ang kahilingan. Pakisubukang muli.</string>
+    <string name="error_http_server">Error sa server. Pakisubukang muli mamaya.</string>
+    <string name="error_http_redirect">Hindi inaasahang pag-redirect. Pakisubukang muli.</string>
+    <string name="error_parsing">Hindi mabasa ang tugon ng server.</string>
+    <string name="error_no_data">Walang available na data.</string>
+    <string name="error_failed_to_load_lessons">Hindi ma-load ang mga aralin. Pakisubukang muli.</string>
+    <string name="error_failed_to_parse_lessons">Hindi mabasa ang listahan ng mga aralin.</string>
+    <string name="error_failed_to_load_lesson">Hindi ma-load ang araling ito. Pakisubukang muli.</string>
+    <string name="error_invalid_lesson_id">Di-wastong aralin.</string>
+    <string name="error_lesson_not_found">Hindi natagpuan ang aralin.</string>
+    <string name="error_lesson_empty">Wala pang nilalaman ang araling ito.</string>
+    <string name="error_invalid_lesson_response">Di-wastong data ng aralin ang natanggap.</string>
+    <string name="error_failed_to_parse_lesson">Hindi ma-parse ang nilalaman ng aralin.</string>
+    <string name="error_audio_playback">Nabigo ang pag-playback ng audio.</string>
+    <string name="error_audio_not_available">Hindi available ang audio para sa item na ito.</string>
+    <string name="error_failed_to_cache_audio">Hindi makapaghanda ng audio. Gagamitin ang streaming.</string>
+</resources>

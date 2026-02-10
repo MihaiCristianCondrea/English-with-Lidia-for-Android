@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Algo deu errado. Por favor, tente novamente.</string>
+    <string name="error_no_internet">Sem conexão à internet.</string>
+    <string name="error_connection">Problema de conexão. Tente novamente.</string>
+    <string name="error_timeout">Tempo limite da solicitação, por favor, tente novamente.</string>
+    <string name="error_ssl">Falha na conexão segura</string>
+    <string name="error_rate_limited">Demasiados pedidos. Tente novamente dentro de momentos.</string>
+    <string name="error_http_client">Pedido falhou, por favor tente novamente</string>
+    <string name="error_http_server">Erro do Servidor. Por favor, tente novamente mais tarde</string>
+    <string name="error_http_redirect">Redirecionamento inesperado. Tente novamente.</string>
+    <string name="error_parsing">Não foi possível ler a resposta do servidor.</string>
+    <string name="error_no_data">Não há dados disponíveis.</string>
+    <string name="error_failed_to_load_lessons">Não foi possível carregar as aulas. Tente novamente.</string>
+    <string name="error_failed_to_parse_lessons">Não foi possível ler a lista de aulas.</string>
+    <string name="error_failed_to_load_lesson">Não foi possível carregar esta lição. Tente novamente.</string>
+    <string name="error_invalid_lesson_id">ID da Unidade inválida.</string>
+    <string name="error_lesson_not_found">Aula não encontrada.</string>
+    <string name="error_lesson_empty">Não há conteúdo para esta aula.</string>
+    <string name="error_invalid_lesson_response">Recebidos dados de aula inválidos.</string>
+    <string name="error_failed_to_parse_lesson">Não foi possível analisar o conteúdo da aula.</string>
+    <string name="error_audio_playback">A reprodução de áudio falhou.</string>
+    <string name="error_audio_not_available">O áudio não está disponível para este item.</string>
+    <string name="error_failed_to_cache_audio">Não foi possível preparar o áudio. O streaming será usado.</string>
+</resources>

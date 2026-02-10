@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Något blev fel. Försök igen.</string>
+    <string name="error_no_internet">Ingen internetanslutning. </string>
+    <string name="error_connection">Anslutningsproblem. Försök igen.</string>
+    <string name="error_timeout">Den här förfrågan har löpt ut. Var god försök igen.</string>
+    <string name="error_ssl">Säker anslutning misslyckades.</string>
+    <string name="error_rate_limited">För många förfrågningar. Försök igen om ett ögonblick.</string>
+    <string name="error_http_client">API-förfrågan misslyckades. Vänligen försök igen.</string>
+    <string name="error_http_server">Servefel. Försök igen senare.</string>
+    <string name="error_http_redirect">Oväntad omdirigering. Försök igen.</string>
+    <string name="error_parsing">Kunde inte läsa serverns svar.</string>
+    <string name="error_no_data">Inga data är tillgängliga.</string>
+    <string name="error_failed_to_load_lessons">Kunde inte ladda lektioner. Vänligen försök igen.</string>
+    <string name="error_failed_to_parse_lessons">Kunde inte läsa lektionslistan.</string>
+    <string name="error_failed_to_load_lesson">Kunde inte ladda den här lektionen. Vänligen försök igen.</string>
+    <string name="error_invalid_lesson_id">Ogiltigt kursavsnitts-ID.</string>
+    <string name="error_lesson_not_found">Lektionen hittades inte.</string>
+    <string name="error_lesson_empty">Den här lektionen har inget innehåll ännu.</string>
+    <string name="error_invalid_lesson_response">Ogiltiga lektionsdata mottagna.</string>
+    <string name="error_failed_to_parse_lesson">Det gick inte att tolka lektionsinnehållet.</string>
+    <string name="error_audio_playback">Ljuduppspelning misslyckades.</string>
+    <string name="error_audio_not_available">Ljud är inte tillgängligt för denna artikel.</string>
+    <string name="error_failed_to_cache_audio">Kunde inte förbereda ljud. Streaming kommer att användas.</string>
+</resources>

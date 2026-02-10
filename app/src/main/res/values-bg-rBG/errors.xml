@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Нещо се обърка. Моля, опитайте отново.</string>
+    <string name="error_no_internet">Няма интернет връзка.</string>
+    <string name="error_connection">Проблем с връзката. Моля, опитайте отново.</string>
+    <string name="error_timeout">Времето за изчакване на заявката изтече. Моля, опитайте отново.</string>
+    <string name="error_ssl">Сигурната връзка е неуспешна.</string>
+    <string name="error_rate_limited">Твърде много заявки. Опитайте отново след малко.</string>
+    <string name="error_http_client">Неуспешна заявка. Моля, опитайте отново.</string>
+    <string name="error_http_server">Грешка в сървъра. Моля, опитайте отново по-късно.</string>
+    <string name="error_http_redirect">Неочаквано пренасочване. Моля, опитайте отново.</string>
+    <string name="error_parsing">Отговорът на сървъра не можа да се прочете.</string>
+    <string name="error_no_data">Няма налични данни.</string>
+    <string name="error_failed_to_load_lessons">Уроците не можаха да се заредят. Моля, опитайте отново.</string>
+    <string name="error_failed_to_parse_lessons">Не можах да прочета списъка с уроци.</string>
+    <string name="error_failed_to_load_lesson">Този урок не можа да се зареди. Моля, опитайте отново.</string>
+    <string name="error_invalid_lesson_id">Невалиден урок.</string>
+    <string name="error_lesson_not_found">Урокът не е намерен.</string>
+    <string name="error_lesson_empty">Този урок все още няма съдържание.</string>
+    <string name="error_invalid_lesson_response">Получени са невалидни данни за урока.</string>
+    <string name="error_failed_to_parse_lesson">Съдържанието на урока не можа да бъде анализирано.</string>
+    <string name="error_audio_playback">Неуспешно възпроизвеждане на аудио.</string>
+    <string name="error_audio_not_available">Аудиото не е налично за този елемент.</string>
+    <string name="error_failed_to_cache_audio">Не можа да се подготви аудио. Ще се използва стрийминг.</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Đã xảy ra sự cố. Vui lòng thử lại.</string>
+    <string name="error_no_internet">Không có kết nối internet.</string>
+    <string name="error_connection">Vấn đề kết nối. Vui lòng thử lại.</string>
+    <string name="error_timeout">Yêu cầu đã hết thời gian chờ, vui lòng thử lại.,</string>
+    <string name="error_ssl">Kết nối an toàn không thành công.</string>
+    <string name="error_rate_limited">Quá nhiều yêu cầu. Hãy thử lại sau ít phút.</string>
+    <string name="error_http_client">Yêu cầu thất bại, vui lòng thử lại sau.</string>
+    <string name="error_http_server">Lỗi máy chủ, vui lòng thử lại sau.</string>
+    <string name="error_http_redirect">Chuyển hướng không mong muốn. Vui lòng thử lại.</string>
+    <string name="error_parsing">Không thể đọc phản hồi của máy chủ.</string>
+    <string name="error_no_data">Không có dữ liệu.</string>
+    <string name="error_failed_to_load_lessons">Không thể tải bài học. Vui lòng thử lại.</string>
+    <string name="error_failed_to_parse_lessons">Không thể đọc danh sách bài học.</string>
+    <string name="error_failed_to_load_lesson">Không thể tải bài học này. Vui lòng thử lại.</string>
+    <string name="error_invalid_lesson_id">Bài học không hợp</string>
+    <string name="error_lesson_not_found">Không tìm thấy bài học.</string>
+    <string name="error_lesson_empty">Bài học này không có nội dung</string>
+    <string name="error_invalid_lesson_response">Dữ liệu bài học đã nhận không hợp lệ.</string>
+    <string name="error_failed_to_parse_lesson">Không thể phân tích cú pháp nội dung bài học.</string>
+    <string name="error_audio_playback">Phát lại âm thanh không thành công.</string>
+    <string name="error_audio_not_available">Không có âm thanh cho mục này.</string>
+    <string name="error_failed_to_cache_audio">Không thể chuẩn bị âm thanh. Phát trực tuyến sẽ được sử dụng.</string>
+</resources>

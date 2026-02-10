@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">出問題了。 請再試一次。</string>
+    <string name="error_no_internet">没有網路连接</string>
+    <string name="error_connection">連線問題。請再試一次。</string>
+    <string name="error_timeout">請求逾時。請再試一次。</string>
+    <string name="error_ssl">安全連線失敗</string>
+    <string name="error_rate_limited">請求太多，請稍後重試。</string>
+    <string name="error_http_client">申请失敗，請稍後再試</string>
+    <string name="error_http_server">伺服器錯誤，請稍後再試</string>
+    <string name="error_http_redirect">意外的重新導向。請再試一次。</string>
+    <string name="error_parsing">無法讀取伺服器回應。</string>
+    <string name="error_no_data">沒有可用的資料.</string>
+    <string name="error_failed_to_load_lessons">無法載入課程。請再試一次。</string>
+    <string name="error_failed_to_parse_lessons">無法讀取課程清單。</string>
+    <string name="error_failed_to_load_lesson">無法載入此課程。請再試一次。</string>
+    <string name="error_invalid_lesson_id">無效的課程。</string>
+    <string name="error_lesson_not_found">未找到課程。</string>
+    <string name="error_lesson_empty">本課沒有內容</string>
+    <string name="error_invalid_lesson_response">收到的課程數據無效。</string>
+    <string name="error_failed_to_parse_lesson">無法解析課程內容。</string>
+    <string name="error_audio_playback">音訊播放失敗。</string>
+    <string name="error_audio_not_available">此項目無法使用音訊。</string>
+    <string name="error_failed_to_cache_audio">無法準備音訊。將使用串流。</string>
+</resources>

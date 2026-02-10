@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">کچھ غلط ہو گیا، پھر سے کوشش کریں، براہ مہربانی.</string>
+    <string name="error_no_internet">انٹرنیٹ کنکشن نہیں ہے</string>
+    <string name="error_connection">کنکشن کا مسئلہ ۔ براہ کرم دوبارہ کوشش کریں ۔</string>
+    <string name="error_timeout">درخواست کا وقت ختم ہو گیا ۔ براہ کرم دوبارہ کوشش کریں ۔</string>
+    <string name="error_ssl">محفوظ کنکشن ناکام ہوگیا ۔</string>
+    <string name="error_rate_limited">بہت ساری درخواستیں ہیں ۔ تھوڑی دیر میں دوبارہ کوشش کریں ۔</string>
+    <string name="error_http_client">درخواست ناکام ہوگئی ۔ براہ کرم دوبارہ کوشش کریں ۔</string>
+    <string name="error_http_server">سرور کی خرابی، براہ کرم بعد میں دوبارہ کوشش کریں</string>
+    <string name="error_http_redirect">غیر متوقع ری ڈائریکٹ ۔ براہ کرم دوبارہ کوشش کریں ۔</string>
+    <string name="error_parsing">سرور کا جواب نہیں پڑھ سکا ۔</string>
+    <string name="error_no_data">کوئی ڈیٹا دستیاب نہیں ہے</string>
+    <string name="error_failed_to_load_lessons">اسباق لوڈ نہیں ہو سکے ۔ براہ کرم دوبارہ کوشش کریں ۔</string>
+    <string name="error_failed_to_parse_lessons">اسباق کی فہرست نہیں پڑھ سکا ۔</string>
+    <string name="error_failed_to_load_lesson">یہ سبق لوڈ نہیں ہو سکا ۔ براہ کرم دوبارہ کوشش کریں ۔</string>
+    <string name="error_invalid_lesson_id">غلط سبق ۔</string>
+    <string name="error_lesson_not_found">سبق نہیں ملا ۔</string>
+    <string name="error_lesson_empty">اس سبق میں ابھی تک کوئی مواد نہیں ہے ۔</string>
+    <string name="error_invalid_lesson_response">غلط سبق کا ڈیٹا موصول ہوا ۔</string>
+    <string name="error_failed_to_parse_lesson">سبق کے مواد کی تشریح نہیں کی جا سکی ۔</string>
+    <string name="error_audio_playback">آڈیو پلے بیک ناکام ہوگیا ۔</string>
+    <string name="error_audio_not_available">اس آئٹم کے لیے آڈیو دستیاب نہیں ہے ۔</string>
+    <string name="error_failed_to_cache_audio">آڈیو تیار نہیں ہو سکی ۔ اسٹریمنگ استعمال کی جائے گی ۔</string>
+</resources>

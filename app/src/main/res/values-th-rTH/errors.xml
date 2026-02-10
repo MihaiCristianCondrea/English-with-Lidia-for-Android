@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">มีบางอย่างผิดปกติ โปรดลองอีกครั้ง</string>
+    <string name="error_no_internet">ไม่มีการเชื่อมต่ออินเทอร์เน็ต </string>
+    <string name="error_connection">ปัญหาการเชื่อมต่อโปรดลองอีกครั้ง</string>
+    <string name="error_timeout">คำขอหมดเวลาโปรดลองอีกครั้ง</string>
+    <string name="error_ssl">การเชื่อมต่อที่ปลอดภัยล้มเหลว</string>
+    <string name="error_rate_limited">มีคำขอมากเกินไปโปรดรอสักครู่แล้วลองอีกครั้ง</string>
+    <string name="error_http_client">คำขอล้มเหลวโปรดลองอีกครั้ง</string>
+    <string name="error_http_server">เกิดข้อผิดพลาดที่เซิร์ฟเวอร์ โปรดลองใหม่ภายหลัง</string>
+    <string name="error_http_redirect">เปลี่ยนเส้นทางโดยไม่คาดคิดโปรดลองอีกครั้ง</string>
+    <string name="error_parsing">ไม่สามารถอ่านการตอบกลับของเซิร์ฟเวอร์ได้</string>
+    <string name="error_no_data">ไม่มีข้อมูล </string>
+    <string name="error_failed_to_load_lessons">โหลดบทเรียนไม่ได้โปรดลองอีกครั้ง</string>
+    <string name="error_failed_to_parse_lessons">ไม่สามารถอ่านรายการบทเรียนได้</string>
+    <string name="error_failed_to_load_lesson">โหลดบทเรียนนี้ไม่ได้โปรดลองอีกครั้ง</string>
+    <string name="error_invalid_lesson_id">บทเรียนไม่ถูกต้อง</string>
+    <string name="error_lesson_not_found">ไม่พบบทเรียน</string>
+    <string name="error_lesson_empty">บทเรียนนี้ยังไม่มีเนื้อหา</string>
+    <string name="error_invalid_lesson_response">ได้รับข้อมูลบทเรียนไม่ถูกต้อง</string>
+    <string name="error_failed_to_parse_lesson">แยกวิเคราะห์เนื้อหาบทเรียนไม่ได้</string>
+    <string name="error_audio_playback">การเล่นเสียงล้มเหลว</string>
+    <string name="error_audio_not_available">เสียงไม่พร้อมใช้งานสำหรับรายการนี้</string>
+    <string name="error_failed_to_cache_audio">เตรียมเสียงไม่ได้ระบบจะใช้การสตรีมมิ่ง</string>
+</resources>

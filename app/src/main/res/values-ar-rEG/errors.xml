@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">حدث خطأ ما. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_no_internet">لا يوجد اتصال بالإنترنت.</string>
+    <string name="error_connection">مشكلة في الاتصال. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_timeout">انتهت مهلة الطلب. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_ssl">فشل الاتصال الآمن.</string>
+    <string name="error_rate_limited">طلبات كثيرة جدًا. حاول مرة أخرى بعد قليل.</string>
+    <string name="error_http_client">فشل الطلب. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_http_server">خطأ في الخادم. يرجى المحاولة مرة أخرى في وقت لاحق.</string>
+    <string name="error_http_redirect">إعادة توجيه غير متوقعة. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_parsing">لا يمكن قراءة استجابة الخادم.</string>
+    <string name="error_no_data">لا توجد بيانات متاحة.</string>
+    <string name="error_failed_to_load_lessons">تعذر تحميل الدروس. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_failed_to_parse_lessons">لا يمكن قراءة قائمة الدروس.</string>
+    <string name="error_failed_to_load_lesson">تعذر تحميل هذا الدرس. يرجى المحاولة مرة أخرى.</string>
+    <string name="error_invalid_lesson_id">درس غير صالح</string>
+    <string name="error_lesson_not_found">لم يتم العثور على الدرس.</string>
+    <string name="error_lesson_empty">هذا الدرس ليس له محتوى بعد.</string>
+    <string name="error_invalid_lesson_response">تم استلام بيانات الدرس غير صالحة.</string>
+    <string name="error_failed_to_parse_lesson">لا يمكن تحليل محتوى الدرس.</string>
+    <string name="error_audio_playback">فشل تشغيل الصوت.</string>
+    <string name="error_audio_not_available">الصوت غير متوفر لهذا العنصر.</string>
+    <string name="error_failed_to_cache_audio">تعذر تحضير الصوت. سيتم استخدام الدفق.</string>
+</resources>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Ceva nu a funcționat corect. Încercați din nou.</string>
+    <string name="error_no_internet">Fără conexiune la internet. </string>
+    <string name="error_connection">Problemă de conexiune. Vă rugăm să încercați din nou.</string>
+    <string name="error_timeout">Solicitarea a expirat. Te rugăm să încerci din nou.</string>
+    <string name="error_ssl">Conexiunea securizată a eșuat</string>
+    <string name="error_rate_limited">Prea multe cereri, încercați din nou într-o clipă.</string>
+    <string name="error_http_client">Solicitarea a eșuat. Vă rugăm să încercați din nou.</string>
+    <string name="error_http_server">S-a detectat o eroare a serverului. Te rugăm să încerci din nou mai târziu.</string>
+    <string name="error_http_redirect">Redirecționare neașteptată. Te rugăm să încerci din nou.</string>
+    <string name="error_parsing">Nu s-a putut citi răspunsul serverului.</string>
+    <string name="error_no_data">Nu există informații disponibile.</string>
+    <string name="error_failed_to_load_lessons">Nu s-au putut încărca lecțiile. Te rugăm să încerci din nou.</string>
+    <string name="error_failed_to_parse_lessons">Nu s-a putut citi lista de lecții.</string>
+    <string name="error_failed_to_load_lesson">Nu s-a putut încărca această lecție. Te rugăm să încerci din nou.</string>
+    <string name="error_invalid_lesson_id">ID lecţie neValid.</string>
+    <string name="error_lesson_not_found">Lecția nu a fost găsită.</string>
+    <string name="error_lesson_empty">Această lecție nu are încă conținut.</string>
+    <string name="error_invalid_lesson_response">Date de lecție primite nevalide.</string>
+    <string name="error_failed_to_parse_lesson">Nu s-a putut analiza conținutul lecției.</string>
+    <string name="error_audio_playback">Redarea audio a eșuat.</string>
+    <string name="error_audio_not_available">Fișierul audio nu este disponibil pentru acest articol.</string>
+    <string name="error_failed_to_cache_audio">Nu s-a putut pregăti sunetul. Se va utiliza redarea în flux.</string>
+</resources>

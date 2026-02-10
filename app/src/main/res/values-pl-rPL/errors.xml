@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_generic">Coś poszło nie tak. Proszę spróbuj ponownie.</string>
+    <string name="error_no_internet">Brak połączenia internetowego. </string>
+    <string name="error_connection">Problem z połączeniem. Spróbuj ponownie.</string>
+    <string name="error_timeout">Upłynął limit czasu żądania. Spróbuj ponownie.</string>
+    <string name="error_ssl">Bezpieczne połączenie nie powiodło się.</string>
+    <string name="error_rate_limited">Zbyt wiele próśb. Spróbuj ponownie za chwilę.</string>
+    <string name="error_http_client">Zapis się nie powiódł. Spróbuj ponownie.</string>
+    <string name="error_http_server">Błąd serwera. Ponów próbę później.</string>
+    <string name="error_http_redirect">Nieoczekiwane przekierowanie. Spróbuj ponownie.</string>
+    <string name="error_parsing">Nie można odczytać odpowiedzi serwera.</string>
+    <string name="error_no_data">Brak dostępnych danych.</string>
+    <string name="error_failed_to_load_lessons">Nie można załadować lekcji. Spróbuj ponownie.</string>
+    <string name="error_failed_to_parse_lessons">Nie można odczytać listy lekcji.</string>
+    <string name="error_failed_to_load_lesson">Nie można załadować tej lekcji. Spróbuj ponownie.</string>
+    <string name="error_invalid_lesson_id">Niepoprawne ID lekcji.</string>
+    <string name="error_lesson_not_found">Nie znaleziono lekcji.</string>
+    <string name="error_lesson_empty">Ta lekcja nie zawiera treści</string>
+    <string name="error_invalid_lesson_response">Otrzymano nieprawidłowe dane lekcji.</string>
+    <string name="error_failed_to_parse_lesson">Nie można przeanalizować treści lekcji.</string>
+    <string name="error_audio_playback">Odtwarzanie dźwięku nie powiodło się.</string>
+    <string name="error_audio_not_available">Dźwięk nie jest dostępny dla tego elementu.</string>
+    <string name="error_failed_to_cache_audio">Nie można przygotować dźwięku. Wykorzystany zostanie streaming.</string>
+</resources>
