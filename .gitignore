@@ -100,3 +100,4 @@ lint/tmp/
 ###############################################################################
 .kotlin
 github.properties
+/app/src/main/play/keys/*
