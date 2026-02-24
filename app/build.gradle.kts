@@ -153,7 +153,7 @@ android {
 dependencies {
 
     // App Core
-    implementation(dependencyNotation = "com.github.MihaiCristianCondrea:App-Toolkit-for-Android:2.0.2") {
+    implementation(dependencyNotation = "com.github.MihaiCristianCondrea:App-Toolkit-for-Android:2.0.5") {
         isTransitive = true
     }
 

@@ -10,7 +10,7 @@ import com.d4rk.android.libs.apptoolkit.app.main.domain.usecases.RequestInAppUpd
 import com.d4rk.android.libs.apptoolkit.app.review.domain.model.ReviewHost
 import com.d4rk.android.libs.apptoolkit.app.review.domain.model.ReviewOutcome
 import com.d4rk.android.libs.apptoolkit.app.review.domain.usecases.RequestInAppReviewUseCase
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.coroutines.dispatchers.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.Errors
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.onFailure

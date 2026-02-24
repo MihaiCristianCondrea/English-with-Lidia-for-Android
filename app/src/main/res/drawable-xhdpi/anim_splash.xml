@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt">
+
+    <!-- 1. THE VECTOR GRAPHIC -->
+    <aapt:attr name="android:drawable">
+        <vector
+            android:width="288dp"
+            android:height="288dp"
+            android:viewportWidth="393"
+            android:viewportHeight="393">
+
+            <!-- Your required scale wrapper -->
+            <group
+                android:name="content_scale"
+                android:pivotX="196.5"
+                android:pivotY="196.5"
+                android:scaleX="0.64"
+                android:scaleY="0.64">
+
+                <!-- Centers the 1415x1179 logo inside the 393x393 viewport -->
+                <group
+                    android:name="base_translate"
+                    android:translateX="55"
+                    android:translateY="78.6"
+                    android:scaleX="0.2"
+                    android:scaleY="0.2">
+
+                    <!-- The Main Animated Group -->
+                    <!-- Starts invisible (alpha=0) and slightly smaller (scale=0.8) -->
+                    <group
+                        android:name="logo_group"
+                        android:pivotX="707.5"
+                        android:pivotY="589.5"
+                        android:scaleX="0.8"
+                        android:scaleY="0.8"
+                        android:alpha="0">
+
+                        <path android:name="path_1" android:fillColor="#4B91FE" android:strokeColor="#4B91FE" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M726,1009.6c14.6-6.1,25.2-20.1,27.1-35.7c1.2-9.5,0.7-20.7,0.7-30.4l-0.1-45.6l0,0l-0.1-174.7 c0-9.8-0.1-19.7-0.2-29.5c22.7-0.9,39.6-12,50.7-31.5c-6.4,2.9-7.7,8-19,9.3c-6.6,0.7-13.2-1.3-18.4-5.5c-8-6.6-9.5-14.2-10.5-23.9 c-2.4-14.6-2.1-25.6-2.3-40.2c-0.3-17.8,0-35.3,0-53.1V419.1c2.3-29.4,11.2-52.8,29.4-76c0.1-17.9-36.3-67.2-47.9-82.5 c-9.1,8.1-20.6,19.4-27.7,29.2c-22.2-26.9-43.3-45.5-75-61.3c-13.3-6.5-27.1-11.9-41.2-16.1c-14.7-4.2-30.3-7.1-45.2-10 c-18.5-3.6-37-7.4-55.5-11.3l-76.8-16.1c-38.6-8.1-70.5-19.5-104.8,9.2c-16.1,13.7-26,33.2-27.6,54.2c-1,13.3-0.4,40.4-0.2,54.4 c-14.1-0.1-55.8-1.2-67.2,1.8c-9.9,2.7-18.9,7.8-26.2,15c-14.1,13.9-16.2,29.9-16.2,48.5l0,376.5l0,112.3l0,30.1 c0,6.9-0.3,15.6,0.5,22.3c1.7,12.6,7.5,24.2,16.5,33.1c16.6,16.4,33.9,15.1,55.1,15.1l43.6,0l162.3,0l48.1-0.1 c45,0,63.7,1.9,105.1,20.8c8.8,6.6,18.2,14.5,26.9,20.7c17.3,12.3,43.6,22.2,64.8,23.2c7.4,1.4,17.7,1.6,25.2,0.3 c0.7,0,1.7-0.1,2.8-0.2c-1.1,0.1-2,0.2-2.8,0.2C721.1,1011.7,724.5,1010.3,726,1009.6z M661.2,616.4c0.1,4.7-0.2,13,0.3,17.5 c-1.6,76.5,0.9,153.9,0.1,230.4c-0.1,11.4,0,22.9,0.2,34.3c-27.6-26.5-63.8-46-100.7-54.8c-19.7-4.7-40.1-8.5-59.9-12.8l-86.8-18.4 c-13.7-2.9-28.3-5.5-41.8-8.7l-0.1-544.8l125.4,26.3l40.6,8.4c14.4,3,26.7,5.1,40.5,10.4c14.6,5.6,28.1,14,39.6,24.6 c8.9,8.2,16.6,17.5,23,27.8c24.5,39.1,19.1,73.4,19.7,117.2c0.4,33.8-0.8,70.2,0.8,103.8C661.2,590.7,661,603.3,661.2,616.4z"/>
+                        <path android:name="path_2" android:fillColor="#FECB09" android:strokeColor="#FECB09" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M1243.2,347.6c-0.7-21.1-12.3-39.8-31.5-49c-14.2-6.8-28.3-5.7-43.6-5.6l-34.3,0.1c-1-35.9,6.7-72-20-101.4 c-17.5-19.3-44.5-29.5-70.3-24.9c-17.6,3.1-34.8,6.9-52.2,10.5L913,193.6l-53.2,10.8c-49,9.9-86.2,21.9-124.4,56.1 c11.6,15.3,48,64.6,47.9,82.5c33.8-37.4,53.7-40.9,100.8-50.9l67.1-13.9l61.1-12.9c7.9-1.6,22.4-5,30-5.9l0,257 c-39.3-2.5-54,6.1-72.4,40.2c-4.6,8.5-17.1,43.1-23.4,45.6c-11.4-7.3-27.9-106.1-41.4-120.8c-2.5-1.6-4.3-4-6.6-5.7 c-5.1-3.9-13.4-5.3-19.6-4.1c-14.9,2.8-20.3,15.9-22.8,29.1c3.7,6.9,7,13.8,9.5,21.3c5.5,16.3,9.6,33.2,14.2,49.8 c8,29,18.1,71.4,51,81.1c14,4.1,29.4,2.9,42.2-4.3c30.2-16.8,38.8-72,49.8-79.1c4.6-3,14.2-1.9,19.4-1.1 c0.8,55.7-0.4,112.1,0.1,167.9c0.2,22.3-0.5,45.5,0.1,67.7c-13,3.1-26.4,5.4-39.5,8.2l-121.9,25.8c-38.9,7.9-69.4,16.5-102.4,40.3 c-8.8,6.4-16.5,13.1-24.9,19.4l0.1,45.6c0,9.7,0.5,21-0.7,30.4c-1.9,15.7-12.5,29.7-27.1,35.7c-1.4,0.6-4.8,2.1-6.1,2.9 c0.7,0,1.7-0.1,2.8-0.2c0.3,0,0.5-0.1,0.8-0.1c0.6-0.1,1.1-0.1,1.7-0.2c0.9-0.1,1.8-0.3,2.7-0.4c1.7-0.3,3.4-0.6,4.5-0.8 c2.5-0.4,5-1,7.4-1.5c2.5-0.6,4.9-1.2,7.3-1.9c4.8-1.4,9.6-3.1,14.2-5.1c2.3-1,4.6-2,6.9-3.1c3.4-1.6,6.7-3.4,10-5.4 c3.2-1.9,6.4-4,9.5-6.2c0.9-0.6,1.8-1.3,2.7-2c0.4-0.3,0.9-0.7,1.3-1.1c1.3-1.1,2.6-2.2,3.9-3.3c4.3-3.7,8.7-7.5,13.4-10.3 c6-3.6,12-6.6,18.2-9.2c1.5-0.6,3.1-1.3,4.6-1.9c3.9-1.5,7.8-2.8,11.7-4c3.9-1.2,7.9-2.2,11.9-3c0.8-0.2,1.6-0.3,2.4-0.5 c1.6-0.3,3.2-0.6,4.8-0.9c1.6-0.3,3.2-0.6,4.8-0.8c0.8-0.1,1.6-0.2,2.4-0.4c1.6-0.2,3.2-0.5,4.9-0.7c2.4-0.3,4.9-0.6,7.4-0.8 c3.3-0.3,6.6-0.6,9.9-0.8c0.8-0.1,1.6-0.1,2.5-0.1c1.7-0.1,3.3-0.2,5-0.2c0.8,0,1.7-0.1,2.5-0.1c1.7-0.1,3.3-0.1,5-0.1 c0.8,0,1.7,0,2.5-0.1c1.7,0,3.3-0.1,5-0.1c1.7,0,3.3,0,5,0c1.7,0,3.3,0,5,0c4.2,0,8.4,0.1,12.5,0.1c2.5,0,5,0.1,7.5,0.1 c6.7,0.1,13.4,0.2,20,0.1l167.1,0l41.5,0c3.6,0,8.5,0.1,13.4,0c1.8,0,3.6-0.1,5.4-0.1c2.9-0.1,5.5-0.4,7.5-0.7 c1.9-0.4,3.8-0.8,5.6-1.4c1.2-0.4,2.4-0.8,3.6-1.2c1.2-0.5,2.4-1,3.5-1.5c2.3-1.1,4.5-2.3,6.6-3.7c0.5-0.4,1.1-0.7,1.6-1.1 c2.1-1.5,4-3.1,5.9-4.9c2.8-2.7,5.2-5.5,7.2-8.3c0.9-1.2,1.7-2.4,2.4-3.7c1.2-2.1,2.3-4.2,3.2-6.4c0.4-0.9,0.7-1.8,1-2.6 c0.5-1.3,0.9-2.7,1.2-4.1c0.2-0.9,0.5-1.9,0.7-2.8c0.3-1.4,0.5-2.9,0.7-4.3c0.3-2.5,0.6-5,0.7-7.6c0-1,0.1-2.1,0.1-3.2l0-377 l0.1-110.6l0.1-37.4C1243.4,359.1,1243.4,353.3,1243.2,347.6z"/>
+                        <path android:name="path_3" android:fillColor="#42B15F" android:strokeColor="#42B15F" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M1133.8,293.1l34.3-0.1c15.3-0.1,29.4-1.2,43.6,5.6c19.2,9.2,30.9,27.9,31.5,49c0.2,5.7,0.2,11.5,0.2,17.3 l-0.1,37.4l-0.1,110.6l0,377c-0.2,17.2-4.4,30.7-17.2,43c-7.4,7.1-16.7,11.9-26.8,13.9c-6.5,1.2-19.1,0.9-26.3,0.8l-41.5,0 l-167.1,0c-53.3,0.1-107.9-5.3-155.5,23.3c-7.5,4.5-14.1,11.5-21.2,16.7c-16.5,11.7-35.4,19.7-55.3,23.2c-3.1,0.6-9.6,1.7-12.5,1.7 c1.2-0.8,4.6-2.3,6.1-2.9c14.6-6.1,25.2-20.1,27.1-35.7c1.2-9.5,0.7-20.7,0.7-30.4l-0.1-45.6c8.4-6.3,16-13,24.9-19.4 c33-23.8,63.5-32.4,102.4-40.3c-1.4,1.3-5.5,3.3-7.3,4.3c-5.6,3.1-10.4,6.1-14.8,10.7c-25.7,26.7-27.3,72.1-27.1,106.7 c29.1-21.2,70.5-33.3,105.1-40.5l98.7-21.2c11.8-2.5,40-7.7,49.5-11.6c10.7-4.3,20.3-11,28.1-19.5c16.6-17.9,21.4-38.2,20.9-61.8 c-0.3-13.5,0-27.5-0.1-41l0-115.3l0-233.8l-0.1-76.6C1133.9,323.9,1134.3,307.7,1133.8,293.1z"/>
+                        <path android:name="path_4" android:fillColor="#FE4F3D" android:strokeColor="#FE4F3D" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M756.2,642.1c13.6-22.2,16.4-44,23.9-68.8c11-36.8,16.1-99.9,54-119.1c26.6-13.5,58.7,0.8,71,27.4 c-2.5-1.6-4.3-4-6.6-5.7c-5.1-3.9-13.4-5.3-19.6-4.1c-14.9,2.8-20.3,15.9-22.8,29.1c-8.4,15-12,30.4-16.4,46.9 c-5.3,19.8-10,39.9-15.2,59.7c-3.7,13.8-7.3,28.1-13.3,41c-1.3,2.9-5.4,11.4-7.1,13.6c-6.4,2.9-7.7,8-19,9.3 c-6.6,0.7-13.2-1.3-18.4-5.5C758.7,659.4,757.2,651.8,756.2,642.1z"/>
+                        <path android:name="path_5" android:fillColor="#FE4F3D" android:strokeColor="#FE4F3D" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M602.9,968.3c-41.4-18.8-60-20.8-105.1-20.8l-48.1,0.1l-162.3,0l-43.6,0c-21.2,0-38.5,1.3-55.1-15.1 c-9-8.9-14.9-20.5-16.5-33.1c-0.9-6.7-0.6-15.4-0.5-22.3l0-30.1l0-112.3l0-376.5c0-18.6,2.1-34.6,16.2-48.5 c7.3-7.2,16.3-12.3,26.2-15c11.4-2.9,53.1-1.9,67.2-1.8l0,372.6l0,106.7c0,11.5-0.7,42.7,1,53c2.7,16.5,10.4,31.8,22.2,43.7 c22.7,22.8,49.7,24.1,79.7,30.2l92.7,19.5c25.3,5.3,54.2,9.9,77.9,19c12.8,4.9,24.7,11.7,35.5,20.1 C593.4,960.3,601.1,965.3,602.9,968.3z"/>
+                        <path android:name="path_6" android:fillColor="#FECB09" android:strokeColor="#FECB09" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M661.4,633.8c8,49.9,37.2,90.8,92.2,89.4l0.1,174.7l0.1,45.6c0,9.7,0.5,21-0.7,30.4 c-1.9,15.7-12.5,29.7-27.1,35.7c-1.4,0.6-4.8,2.1-6.1,2.9c-7.5,1.2-17.8,1.1-25.2-0.3c-8.2-4.3-12.5-5-19.8-12.4 c-5.6-5.7-9.7-12.8-11.7-20.6c-2.1-8.6-1.4-24.7-1.4-34.2l0-46.3c-0.2-11.4-0.3-22.9-0.2-34.3C662.3,787.7,659.8,710.4,661.4,633.8 z"/>
+                        <path android:name="path_7" android:fillColor="#FE4F3D" android:strokeColor="#FE4F3D" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M707.6,289.8c7.1-9.9,18.7-21.2,27.7-29.2c11.6,15.3,48,64.6,47.9,82.5c-18.2,23.2-27.1,46.6-29.4,76 c-1.9-3-2.6-24.1-3.7-30C744.1,355.7,729.4,316.2,707.6,289.8z"/>
+                        <path android:name="path_8" android:fillColor="#E7AA06" android:strokeColor="#E7AA06" android:strokeWidth="0" android:strokeLineJoin="round" android:strokeLineCap="round" android:pathData="M662,577.7c1.1,3.1,1.5,8.2,2.1,11.6c0.8,5.5,1.9,11,3.1,16.4c7.2,31.7,23.8,65.2,53.7,80.8 c8.7,4.5,22.8,8.4,32.5,7.1c0.2,9.8,0.2,19.7,0.2,29.5c-55,1.4-84.2-39.5-92.2-89.4c-0.5-4.5-0.2-12.8-0.3-17.5 C661,603.3,661.2,590.7,662,577.7z"/>
+                    </group>
+                </group>
+            </group>
+        </vector>
+    </aapt:attr>
+
+    <!-- 2. THE ANIMATORS -->
+
+    <!-- Animating the Scale and Fade of the Entire Group -->
+    <target android:name="logo_group">
+        <aapt:attr name="android:animation">
+            <set android:ordering="together">
+
+                <!-- PHASE 1: Quick Fade In (0-200ms) -->
+                <objectAnimator
+                    android:propertyName="alpha"
+                    android:duration="400"
+                    android:valueFrom="0.0"
+                    android:valueTo="1.0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/decelerate_interpolator" />
+
+                <!-- PHASE 1: Scale Up with Overshoot "Pop" (0-450ms) -->
+                <!-- Overshoot naturally makes it burst past 1.0 and settle perfectly, creating a beautiful bounce -->
+                <objectAnimator
+                    android:propertyName="scaleX"
+                    android:duration="850"
+                    android:valueFrom="0.6"
+                    android:valueTo="1.0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+                <objectAnimator
+                    android:propertyName="scaleY"
+                    android:duration="850"
+                    android:valueFrom="0.6"
+                    android:valueTo="1.0"
+                    android:valueType="floatType"
+                    android:interpolator="@android:anim/overshoot_interpolator" />
+            </set>
+        </aapt:attr>
+    </target>
+</animated-vector>

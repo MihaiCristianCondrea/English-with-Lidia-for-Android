@@ -3,7 +3,7 @@ package com.d4rk.englishwithlidia.plus.player.audio
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.d4rk.android.libs.apptoolkit.core.di.StandardDispatchers
+import com.d4rk.android.libs.apptoolkit.core.coroutines.dispatchers.StandardDispatchers
 
 class AudioCacheEvictionWorker(
     appContext: Context,

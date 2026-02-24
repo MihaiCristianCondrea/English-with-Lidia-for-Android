@@ -1,7 +1,7 @@
 package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui
 
 import androidx.lifecycle.viewModelScope
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.coroutines.dispatchers.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.DataState
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.onFailure
 import com.d4rk.android.libs.apptoolkit.core.domain.model.network.onSuccess

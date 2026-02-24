@@ -16,9 +16,9 @@ import org.koin.dsl.module
 val onboardingModule: Module = module {
     single<OnboardingProvider> { AppOnboardingProvider() }
     single<OnboardingPreferencesDataSource> { get<CommonDataStore>() }
-    single<OnboardingRepository> { OnboardingRepositoryImpl(dataStore = get(), firebaseController = get()) }
-    single<ObserveOnboardingCompletionUseCase> { ObserveOnboardingCompletionUseCase(repository = get(), firebaseController = get()) }
-    single<CompleteOnboardingUseCase> { CompleteOnboardingUseCase(repository = get(), firebaseController = get()) }
+    single<OnboardingRepository> { OnboardingRepositoryImpl(dataStore = get()) }
+    single<ObserveOnboardingCompletionUseCase> { ObserveOnboardingCompletionUseCase(repository = get()) }
+    single<CompleteOnboardingUseCase> { CompleteOnboardingUseCase(repository = get()) }
 
     viewModel {
         OnboardingViewModel(

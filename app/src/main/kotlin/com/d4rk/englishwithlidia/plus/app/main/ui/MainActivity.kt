@@ -15,7 +15,7 @@ import com.d4rk.android.libs.apptoolkit.app.consent.domain.usecases.ApplyInitial
 import com.d4rk.android.libs.apptoolkit.app.main.ui.factory.GmsHostFactory
 import com.d4rk.android.libs.apptoolkit.app.startup.ui.StartupActivity
 import com.d4rk.android.libs.apptoolkit.app.theme.ui.style.AppTheme
-import com.d4rk.android.libs.apptoolkit.core.di.DispatcherProvider
+import com.d4rk.android.libs.apptoolkit.core.coroutines.dispatchers.DispatcherProvider
 import com.d4rk.android.libs.apptoolkit.core.utils.extensions.context.openActivity
 import com.d4rk.englishwithlidia.plus.app.main.ui.contract.MainAction
 import com.d4rk.englishwithlidia.plus.app.main.ui.contract.MainEvent
