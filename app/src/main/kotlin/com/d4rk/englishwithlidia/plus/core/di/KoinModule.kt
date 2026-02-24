@@ -3,6 +3,7 @@ package com.d4rk.englishwithlidia.plus.core.di
 import android.content.Context
 import com.d4rk.englishwithlidia.plus.core.di.modules.app.modules.adsModule
 import com.d4rk.englishwithlidia.plus.core.di.modules.app.modules.appModule
+import com.d4rk.englishwithlidia.plus.core.di.modules.app.modules.consentModule
 import com.d4rk.englishwithlidia.plus.core.di.modules.app.modules.lessonsModule
 import com.d4rk.englishwithlidia.plus.core.di.modules.app.modules.onboardingModule
 import com.d4rk.englishwithlidia.plus.core.di.modules.apptoolkit.appToolkitModules
@@ -22,6 +23,7 @@ fun initializeKoin(context: Context) {
                 add(coreModule)
                 add(appModule)
                 add(lessonsModule)
+                add(consentModule)
                 addAll(settingsModules)
                 add(adsModule)
                 addAll(appToolkitModules)
