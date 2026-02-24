@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">يتم تحديث التطبيق بانتظام مع دروس وميزات جديدة. يمكنك التحقق من صفحة تشغيل Google للحصول على آخر التحديثات أو متابعة D4RK على وسائل التواصل الاجتماعي للإعلانات.</string>
   <string name="question_9">من هي ليديا ميلينتي وما هو دورها في التطبيق؟</string>
   <string name="summary_preference_faq_9">تقوم Lidia Melinte ، وهي معلمة باللغة الإنجليزية ، بإنشاء الدروس وتروي السمعات في التطبيق.</string>
+    <string name="lesson_writer_footer">الكاتب: %1$s</string>
 </resources>

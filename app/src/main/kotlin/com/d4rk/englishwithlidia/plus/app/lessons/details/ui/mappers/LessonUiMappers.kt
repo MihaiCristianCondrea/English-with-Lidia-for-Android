@@ -7,6 +7,7 @@ import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonScree
 internal fun Lesson.toUiModel(): UiLessonScreen =
     UiLessonScreen(
         lessonTitle = lessonTitle,
+        writer = writer,
         lessonContent = lessonContent.map(LessonContent::toUiModel),
     )
 
@@ -24,4 +25,5 @@ internal fun LessonContent.toUiModel(): UiLessonContent =
         contentGenre = contentGenre,
         contentDescription = contentDescription,
         contentReleaseYear = contentReleaseYear,
+        writer = writer,
     )

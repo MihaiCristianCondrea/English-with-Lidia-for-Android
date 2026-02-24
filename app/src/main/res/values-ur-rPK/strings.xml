@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">ایپ کو نئے اسباق اور خصوصیات کے ساتھ باقاعدگی سے اپ ڈیٹ کیا جاتا ہے۔ آپ تازہ ترین تازہ کاریوں کے لئے گوگل پلے پیج کو چیک کرسکتے ہیں یا اعلانات کے لئے سوشل میڈیا پر D4RK کی پیروی کرسکتے ہیں۔</string>
   <string name="question_9">لیڈیا میلینٹ کون ہے اور ایپ میں اس کا کیا کردار ہے؟</string>
   <string name="summary_preference_faq_9">ایک انگریزی ٹیچر ، لڈیا میلنٹے اسباق تیار کرتی ہے اور ایپ میں آڈیو کو بیان کرتی ہے۔</string>
+    <string name="lesson_writer_footer">مصنف: %1$s</string>
 </resources>

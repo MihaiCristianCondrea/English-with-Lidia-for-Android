@@ -17,4 +17,5 @@ data class LessonContentDto(
     @SerialName("content_genre") val contentGenre: String = "",
     @SerialName("content_description") val contentDescription: String = "",
     @SerialName("content_release_year") val contentReleaseYear: Int? = null,
+    @SerialName("writer") val writer: String = "",
 )

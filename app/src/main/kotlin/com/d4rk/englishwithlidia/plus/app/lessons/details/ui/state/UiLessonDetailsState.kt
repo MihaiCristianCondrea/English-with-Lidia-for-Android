@@ -10,6 +10,7 @@ data class UiLessonScreen(
     val playbackDuration: Long = 0L,
     val hasPlaybackError: Boolean = false,
     val lessonTitle: String = "",
+    val writer: String = "",
     val lessonContent: List<UiLessonContent> = emptyList(),
 )
 
@@ -27,4 +28,5 @@ data class UiLessonContent(
     val contentGenre: String = "",
     val contentDescription: String = "",
     val contentReleaseYear: Int? = null,
+    val writer: String = "",
 )

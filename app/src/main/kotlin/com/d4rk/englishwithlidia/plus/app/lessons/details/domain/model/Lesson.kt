@@ -8,6 +8,7 @@ import androidx.compose.runtime.Immutable
 @Immutable
 data class Lesson(
     val lessonTitle: String = "",
+    val writer: String = "",
     val lessonContent: List<LessonContent> = emptyList(),
 )
 
@@ -28,4 +29,5 @@ data class LessonContent(
     val contentGenre: String = "",
     val contentDescription: String = "",
     val contentReleaseYear: Int? = null,
+    val writer: String = "",
 )
