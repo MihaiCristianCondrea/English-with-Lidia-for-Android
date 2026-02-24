@@ -15,8 +15,8 @@
                 android:name="content_scale"
                 android:pivotX="196.5"
                 android:pivotY="196.5"
-                android:scaleX="0.64"
-                android:scaleY="0.64">
+                android:scaleX="1"
+                android:scaleY="1">
 
                 <!-- Centers the 1415x1179 logo inside the 393x393 viewport -->
                 <group

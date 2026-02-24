@@ -1,5 +1,4 @@
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
 import kotlin.toString
 
@@ -20,7 +19,7 @@ android {
         applicationId = "com.d4rk.englishwithlidia.plus"
         minSdk = 26
         targetSdk = 36
-        versionCode = 70
+        versionCode = 71
         versionName = "5.3.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
@@ -122,12 +121,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
         targetCompatibility = JavaVersion.VERSION_21
-    }
-
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_21)
-        }
     }
 
     buildFeatures {
