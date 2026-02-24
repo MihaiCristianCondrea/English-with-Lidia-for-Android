@@ -33,6 +33,7 @@ class LessonMapperTest {
         data = listOf(
             LessonDto(
                 lessonTitle = LESSON_TITLE,
+                writer = LESSON_WRITER,
                 lessonContent = sampleContents.map { it.toDto() },
             ),
         ),
@@ -42,6 +43,7 @@ class LessonMapperTest {
 
     private fun expectedLesson() = Lesson(
         lessonTitle = LESSON_TITLE,
+        writer = LESSON_WRITER,
         lessonContent = sampleContents.map { it.toDomain() },
     )
 
@@ -58,6 +60,7 @@ class LessonMapperTest {
         val genre: String,
         val description: String,
         val releaseYear: Int?,
+        val writer: String,
     ) {
         fun toDto() = LessonContentDto(
             contentId = id,
@@ -72,6 +75,7 @@ class LessonMapperTest {
             contentGenre = genre,
             contentDescription = description,
             contentReleaseYear = releaseYear,
+            writer = writer,
         )
 
         fun toDomain() = LessonContent(
@@ -87,11 +91,13 @@ class LessonMapperTest {
             contentGenre = genre,
             contentDescription = description,
             contentReleaseYear = releaseYear,
+            writer = writer,
         )
     }
 
     private companion object {
         private const val LESSON_TITLE = "Lesson 1"
+        private const val LESSON_WRITER = "Lidia Melinte"
 
         private val sampleContents = listOf(
             LessonContentSample(
@@ -107,6 +113,7 @@ class LessonMapperTest {
                 genre = "genre1",
                 description = "description1",
                 releaseYear = 2001,
+                writer = LESSON_WRITER,
             ),
             LessonContentSample(
                 id = "content2",
@@ -121,6 +128,7 @@ class LessonMapperTest {
                 genre = "genre2",
                 description = "description2",
                 releaseYear = 2002,
+                writer = LESSON_WRITER,
             ),
         )
     }

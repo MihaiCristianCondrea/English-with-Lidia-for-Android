@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">該應用程序定期使用新的課程和功能更新。您可以查看Google Play頁面以獲取最新更新，也可以在社交媒體上關注D4RK以獲取公告。</string>
   <string name="question_9">Lidia Melinte是誰，她在應用程序中的角色是什麼？</string>
   <string name="summary_preference_faq_9">英語老師Lidia Melinte創作了課程並在應用程序中敘述音頻。</string>
+    <string name="lesson_writer_footer">作者：%1$s</string>
 </resources>

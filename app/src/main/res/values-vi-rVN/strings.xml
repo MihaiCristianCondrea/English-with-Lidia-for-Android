@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">Ứng dụng được cập nhật thường xuyên với các bài học và tính năng mới. Bạn có thể kiểm tra trang Google Play để biết các bản cập nhật mới nhất hoặc theo dõi D4RK trên phương tiện truyền thông xã hội để biết thông báo.</string>
   <string name="question_9">Lidia Melinte là ai và vai trò của cô ấy trong ứng dụng là gì?</string>
   <string name="summary_preference_faq_9">Lidia Melinte, một giáo viên tiếng Anh, tạo ra các bài học và thuật lại âm thanh trong ứng dụng.</string>
+    <string name="lesson_writer_footer">Tác giả: %1$s</string>
 </resources>

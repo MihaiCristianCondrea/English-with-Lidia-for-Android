@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">Aplikacja jest regularnie aktualizowana o nowe lekcje i funkcje. Możesz sprawdzić stronę Google Play, aby uzyskać najnowsze aktualizacje lub śledzić D4RK w mediach społecznościowych w celu uzyskania ogłoszeń.</string>
   <string name="question_9">Kim jest Lidia Melinte i jaka jest jej rola w aplikacji?</string>
   <string name="summary_preference_faq_9">Lidia Melinte, nauczycielka angielskiego, tworzy lekcje i opowiada audios w aplikacji.</string>
+    <string name="lesson_writer_footer">Autor: %1$s</string>
 </resources>

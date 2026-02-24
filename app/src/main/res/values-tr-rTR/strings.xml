@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">Uygulama, yeni dersler ve özelliklerle düzenli olarak güncellenir. En son güncellemeler için Google Play sayfasını kontrol edebilir veya duyurular için sosyal medyada D4RK\'yı takip edebilirsiniz.</string>
   <string name="question_9">Lidia Melinte kimdir ve uygulamadaki rolü nedir?</string>
   <string name="summary_preference_faq_9">Bir İngilizce öğretmeni olan Lidia Melinte, dersleri oluşturur ve uygulamadaki sesleri anlatır.</string>
+    <string name="lesson_writer_footer">Yazar: %1$s</string>
 </resources>

@@ -14,9 +14,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.d4rk.android.libs.apptoolkit.core.ui.model.ads.AdsConfig
 import com.d4rk.android.libs.apptoolkit.core.ui.views.modifiers.animateVisibility
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
+import com.d4rk.englishwithlidia.plus.R
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.state.UiLessonScreen
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.views.cards.LessonAudioContent
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.views.text.LessonBodyText
@@ -107,6 +109,18 @@ fun LessonContentLayout(
                 LessonContentTypes.AD_LARGE_BANNER -> LessonAdBanner(adsConfig = mediumRectangleConfig)
 
                 else -> LessonUnsupportedContent(contentType = contentItem.contentType)
+            }
+        }
+
+
+        if (lesson.writer.isNotBlank()) {
+            item(key = "lesson_writer_footer") {
+                LessonBodyText(
+                    text = stringResource(R.string.lesson_writer_footer, lesson.writer),
+                    modifier = Modifier
+                        .animateItem()
+                        .animateVisibility(),
+                )
             }
         }
     }

@@ -12,6 +12,7 @@ internal fun LessonResponseDto.firstLessonOrNull(): Lesson? =
 internal fun LessonDto.toDomain(): Lesson =
     Lesson(
         lessonTitle = lessonTitle,
+        writer = writer,
         lessonContent = lessonContent.map(LessonContentDto::toDomain),
     )
 
@@ -29,4 +30,5 @@ internal fun LessonContentDto.toDomain(): LessonContent =
         contentGenre = contentGenre,
         contentDescription = contentDescription,
         contentReleaseYear = contentReleaseYear,
+        writer = writer,
     )

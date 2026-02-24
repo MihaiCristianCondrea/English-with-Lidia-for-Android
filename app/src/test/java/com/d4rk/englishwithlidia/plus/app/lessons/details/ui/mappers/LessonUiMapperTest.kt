@@ -13,6 +13,7 @@ class LessonUiMapperTest {
     fun `map maps lesson to ui screen`() {
         val lesson = Lesson(
             lessonTitle = "Lesson title",
+            writer = "Lidia Melinte",
             lessonContent = listOf(
                 LessonContent(
                     contentId = "1",
@@ -27,6 +28,7 @@ class LessonUiMapperTest {
                     contentGenre = "genre",
                     contentDescription = "description",
                     contentReleaseYear = 2024,
+                    writer = "Lidia Melinte",
                 ),
             ),
         )
@@ -35,6 +37,7 @@ class LessonUiMapperTest {
 
         val expected = UiLessonScreen(
             lessonTitle = lesson.lessonTitle,
+            writer = lesson.writer,
             lessonContent = lesson.lessonContent.map {
                 UiLessonContent(
                     contentId = it.contentId,
@@ -49,6 +52,7 @@ class LessonUiMapperTest {
                     contentGenre = it.contentGenre,
                     contentDescription = it.contentDescription,
                     contentReleaseYear = it.contentReleaseYear,
+                    writer = it.writer,
                 )
             },
         )
@@ -58,11 +62,11 @@ class LessonUiMapperTest {
 
     @Test
     fun `map handles empty content`() {
-        val lesson = Lesson(lessonTitle = "Lesson", lessonContent = emptyList())
+        val lesson = Lesson(lessonTitle = "Lesson", writer = "Lidia Melinte", lessonContent = emptyList())
 
         val result = lesson.toUiModel()
 
-        assertEquals(UiLessonScreen(lessonTitle = "Lesson"), result)
+        assertEquals(UiLessonScreen(lessonTitle = "Lesson", writer = "Lidia Melinte"), result)
         assertNotNull(result.lessonContent)
         assertEquals(0, result.lessonContent.size)
     }

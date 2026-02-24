@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">Appen uppdateras regelbundet med nya lektioner och funktioner. Du kan kontrollera Google Play -sidan för de senaste uppdateringarna eller följa D4RK på sociala medier för tillkännagivanden.</string>
   <string name="question_9">Vem är Lidia Melinte och vad är hennes roll i appen?</string>
   <string name="summary_preference_faq_9">Lidia Melinte, en engelsklärare, skapar lektionerna och berättar ljudet i appen.</string>
+    <string name="lesson_writer_footer">Författare: %1$s</string>
 </resources>

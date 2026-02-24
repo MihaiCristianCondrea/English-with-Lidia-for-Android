@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">Додаток регулярно оновлюється новими уроками та функціями. Ви можете перевірити сторінку Google Play на отримання останніх оновлень або слідкувати за D4RK в соціальних мережах для оголошень.</string>
   <string name="question_9">Хто такий Lidia Melinte і яка її роль у додатку?</string>
   <string name="summary_preference_faq_9">Лідія Мелінте, вчитель англійської мови, створює уроки та розповідає про аудіозаписи в додатку.</string>
+    <string name="lesson_writer_footer">Автор: %1$s</string>
 </resources>

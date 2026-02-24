@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">Az alkalmazást rendszeresen frissítik új órákkal és funkciókkal. Ellenőrizheti a Google Play oldalt a legfrissebb frissítésekhez, vagy a D4RK -t a közösségi médiában követheti a bejelentésekhez.</string>
   <string name="question_9">Ki az a Lidia Melinte, és mi a szerepe az alkalmazásban?</string>
   <string name="summary_preference_faq_9">Lidia Melinte, egy angol tanár, létrehozza az órákat és elmondja az Audios -t az alkalmazásban.</string>
+    <string name="lesson_writer_footer">Szerző: %1$s</string>
 </resources>

@@ -25,4 +25,5 @@
   <string name="summary_preference_faq_8">ऐप को नए पाठों और सुविधाओं के साथ नियमित रूप से अपडेट किया जाता है। आप नवीनतम अपडेट के लिए Google Play पेज की जांच कर सकते हैं या घोषणाओं के लिए सोशल मीडिया पर D4RK का पालन कर सकते हैं।</string>
   <string name="question_9">लिडिया मेलिंटे कौन है और ऐप में उसकी क्या भूमिका है?</string>
   <string name="summary_preference_faq_9">एक अंग्रेजी शिक्षक, लिडिया मेलिंटे, सबक बनाते हैं और ऐप में ऑडियोस बताते हैं।</string>
+    <string name="lesson_writer_footer">लेखक: %1$s</string>
 </resources>
