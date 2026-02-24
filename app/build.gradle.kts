@@ -16,7 +16,8 @@ android {
     compileSdk = 36
     namespace = "com.d4rk.englishwithlidia.plus"
     defaultConfig {
-        applicationId = "com.d4rk.englishwithlidia.plus"
+        applicationId = "com.d4rk.englishwithlidia"
+        applicationIdSuffix = ".plus"
         minSdk = 26
         targetSdk = 36
         versionCode = 71
@@ -54,6 +55,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        multiDexEnabled = true
 
         val githubProps = Properties()
         val githubFile = rootProject.file("github.properties")
@@ -94,27 +96,17 @@ android {
             } else {
                 null
             }
-            isDebuggable = false
+
+            proguardFiles(
+                getDefaultProguardFile(name = "proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+
             isMinifyEnabled = true
             isShrinkResources = true
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled = true
             }
-        }
-        debug {
-            isDebuggable = true
-            isMinifyEnabled = false
-            isShrinkResources = false
-        }
-    }
-
-    buildTypes.forEach { buildType ->
-        with(receiver = buildType) {
-            multiDexEnabled = true
-            proguardFiles(
-                getDefaultProguardFile(name = "proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
         }
     }
 
