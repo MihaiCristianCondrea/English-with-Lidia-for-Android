@@ -1,15 +1,33 @@
+/*
+ * Copyright (©) 2026 Mihai-Cristian Condrea
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsExtension
 import java.util.Properties
 import kotlin.toString
 
 plugins {
     alias(notation = libs.plugins.android.application)
-    alias(notation = libs.plugins.compose.compiler)
-    alias(notation = libs.plugins.about.libraries)
-    alias(notation = libs.plugins.mannodermaus)
-    alias(notation = libs.plugins.googlePlayServices)
-    alias(notation = libs.plugins.googleFirebase)
+    alias(notation = libs.plugins.kotlin.compose)
     alias(notation = libs.plugins.kotlin.serialization)
+    alias(notation = libs.plugins.google.mobile.services)
+    alias(notation = libs.plugins.firebase.crashlytics)
+    alias(notation = libs.plugins.firebase.performance)
+    alias(notation = libs.plugins.about.libraries)
+    alias(notation = libs.plugins.mannodermaus.android.junit5)
 }
 
 android {
@@ -20,7 +38,7 @@ android {
         applicationIdSuffix = ".plus"
         minSdk = 26
         targetSdk = 36
-        versionCode = 71
+        versionCode = 72
         versionName = "5.3.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         @Suppress("UnstableApiUsage")
@@ -143,7 +161,7 @@ dependencies {
     }
 
     // AndroidX Media3
-    implementation(dependencyNotation = libs.bundles.media3)
+    implementation(dependencyNotation = libs.bundles.androidxMedia3)
 
     // Unit Tests
     testImplementation(dependencyNotation = libs.bundles.unitTest)
@@ -151,5 +169,5 @@ dependencies {
 
     // Instrumentation Tests
     androidTestImplementation(dependencyNotation = libs.bundles.instrumentationTest)
-    debugImplementation(dependencyNotation = libs.androidx.ui.test.manifest)
+    debugImplementation(dependencyNotation = libs.androidx.compose.ui.test.manifest)
 }

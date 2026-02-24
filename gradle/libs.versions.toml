@@ -1,81 +1,92 @@
 [versions]
-agp = "9.0.1"
-aboutlibraries = "14.0.0-b02"
+androidGradlePlugin = "9.0.1"
+androidxMedia3 = "1.9.2"
+googleMobileServices = "4.4.4"
+firebaseCrashlyticsPlugin = "3.0.6"
+firebasePerformancePlugin = "2.0.2"
+mannodermausPlugin = "2.0.1"
 kotlin = "2.3.10"
-google-services = "4.4.4"
-google-firebase-crashlytics = "3.0.6"
-media3 = "1.9.2"
-junittest = "3.7.0"
-mannodermaus = "2.0.1"
-mockk = "1.14.9"
-jupiter = "6.0.3"
-testCorutines = "1.10.2"
-testTurbine = "1.2.1"
-truth = "1.7.0"
-testManifestTestJunit4Android = "1.10.3"
-slf4j = "2.0.17"
 ktor = "3.4.0"
+koin = "4.1.1"
+aboutLibraries = "14.0.0-b02"
+androidxComposeUiTestManifest = "1.10.3"
+androidxEspressoCore = "3.7.0"
+androidxTestTruth = "1.7.0"
+testJupiter = "6.0.3"
+testKotlinCoroutines = "1.10.2"
+testMockk = "1.14.9"
+testRobolectric = "4.16.1"
+testSlf4jSimple = "2.0.17"
+testTurbine = "1.2.1"
 
 [libraries]
-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3" }
-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3" }
-media3-session = { module = "androidx.media3:media3-session", version.ref = "media3" }
 
-# --- TESTING ---
-# Unit Tests (test folder)
-ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
-mockk-api = { module = "io.mockk:mockk", version.ref = "mockk" }
-test-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "testCorutines" }
+# Media3
+androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "androidxMedia3" }
+androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "androidxMedia3" }
+androidx-media3-session = { module = "androidx.media3:media3-session", version.ref = "androidxMedia3" }
+
+# Testing
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "androidxComposeUiTestManifest" }
+androidx-test-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspressoCore" }
+androidx-test-truth = { module = "androidx.test.ext:truth", version.ref = "androidxTestTruth" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+test-koin-junit5 = { module = "io.insert-koin:koin-test-junit5", version.ref = "koin" }
+test-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "testJupiter" }
+test-junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "testJupiter" }
+test-junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "testJupiter" }
+test-kotlinx-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "testKotlinCoroutines" }
+test-mockk = { module = "io.mockk:mockk", version.ref = "testMockk" }
+test-robolectric = { module = "org.robolectric:robolectric", version.ref = "testRobolectric" }
+test-slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "testSlf4jSimple" }
 test-turbine = { module = "app.cash.turbine:turbine", version.ref = "testTurbine" }
-androidx-truth = { module = "androidx.test.ext:truth", version.ref = "truth" }
-slf4j-simple = { module = "org.slf4j:slf4j-simple", version.ref = "slf4j" }
+test-mockk-android = { module = "io.mockk:mockk-android", version.ref = "testMockk" }
+ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
 
-# Instrumentation Tests (androidTest folder)
-mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "junittest" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "testManifestTestJunit4Android" }
-androidx-ui-test-junit4-android = { group = "androidx.compose.ui", name = "ui-test-junit4-android", version.ref = "testManifestTestJunit4Android" }
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-about-libraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutlibraries" }
-googlePlayServices = { id = "com.google.gms.google-services", version.ref = "google-services" }
-googleFirebase = { id = "com.google.firebase.crashlytics", version.ref = "google-firebase-crashlytics" }
-mannodermaus = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermaus" }
+google-mobile-services = { id = "com.google.gms.google-services", version.ref = "googleMobileServices" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
+firebase-performance = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerformancePlugin" }
+about-libraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }
+mannodermaus-android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermausPlugin" }
+
 
 [bundles]
-media3 = [
-    "media3-exoplayer",
-    "media3-ui",
-    "media3-session",
+androidxMedia3 = [
+    "androidx-media3-exoplayer",
+    "androidx-media3-ui",
+    "androidx-media3-session",
 ]
+
 # For local tests on the JVM (test sourceSet)
 unitTest = [
-    "jupiter-api",
-    "jupiter-params",
-    "mockk-api",
-    "test-kotlin-coroutines",
+    "androidx-test-truth",
+    "ktor-client-mock",
+    "test-junit-jupiter-api",
+    "test-junit-jupiter-params",
+    "test-koin-junit5",
+    "test-kotlinx-coroutines",
+    "test-mockk",
+    "test-robolectric",
+    "test-slf4j-simple",
     "test-turbine",
-    "androidx-truth",
-    "slf4j-simple",
-    "ktor-client-mock"
 ]
-unitTestRuntime = ["jupiter-engine"]
+
+unitTestRuntime = ["test-junit-jupiter-engine"]
 
 # For instrumentation tests on an Android device (androidTest sourceSet)
 instrumentationTest = [
-    "jupiter-api",
-    "jupiter-params",
-    "mockk-android",
-    "test-kotlin-coroutines",
+    "androidx-compose-ui-test-manifest",
+    "androidx-test-espresso-core",
+    "androidx-test-truth",
+    "koin-androidx-compose",
+    "test-junit-jupiter-api",
+    "test-junit-jupiter-params",
+    "test-kotlinx-coroutines",
+    "test-mockk-android",
     "test-turbine",
-    "androidx-espresso-core",
-    "androidx-ui-test-junit4-android",
-    "androidx-truth",
 ]
