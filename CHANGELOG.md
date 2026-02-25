@@ -1,6 +1,8 @@
 # Version 5.3.0:
 
 - **New**: Added new colorful themes
+- Updated app icon
+- Updated the UI of the lessons and details
 - **Minor**: Updated the app and optimized the speed
 - **Patch**: Fixed the current known issues
 
