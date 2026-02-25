@@ -53,7 +53,6 @@ firebase-performance = { id = "com.google.firebase.firebase-perf", version.ref =
 about-libraries = { id = "com.mikepenz.aboutlibraries.plugin.android", version.ref = "aboutLibraries" }
 mannodermaus-android-junit5 = { id = "de.mannodermaus.android-junit5", version.ref = "mannodermausPlugin" }
 
-
 [bundles]
 androidxMedia3 = [
     "androidx-media3-exoplayer",
