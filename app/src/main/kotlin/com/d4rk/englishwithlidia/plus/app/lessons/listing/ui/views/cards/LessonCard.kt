@@ -44,7 +44,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.d4rk.android.libs.apptoolkit.core.ui.views.modifiers.bounceClick
 import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
@@ -58,42 +57,44 @@ fun LessonCard(
     modifier: Modifier = Modifier,
 ) {
     ElevatedCard(
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.elevatedCardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(SizeConstants.LargeIncreasedSize),
+        elevation = CardDefaults.elevatedCardElevation(defaultElevation = SizeConstants.ExtraSmallSize),
         colors = CardDefaults.elevatedCardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow
         ),
         modifier = modifier
             .fillMaxWidth()
             .bounceClick()
-            .clip(RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(SizeConstants.LargeIncreasedSize))
             .clickable(onClick = onClick)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
 
-            // Image Box with Overlaid Badge
             Box(modifier = Modifier.fillMaxWidth()) {
                 AsyncImage(
                     model = imageResource,
                     contentDescription = title,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .clip(RoundedCornerShape(bottomEnd = 20.dp, bottomStart = 20.dp))
+                        .clip(
+                            RoundedCornerShape(
+                                bottomEnd = SizeConstants.LargeIncreasedSize,
+                                bottomStart = SizeConstants.LargeIncreasedSize,
+                            )
+                        )
                         .aspectRatio(ratio = 2.06f / 1f),
                     contentScale = ContentScale.Crop,
                 )
             }
 
-            // Text and Info Area
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
                         horizontal = SizeConstants.MediumSize,
-                        vertical = 16.dp
+                        vertical = SizeConstants.LargeSize,
                     )
             ) {
-                // Title
                 Text(
                     text = title,
                     style = MaterialTheme.typography.titleLarge,
@@ -104,24 +105,22 @@ fun LessonCard(
                     modifier = Modifier.fillMaxWidth(),
                 )
 
-                // Bottom Row: Writer and Action Arrow
                 if (writer.isNotBlank()) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 12.dp),
+                            .padding(top = SizeConstants.MediumSize),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        // Writer Info
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
                                 imageVector = Icons.Rounded.EditNote,
                                 contentDescription = null,
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                                modifier = Modifier.size(20.dp)
+                                modifier = Modifier.size(SizeConstants.LargeIncreasedSize),
                             )
-                            Spacer(modifier = Modifier.width(6.dp))
+                            Spacer(modifier = Modifier.width(SizeConstants.ExtraSmallSize + SizeConstants.ExtraTinySize))
                             Text(
                                 text = writer,
                                 style = MaterialTheme.typography.bodyMedium,
@@ -131,12 +130,11 @@ fun LessonCard(
                             )
                         }
 
-                        // Call to Action Arrow
                         Icon(
                             imageVector = Icons.AutoMirrored.Rounded.ArrowForward,
                             contentDescription = "Open Lesson",
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(20.dp)
+                            modifier = Modifier.size(SizeConstants.LargeIncreasedSize),
                         )
                     }
                 }

@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -55,7 +54,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.core.ui.views.spacers.ExtraSmallVerticalSpacer
 import com.d4rk.android.libs.apptoolkit.core.ui.views.modifiers.bounceClick
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.englishwithlidia.plus.app.lessons.details.ui.views.LessonPlaybackUiState
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -72,7 +73,11 @@ fun LessonAudioContent(
         label = "play_button_corner",
     )
     val bottomCornerRadius by animateDpAsState(
-        targetValue = if (playbackState.hasPlaybackError) 4.dp else 28.dp,
+        targetValue = if (playbackState.hasPlaybackError) {
+            SizeConstants.ExtraSmallSize
+        } else {
+            SizeConstants.ExtraLargeSize
+        },
         animationSpec = tween(durationMillis = 200),
         label = "playback_corner",
     )
@@ -149,24 +154,24 @@ fun LessonPlaybackErrorMessage(isVisible: Boolean) {
         Column(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            Spacer(modifier = Modifier.height(4.dp))
+            ExtraSmallVerticalSpacer()
 
             OutlinedCard(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-                    .padding(bottom = 8.dp),
+                    .padding(horizontal = SizeConstants.SmallSize)
+                    .padding(bottom = SizeConstants.SmallSize),
                 shape = RoundedCornerShape(
-                    topStart = 4.dp,
-                    topEnd = 4.dp,
-                    bottomStart = 28.dp,
-                    bottomEnd = 28.dp,
+                    topStart = SizeConstants.ExtraSmallSize,
+                    topEnd = SizeConstants.ExtraSmallSize,
+                    bottomStart = SizeConstants.ExtraLargeSize,
+                    bottomEnd = SizeConstants.ExtraLargeSize,
                 ),
             ) {
                 Text(
                     text = "Playback unavailable",
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(SizeConstants.LargeSize)
                         .fillMaxWidth(),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface,
@@ -193,18 +198,21 @@ fun LessonPlaybackControlsCard(
     OutlinedCard(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 8.dp)
-            .padding(top = 8.dp, bottom = if (showError) 0.dp else 8.dp),
+            .padding(horizontal = SizeConstants.SmallSize)
+            .padding(
+                top = SizeConstants.SmallSize,
+                bottom = if (showError) SizeConstants.ZeroSize else SizeConstants.SmallSize,
+            ),
         shape = RoundedCornerShape(
-            topStart = 28.dp,
-            topEnd = 28.dp,
+            topStart = SizeConstants.ExtraLargeSize,
+            topEnd = SizeConstants.ExtraLargeSize,
             bottomStart = bottomCornerRadius,
             bottomEnd = bottomCornerRadius,
         ),
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(SizeConstants.LargeSize)
                 .fillMaxWidth(),
         ) {
             Row(
@@ -220,8 +228,8 @@ fun LessonPlaybackControlsCard(
                 ) {
                     if (isBuffering) {
                         CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            strokeWidth = 2.dp,
+                            modifier = Modifier.size(SizeConstants.TwentyFourSize),
+                            strokeWidth = SizeConstants.ExtraTinySize,
                             color = LocalContentColor.current,
                         )
                     } else {
@@ -232,7 +240,7 @@ fun LessonPlaybackControlsCard(
                     }
                 }
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(SizeConstants.LargeSize))
 
                 Slider(
                     value = sliderValue,

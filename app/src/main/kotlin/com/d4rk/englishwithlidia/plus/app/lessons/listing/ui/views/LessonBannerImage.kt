@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views.drawable.listingBanner
 
 @Composable
@@ -48,7 +48,12 @@ fun LessonBannerImage(
             .graphicsLayer { translationY = parallaxOffset }
             .fillMaxWidth()
             .wrapContentHeight()
-            .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)), // Softens the edge
+            .clip(
+                RoundedCornerShape(
+                    bottomStart = SizeConstants.TwentyFourSize,
+                    bottomEnd = SizeConstants.TwentyFourSize,
+                )
+            ),
         contentScale = ContentScale.FillWidth,
     )
 }

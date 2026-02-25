@@ -20,7 +20,6 @@ package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -30,6 +29,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import com.d4rk.android.libs.apptoolkit.core.utils.constants.ui.SizeConstants
 import com.d4rk.android.libs.apptoolkit.core.utils.extensions.context.openUrl
 
 @Composable
@@ -50,17 +50,17 @@ fun OutlinedUrlButtons(
             Icon(
                 painter = painterIcon,
                 contentDescription = null,
-                modifier = Modifier.size(ButtonDefaults.IconSize),
+                modifier = Modifier.size(SizeConstants.ButtonIconSize),
             )
         } else if (vectorIcon != null) {
             Icon(
                 imageVector = vectorIcon,
                 contentDescription = null,
-                modifier = Modifier.size(ButtonDefaults.IconSize),
+                modifier = Modifier.size(SizeConstants.ButtonIconSize),
             )
         }
 
-        Spacer(Modifier.size(ButtonDefaults.IconSpacing))
+        Spacer(Modifier.size(SizeConstants.ButtonIcon))
         Text(text = stringResource(id = text), modifier = Modifier.basicMarquee())
     }
 }
