@@ -34,5 +34,6 @@ internal fun ListingLessonDto.toDomainOrNull(): ListingLesson? {
         lessonType = lessonType,
         lessonThumbnailImageUrl = lessonThumbnailImageUrl,
         lessonDeepLinkPath = lessonDeepLinkPath,
+        writer = writer,
     )
 }

@@ -22,6 +22,7 @@ import com.d4rk.englishwithlidia.plus.app.lessons.listing.domain.model.ListingSc
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.state.ListingLessonUiModel
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.state.ListingUiState
 import kotlinx.collections.immutable.toImmutableList
+
 internal fun ListingScreen.toUiState(): ListingUiState =
     ListingUiState(lessons = lessons.map(ListingLesson::toUiModel).toImmutableList())
 
@@ -32,4 +33,5 @@ internal fun ListingLesson.toUiModel(): ListingLessonUiModel =
         lessonType = lessonType,
         lessonThumbnailImageUrl = lessonThumbnailImageUrl,
         lessonDeepLinkPath = lessonDeepLinkPath,
+        writer = writer,
     )

@@ -21,10 +21,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.dp
 import com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views.drawable.listingBanner
 
 @Composable
@@ -44,7 +47,8 @@ fun LessonBannerImage(
         modifier = modifier
             .graphicsLayer { translationY = parallaxOffset }
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp)), // Softens the edge
         contentScale = ContentScale.FillWidth,
     )
 }

@@ -47,6 +47,7 @@ class ListingRepositoryImplTest {
                     lessonType = "video",
                     lessonThumbnailImageUrl = "url1",
                     lessonDeepLinkPath = "path1",
+                    writer = "Lidia Melinte",
                 )
             )
         )
@@ -63,6 +64,7 @@ class ListingRepositoryImplTest {
                     lessonType = "video",
                     lessonThumbnailImageUrl = "url1",
                     lessonDeepLinkPath = "path1",
+                    writer = "Lidia Melinte",
                 )
             )
         )

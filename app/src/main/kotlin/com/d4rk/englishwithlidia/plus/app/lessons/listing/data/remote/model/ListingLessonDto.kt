@@ -27,4 +27,5 @@ data class ListingLessonDto(
     @SerialName("lesson_type") val lessonType: String = "",
     @SerialName("lesson_thumbnail_image_url") val lessonThumbnailImageUrl: String = "",
     @SerialName("lesson_deep_link_path") val lessonDeepLinkPath: String = "",
+    @SerialName("writer") val writer: String = "",
 )

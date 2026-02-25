@@ -23,4 +23,5 @@ data class ListingLesson(
     val lessonType: String = "",
     val lessonThumbnailImageUrl: String = "",
     val lessonDeepLinkPath: String = "",
+    val writer: String = "",
 )

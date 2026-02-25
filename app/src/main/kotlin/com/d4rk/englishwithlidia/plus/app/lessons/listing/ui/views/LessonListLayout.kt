@@ -126,6 +126,7 @@ private fun LazyItemScope.LessonListEntry(
         is LessonListItem.Lesson -> LessonCard(
             title = item.lesson.lessonTitle,
             imageResource = item.lesson.lessonThumbnailImageUrl,
+            writer = item.lesson.writer,
             onClick = { onLessonClick(item.lesson) },
             modifier = Modifier
                 .animateVisibility(index = index)

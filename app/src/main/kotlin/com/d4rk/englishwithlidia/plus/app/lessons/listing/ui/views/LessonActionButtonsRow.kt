@@ -17,15 +17,15 @@
 
 package com.d4rk.englishwithlidia.plus.app.lessons.listing.ui.views
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -38,9 +38,11 @@ fun LessonActionButtonsRow(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .padding(start = 24.dp, end = 24.dp),
+            .padding(horizontal = 24.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        OutlinedUrlButtons(
+        UrlActionButton(
             url = "https://sites.google.com/view/englishwithlidia",
             text = R.string.website,
             modifier = Modifier
@@ -49,9 +51,7 @@ fun LessonActionButtonsRow(modifier: Modifier = Modifier) {
             vectorIcon = Icons.Outlined.Language,
         )
 
-        Spacer(modifier = Modifier.width(24.dp))
-
-        OutlinedUrlButtons(
+        UrlActionButton(
             url = "https://www.facebook.com/lidia.melinte",
             text = R.string.find_us,
             modifier = Modifier
