@@ -31,8 +31,13 @@ plugins {
 }
 
 android {
-    compileSdk = 36
     namespace = "com.d4rk.englishwithlidia.plus"
+    compileSdk {
+        version = release(36) {
+            minorApiLevel = 1
+        }
+    }
+
     defaultConfig {
         applicationId = "com.d4rk.englishwithlidia"
         applicationIdSuffix = ".plus"
@@ -84,6 +89,7 @@ android {
             ""
         }
         buildConfigField("String", "GITHUB_TOKEN", "\"$githubToken\"")
+        buildConfigField("int", "APPS_LIST_AD_FREQUENCY", "4")
     }
 
     signingConfigs {
@@ -114,14 +120,9 @@ android {
             } else {
                 null
             }
-
-            proguardFiles(
-                getDefaultProguardFile(name = "proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-
             isMinifyEnabled = true
             isShrinkResources = true
+            proguardFiles(getDefaultProguardFile(name = "proguard-android-optimize.txt"), "proguard-rules.pro")
             configure<CrashlyticsExtension> {
                 mappingFileUploadEnabled = true
             }
@@ -136,6 +137,12 @@ android {
     buildFeatures {
         buildConfig = true
         compose = true
+    }
+
+    bundle {
+        storeArchive {
+            enable = true
+        }
     }
 
     packaging {
